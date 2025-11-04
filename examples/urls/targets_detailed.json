@@ -1,0 +1,20 @@
+[
+  {
+    "url": "http://localhost:3000",
+    "name": "Local Development Server",
+    "priority": "high",
+    "tests": ["sqli", "xss", "crawl"]
+  },
+  {
+    "url": "http://localhost:8080",
+    "name": "Local API Server",
+    "priority": "high",
+    "tests": ["api_discovery", "ssrf"]
+  },
+  {
+    "url": "https://staging.example.com",
+    "name": "Staging Environment",
+    "priority": "medium",
+    "tests": ["sqli", "xss", "cors", "csrf"]
+  }
+]

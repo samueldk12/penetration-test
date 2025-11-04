@@ -1,0 +1,16 @@
+# Lista de URLs para teste
+# Uma URL por linha
+# Use apenas em sistemas autorizados!
+
+# Exemplos (NÃO use sem autorização)
+# https://example.com
+# https://testsite.local
+# http://192.168.1.100
+# https://staging.example.com
+
+# Para testar em local/desenvolvimento:
+http://localhost:3000
+http://localhost:8080
+http://127.0.0.1:5000
+
+# Adicione suas URLs autorizadas aqui:

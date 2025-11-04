@@ -1,0 +1,8 @@
+{
+  "type": "basic",
+  "username": "admin",
+  "password": "password",
+  "token": null,
+  "api_key": null,
+  "header_name": "X-API-Key"
+}

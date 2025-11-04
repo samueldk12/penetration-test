@@ -1,0 +1,19 @@
+# Lista de testes específicos para executar
+# Um teste por linha
+
+# Web Vulnerabilities
+sqli
+xss
+command_injection
+path_traversal
+ssrf
+csrf
+
+# LLM Vulnerabilities
+prompt_injection
+jailbreak
+system_prompt_leak
+
+# Discovery
+crawl
+api_discovery

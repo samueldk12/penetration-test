@@ -23,3 +23,14 @@ tqdm>=4.66.0
 
 # JSON/Data Handling
 python-dateutil>=2.8.2
+
+# Testing
+pytest>=7.4.0
+pytest-cov>=4.1.0
+pytest-mock>=3.11.1
+
+# Proxy Support (optional)
+PySocks>=1.7.1
+
+# For XML parsing in sitemaps
+lxml-stubs>=0.4.0

