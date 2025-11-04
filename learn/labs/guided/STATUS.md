@@ -8,14 +8,14 @@
 
 | Métrica | Valor |
 |---------|-------|
-| **Labs Completos** | 4 de 11 (36%) |
-| **Labs com Teoria** | 5 de 11 (45%) |
-| **Aplicações Funcionais** | 5 apps Python |
-| **Linhas de Código** | 2.500+ linhas |
-| **Linhas de Documentação** | 4.000+ linhas |
-| **Pontos Disponíveis** | 330+ pontos |
-| **Flags Escondidas** | 15+ flags |
-| **Tempo de Conteúdo** | 20-30 horas |
+| **Labs Completos** | 8 de 11 (73%) |
+| **Labs com Teoria** | 8 de 11 (73%) |
+| **Aplicações Funcionais** | 8 apps Python |
+| **Linhas de Código** | 4.100+ linhas |
+| **Linhas de Documentação** | 6.500+ linhas |
+| **Pontos Disponíveis** | 535+ pontos |
+| **Flags Escondidas** | 28+ flags |
+| **Tempo de Conteúdo** | 35-45 horas |
 
 ---
 
@@ -107,64 +107,85 @@
 
 ## 📝 Labs com Teoria Completa
 
-### 5. Path Traversal (70 pontos)
-**Status**: 📝 40% Completo
+### 5. Broken Access Control (70 pontos)
+**Status**: ✅ 60% Completo
+
+**Arquivos**:
+- ✅ README.md (450+ linhas) - Teoria completa
+- ✅ basic_app.py (520 linhas) - Rede social
+- 📝 intermediate_app.py (planejado)
+
+**Features**:
+- IDOR horizontal e vertical
+- Privilege escalation via API
+- Missing function level access control
+- Mass assignment vulnerability
+- 4 flags escondidas
+
+**Portas**: 5030 (basic)
+
+---
+
+### 6. Path Traversal (70 pontos)
+**Status**: ✅ 60% Completo
 
 **Arquivos**:
 - ✅ README.md (380+ linhas) - Teoria completa
-- 📝 basic_app.py (planejado)
+- ✅ basic_app.py (480 linhas) - File Manager
 
-**Conteúdo**:
+**Features**:
 - Directory traversal fundamentals
 - 15+ bypass techniques
 - LFI/RFI exploitation
 - LFI to RCE (6 métodos)
 - Zip slip vulnerability
-- Arquivos interessantes (50+)
+- Log file access
 
-**Portas**: 5060 (planejado)
-
----
-
-## 🚧 Labs Planejados (0-20%)
-
-### 6. Broken Access Control (70 pontos)
-**Status**: 📝 20% (estrutura no INDEX)
-
-**Planejado**:
-- IDOR exploitation
-- Privilege escalation
-- JWT manipulation
-- Mass assignment
-
-**Portas**: 5030-5032
+**Portas**: 5060 (basic)
 
 ---
 
 ### 7. CSRF (60 pontos)
-**Status**: 📝 20% (estrutura no INDEX)
+**Status**: ✅ 60% Completo
 
-**Planejado**:
-- CSRF básico e avançado
-- Bypass de token
-- JSON CSRF
-- Login CSRF
+**Arquivos**:
+- ✅ README.md (420+ linhas) - Teoria completa
+- ✅ basic_app.py (550 linhas) - Task Manager
+- 📝 intermediate_app.py (planejado)
 
-**Portas**: 5070-5072
+**Features**:
+- GET/POST CSRF attacks
+- JSON CSRF exploitation
+- Token bypass techniques
+- Referer/Origin bypass
+- SameSite bypass theory
+- Inclui página de exploit
+
+**Portas**: 5070 (basic)
 
 ---
 
 ### 8. Insecure Deserialization (70 pontos)
-**Status**: 📝 20% (estrutura no INDEX)
+**Status**: ✅ 60% Completo
 
-**Planejado**:
-- Python Pickle RCE
-- PHP unserialize
+**Arquivos**:
+- ✅ README.md (520+ linhas) - Teoria completa
+- ✅ basic_app.py (580 linhas) - Blog com pickle
+- 📝 intermediate_app.py (planejado)
+
+**Features**:
+- Python Pickle RCE exploitation
+- __reduce__ magic method
+- Cookie manipulation
+- File upload pickle
+- YAML deserialization theory
 - Gadget chains
 
-**Portas**: 5080-5082
+**Portas**: 5080 (basic)
 
 ---
+
+## 🚧 Labs Planejados (0-20%)
 
 ### 9. SSTI (90 pontos)
 **Status**: 📝 20% (estrutura no INDEX)
