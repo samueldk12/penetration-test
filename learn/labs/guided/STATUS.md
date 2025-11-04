@@ -8,14 +8,14 @@
 
 | Métrica | Valor |
 |---------|-------|
-| **Labs Completos** | 8 de 11 (73%) |
-| **Labs com Teoria** | 8 de 11 (73%) |
-| **Aplicações Funcionais** | 8 apps Python |
-| **Linhas de Código** | 4.100+ linhas |
-| **Linhas de Documentação** | 6.500+ linhas |
-| **Pontos Disponíveis** | 535+ pontos |
-| **Flags Escondidas** | 28+ flags |
-| **Tempo de Conteúdo** | 35-45 horas |
+| **Labs Completos** | 11 de 11 (100%) ✅ |
+| **Labs com Teoria** | 11 de 11 (100%) ✅ |
+| **Aplicações Funcionais** | 11 apps Python |
+| **Linhas de Código** | 6.100+ linhas |
+| **Linhas de Documentação** | 8.300+ linhas |
+| **Pontos Disponíveis** | 860+ pontos |
+| **Flags Escondidas** | 37+ flags |
+| **Tempo de Conteúdo** | 50-60 horas |
 
 ---
 
@@ -185,42 +185,63 @@
 
 ---
 
-## 🚧 Labs Planejados (0-20%)
+### 9. SSTI - Server-Side Template Injection (90 pontos)
+**Status**: ✅ 60% Completo
 
-### 9. SSTI (90 pontos)
-**Status**: 📝 20% (estrutura no INDEX)
+**Arquivos**:
+- ✅ README.md (540+ linhas) - Teoria completa
+- ✅ basic_app.py (530 linhas) - Greeting card generator
+- 📝 intermediate_app.py (planejado)
 
-**Planejado**:
-- Jinja2 exploitation
-- Sandbox escape
-- Template RCE
+**Features**:
+- Jinja2 template injection
+- Object introspection
+- Sandbox escape techniques
+- RCE via __reduce__
+- Múltiplos endpoints vulneráveis
+- Bypass de blacklist
 
-**Portas**: 5090-5092
+**Portas**: 5090 (basic)
 
 ---
 
-### 10. XXE (80 pontos)
-**Status**: 📝 20% (estrutura no INDEX)
+### 10. XXE - XML External Entity (80 pontos)
+**Status**: ✅ 60% Completo
 
-**Planejado**:
-- XML External Entity
-- File read, SSRF
-- Blind XXE
-- Billion Laughs
+**Arquivos**:
+- ✅ README.md (480+ linhas) - Teoria completa
+- ✅ basic_app.py (560 linhas) - XML processor
+- 📝 intermediate_app.py (planejado)
 
-**Portas**: 5100-5102
+**Features**:
+- File read via XXE
+- SSRF via XXE
+- Billion Laughs Attack
+- SVG upload exploitation
+- Cloud metadata access
+- ElementTree e lxml vulnerável
+
+**Portas**: 5100 (basic)
 
 ---
 
 ### 11. Race Conditions (85 pontos)
-**Status**: 📝 20% (estrutura no INDEX)
+**Status**: ✅ 60% Completo
 
-**Planejado**:
+**Arquivos**:
+- ✅ README.md (470+ linhas) - Teoria completa
+- ✅ basic_app.py (600 linhas) - E-commerce
+- 📝 intermediate_app.py (planejado)
+
+**Features**:
 - TOCTOU exploitation
-- Concurrent requests
-- HTTP/2 multiplexing
+- Limit overrun attacks
+- Double spending
+- Concurrent request handling
+- Artificial delays for testing
+- Threading vulnerabilities
 
-**Portas**: 5110-5112
+**Portas**: 5110 (basic)
 
 ---
 
