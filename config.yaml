@@ -1,0 +1,49 @@
+general:
+  output_dir: ./output
+  database: recon_discoveries.db
+  log_level: INFO
+  max_threads: 50
+  timeout: 300
+plugins:
+  enabled_categories:
+  - recon
+  - vuln_scan
+  disabled_plugins: []
+  python_plugins_dir: ./plugins
+  js_plugins_dir: ./js_plugins
+scanning:
+  max_depth: 3
+  follow_redirects: true
+  verify_ssl: false
+  user_agent: Mozilla/5.0 (Pentest Suite)
+  rate_limit: 10
+  blacklist_file: blacklist.json
+reporting:
+  format: json
+  include_screenshots: false
+  severity_filter: []
+  auto_export: true
+  export_formats:
+  - json
+  - html
+  - markdown
+osint:
+  enable_whois: true
+  enable_dns: true
+  enable_ct_logs: true
+  enable_social_media: false
+  enable_breach_check: false
+  hibp_api_key: ''
+  google_api_key: ''
+  shodan_api_key: ''
+notifications:
+  enabled: false
+  webhook_url: ''
+  notify_on_critical: true
+  notify_on_complete: true
+advanced:
+  concurrent_scans: 3
+  retry_failed: true
+  retry_count: 3
+  save_raw_responses: false
+  debug_mode: false
