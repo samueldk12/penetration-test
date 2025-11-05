@@ -113,10 +113,36 @@ class DiscoveryDatabase:
             )
         """)
 
+        # Tabela de vulnerabilidades
+        cursor.execute("""
+            CREATE TABLE IF NOT EXISTS vulnerabilities (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                url_id INTEGER,
+                endpoint_id INTEGER,
+                vuln_type TEXT NOT NULL,
+                severity TEXT NOT NULL,
+                description TEXT,
+                payload TEXT,
+                evidence TEXT,
+                cvss_score FLOAT,
+                cve_id TEXT,
+                discovered_by TEXT,
+                discovered_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                verified BOOLEAN DEFAULT 0,
+                false_positive BOOLEAN DEFAULT 0,
+                remediation TEXT,
+                notes TEXT,
+                FOREIGN KEY (url_id) REFERENCES urls(id),
+                FOREIGN KEY (endpoint_id) REFERENCES endpoints(id)
+            )
+        """)
+
         # Índices para performance
         cursor.execute("CREATE INDEX IF NOT EXISTS idx_urls_domain ON urls(domain)")
         cursor.execute("CREATE INDEX IF NOT EXISTS idx_secrets_type ON secrets(secret_type)")
         cursor.execute("CREATE INDEX IF NOT EXISTS idx_subdomains_root ON subdomains(root_domain)")
+        cursor.execute("CREATE INDEX IF NOT EXISTS idx_vulns_severity ON vulnerabilities(severity)")
+        cursor.execute("CREATE INDEX IF NOT EXISTS idx_vulns_type ON vulnerabilities(vuln_type)")
 
         self.conn.commit()
 
@@ -421,7 +447,96 @@ class DiscoveryDatabase:
         cursor.execute("SELECT COUNT(*) FROM permission_tests")
         stats['total_permission_tests'] = cursor.fetchone()[0]
 
+        # Total de vulnerabilidades
+        cursor.execute("SELECT COUNT(*) FROM vulnerabilities")
+        stats['total_vulnerabilities'] = cursor.fetchone()[0]
+
+        # Vulnerabilidades por severidade
+        cursor.execute("""
+            SELECT severity, COUNT(*) as count
+            FROM vulnerabilities
+            GROUP BY severity
+        """)
+        stats['vulnerabilities_by_severity'] = {row[0]: row[1] for row in cursor.fetchall()}
+
+        # Vulnerabilidades por tipo
+        cursor.execute("""
+            SELECT vuln_type, COUNT(*) as count
+            FROM vulnerabilities
+            GROUP BY vuln_type
+        """)
+        stats['vulnerabilities_by_type'] = {row[0]: row[1] for row in cursor.fetchall()}
+
         return stats
+
+    def add_vulnerability(self, vuln_type: str, severity: str, **kwargs) -> int:
+        """
+        Adiciona vulnerabilidade descoberta.
+
+        Args:
+            vuln_type: Tipo de vulnerabilidade (xss, sqli, ssrf, etc.)
+            severity: Severidade (critical, high, medium, low, info)
+            **kwargs: url, endpoint_id, description, payload, evidence, etc.
+
+        Returns:
+            ID da vulnerabilidade inserida
+        """
+        cursor = self.conn.cursor()
+
+        # Busca URL ID se fornecida
+        url_id = None
+        if 'url' in kwargs:
+            cursor.execute("SELECT id FROM urls WHERE url = ?", (kwargs['url'],))
+            result = cursor.fetchone()
+            url_id = result[0] if result else None
+
+        data = {
+            'url_id': url_id,
+            'endpoint_id': kwargs.get('endpoint_id'),
+            'vuln_type': vuln_type,
+            'severity': severity,
+            'description': kwargs.get('description', ''),
+            'payload': kwargs.get('payload', ''),
+            'evidence': kwargs.get('evidence', ''),
+            'cvss_score': kwargs.get('cvss_score'),
+            'cve_id': kwargs.get('cve_id'),
+            'discovered_by': kwargs.get('discovered_by', 'unknown'),
+            'remediation': kwargs.get('remediation', ''),
+            'notes': kwargs.get('notes', '')
+        }
+
+        cursor.execute("""
+            INSERT INTO vulnerabilities (url_id, endpoint_id, vuln_type, severity,
+                                       description, payload, evidence, cvss_score,
+                                       cve_id, discovered_by, remediation, notes)
+            VALUES (:url_id, :endpoint_id, :vuln_type, :severity,
+                   :description, :payload, :evidence, :cvss_score,
+                   :cve_id, :discovered_by, :remediation, :notes)
+        """, data)
+
+        self.conn.commit()
+        return cursor.lastrowid
+
+    def get_vulnerabilities(self, severity: Optional[str] = None,
+                           vuln_type: Optional[str] = None) -> List[Dict]:
+        """Recupera vulnerabilidades armazenadas."""
+        cursor = self.conn.cursor()
+
+        query = "SELECT * FROM vulnerabilities WHERE 1=1"
+        params = []
+
+        if severity:
+            query += " AND severity = ?"
+            params.append(severity)
+
+        if vuln_type:
+            query += " AND vuln_type = ?"
+            params.append(vuln_type)
+
+        query += " ORDER BY discovered_at DESC"
+
+        cursor.execute(query, params)
+        return [dict(row) for row in cursor.fetchall()]
 
     def export_to_json(self, output_file: str = "discoveries.json"):
         """Exporta todos os dados para JSON."""
@@ -429,6 +544,7 @@ class DiscoveryDatabase:
             'urls': self.get_urls(),
             'secrets': self.get_secrets(),
             'subdomains': self.get_subdomains(),
+            'vulnerabilities': self.get_vulnerabilities(),
             'statistics': self.get_statistics(),
             'exported_at': datetime.now().isoformat()
         }

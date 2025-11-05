@@ -11,6 +11,9 @@ lxml>=4.9.0
 # DNS Resolution
 dnspython>=2.4.0
 
+# WHOIS Lookup
+python-whois>=0.8.0
+
 # Async/Concurrent Operations
 aiohttp>=3.9.0
 
