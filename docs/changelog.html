@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Changelog - Penetration Test Suite</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/docs.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .changelog-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+        .version-block {
+            background: var(--dark-light);
+            border-left: 4px solid var(--primary);
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            transition: all 0.3s;
+        }
+        .version-block:hover {
+            transform: translateX(10px);
+            box-shadow: 0 10px 30px rgba(0, 212, 255, 0.2);
+        }
+        .version-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        .version-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--primary);
+        }
+        .version-date {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+        .version-badge {
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+        .badge-latest {
+            background: var(--success);
+            color: var(--dark);
+        }
+        .badge-stable {
+            background: var(--primary);
+            color: var(--dark);
+        }
+        .badge-beta {
+            background: var(--warning);
+            color: var(--dark);
+        }
+        .change-list {
+            margin-top: 1rem;
+        }
+        .change-category {
+            margin-bottom: 1.5rem;
+        }
+        .change-category h4 {
+            color: var(--primary);
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .change-category ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        .change-category li {
+            padding: 0.5rem 0;
+            padding-left: 2rem;
+            position: relative;
+            color: var(--text-muted);
+        }
+        .change-category li::before {
+            content: '';
+            position: absolute;
+            left: 0.5rem;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--primary);
+        }
+        .added::before { background: var(--success) !important; }
+        .fixed::before { background: var(--danger) !important; }
+        .changed::before { background: var(--warning) !important; }
+        .deprecated::before { background: #666 !important; }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+        .stat-box {
+            background: var(--dark-light);
+            padding: 1.5rem;
+            border-radius: 8px;
+            text-align: center;
+            border: 1px solid rgba(0, 212, 255, 0.2);
+        }
+        .stat-box .number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--primary);
+        }
+        .stat-box .label {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="navbar">
+            <div class="container">
+                <div class="nav-brand">
+                    <i class="fas fa-shield-alt"></i>
+                    <span>Penetration Test Suite</span>
+                </div>
+                <button class="mobile-menu-toggle" id="mobile-menu-toggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <ul class="nav-menu" id="nav-menu">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="documentation.html">Docs</a></li>
+                    <li><a href="screenshots.html">Screenshots</a></li>
+                    <li><a href="tutorials.html">Tutorials</a></li>
+                    <li><a href="changelog.html" class="active">Changelog</a></li>
+                    <li><a href="https://github.com/samueldk12/penetration-test" target="_blank">
+                        <i class="fab fa-github"></i> GitHub
+                    </a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Content -->
+    <div class="changelog-container">
+        <div class="section-header" style="text-align: center; margin-bottom: 3rem;">
+            <h1 class="section-title">
+                <i class="fas fa-history"></i> Changelog
+            </h1>
+            <p class="section-subtitle">Complete history of releases and updates</p>
+        </div>
+
+        <!-- Statistics -->
+        <div class="stats-grid">
+            <div class="stat-box">
+                <div class="number">2.0.0</div>
+                <div class="label">Current Version</div>
+            </div>
+            <div class="stat-box">
+                <div class="number">50+</div>
+                <div class="label">Total Features</div>
+            </div>
+            <div class="stat-box">
+                <div class="number">15+</div>
+                <div class="label">Plugins</div>
+            </div>
+            <div class="stat-box">
+                <div class="number">5</div>
+                <div class="label">Major Releases</div>
+            </div>
+        </div>
+
+        <!-- Version 2.0.0 -->
+        <div class="version-block">
+            <div class="version-header">
+                <div>
+                    <div class="version-number">v2.0.0</div>
+                    <div class="version-date">December 2024</div>
+                </div>
+                <span class="version-badge badge-latest">LATEST</span>
+            </div>
+            <p>Major release with web interface, multi-language plugin support, and advanced reporting system.</p>
+
+            <div class="change-list">
+                <div class="change-category">
+                    <h4><i class="fas fa-plus-circle" style="color: var(--success);"></i> Added</h4>
+                    <ul>
+                        <li class="added">Interactive web interface with Flask + SocketIO</li>
+                        <li class="added">Multi-tab system for managing multiple targets</li>
+                        <li class="added">Real-time scan progress via WebSocket</li>
+                        <li class="added">Notes system for target documentation</li>
+                        <li class="added">Secure API key manager</li>
+                        <li class="added">GitHub plugin installer (--add command)</li>
+                        <li class="added">Go plugin support with auto-compilation</li>
+                        <li class="added">JavaScript plugin support via Node.js</li>
+                        <li class="added">Multi-channel notifications (Telegram, WhatsApp, Email, Webhook)</li>
+                        <li class="added">Advanced reporting with filters and API key detection</li>
+                        <li class="added">OSINT module with deep investigation</li>
+                        <li class="added">Configuration manager with YAML support</li>
+                        <li class="added">Complete GitHub Pages documentation site</li>
+                    </ul>
+                </div>
+
+                <div class="change-category">
+                    <h4><i class="fas fa-wrench" style="color: var(--warning);"></i> Changed</h4>
+                    <ul>
+                        <li class="changed">Refactored plugin system for multi-language support</li>
+                        <li class="changed">Improved CLI with argparse subcommands</li>
+                        <li class="changed">Enhanced database schema for better reporting</li>
+                        <li class="changed">Updated documentation with comprehensive examples</li>
+                    </ul>
+                </div>
+
+                <div class="change-category">
+                    <h4><i class="fas fa-bug" style="color: var(--danger);"></i> Fixed</h4>
+                    <ul>
+                        <li class="fixed">DNS resolution errors in container environments</li>
+                        <li class="fixed">Plugin discovery race conditions</li>
+                        <li class="fixed">Report generation encoding issues</li>
+                        <li class="fixed">Concurrent scan execution bugs</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Version 1.5.0 -->
+        <div class="version-block">
+            <div class="version-header">
+                <div>
+                    <div class="version-number">v1.5.0</div>
+                    <div class="version-date">November 2024</div>
+                </div>
+                <span class="version-badge badge-stable">STABLE</span>
+            </div>
+            <p>Added 18+ native Python plugins and comprehensive reporting system.</p>
+
+            <div class="change-list">
+                <div class="change-category">
+                    <h4><i class="fas fa-plus-circle" style="color: var(--success);"></i> Added</h4>
+                    <ul>
+                        <li class="added">Nikto scanner integration</li>
+                        <li class="added">Nuclei vulnerability scanner</li>
+                        <li class="added">Nmap network scanner</li>
+                        <li class="added">FFUF web fuzzer</li>
+                        <li class="added">Katana web crawler</li>
+                        <li class="added">Dalfox XSS scanner</li>
+                        <li class="added">Native subdomain enumerator</li>
+                        <li class="added">DNS brute force tool</li>
+                        <li class="added">Advanced reporter with JSON/HTML/Markdown/PDF output</li>
+                        <li class="added">OSINT module foundations</li>
+                    </ul>
+                </div>
+
+                <div class="change-category">
+                    <h4><i class="fas fa-wrench" style="color: var(--warning);"></i> Changed</h4>
+                    <ul>
+                        <li class="changed">Improved plugin orchestrator with parallel execution</li>
+                        <li class="changed">Enhanced logging and error handling</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Version 1.0.0 -->
+        <div class="version-block">
+            <div class="version-header">
+                <div>
+                    <div class="version-number">v1.0.0</div>
+                    <div class="version-date">October 2024</div>
+                </div>
+            </div>
+            <p>Initial stable release with core functionality and plugin system.</p>
+
+            <div class="change-list">
+                <div class="change-category">
+                    <h4><i class="fas fa-plus-circle" style="color: var(--success);"></i> Added</h4>
+                    <ul>
+                        <li class="added">Core CLI framework</li>
+                        <li class="added">Plugin system architecture</li>
+                        <li class="added">Database storage for results</li>
+                        <li class="added">Basic reporting functionality</li>
+                        <li class="added">Configuration system</li>
+                        <li class="added">First set of Python plugins</li>
+                        <li class="added">Command-line interface with scan/osint/report commands</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Version 0.5.0 -->
+        <div class="version-block">
+            <div class="version-header">
+                <div>
+                    <div class="version-number">v0.5.0</div>
+                    <div class="version-date">September 2024</div>
+                </div>
+                <span class="version-badge badge-beta">BETA</span>
+            </div>
+            <p>Beta release with experimental features and testing.</p>
+
+            <div class="change-list">
+                <div class="change-category">
+                    <h4><i class="fas fa-plus-circle" style="color: var(--success);"></i> Added</h4>
+                    <ul>
+                        <li class="added">Prototype plugin system</li>
+                        <li class="added">Basic CLI structure</li>
+                        <li class="added">SQLite database integration</li>
+                        <li class="added">Initial documentation</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Version 0.1.0 -->
+        <div class="version-block">
+            <div class="version-header">
+                <div>
+                    <div class="version-number">v0.1.0</div>
+                    <div class="version-date">August 2024</div>
+                </div>
+                <span class="version-badge badge-beta">ALPHA</span>
+            </div>
+            <p>Initial alpha release - proof of concept.</p>
+
+            <div class="change-list">
+                <div class="change-category">
+                    <h4><i class="fas fa-plus-circle" style="color: var(--success);"></i> Added</h4>
+                    <ul>
+                        <li class="added">Project structure and foundation</li>
+                        <li class="added">First working prototype</li>
+                        <li class="added">Basic scanning capabilities</li>
+                        <li class="added">README and LICENSE</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Roadmap Teaser -->
+        <div style="text-align: center; margin-top: 4rem; padding: 3rem; background: var(--dark-light); border-radius: 12px;">
+            <h2 style="margin-bottom: 1rem;">What's Next?</h2>
+            <p style="color: var(--text-muted); margin-bottom: 2rem;">
+                Check out our roadmap to see upcoming features and improvements
+            </p>
+            <a href="roadmap.html" class="btn btn-primary">
+                <i class="fas fa-road"></i> View Roadmap
+            </a>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom">
+                <p>&copy; 2024 Penetration Test Suite. Licensed under MIT.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

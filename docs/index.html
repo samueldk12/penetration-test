@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Suite completa de ferramentas para Penetration Testing e OSINT">
+    <title>Penetration Test Suite - Professional Security Testing Framework</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="navbar">
+            <div class="container">
+                <div class="nav-brand">
+                    <i class="fas fa-shield-alt"></i>
+                    <span>Penetration Test Suite</span>
+                </div>
+                <ul class="nav-menu">
+                    <li><a href="#home" class="active">Home</a></li>
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="documentation.html">Docs</a></li>
+                    <li><a href="theory.html">Theory</a></li>
+                    <li><a href="api-exploitation.html">API Exploitation</a></li>
+                    <li><a href="tutorials.html">Tutorials</a></li>
+                    <li><a href="use-cases.html">Use Cases</a></li>
+                    <li><a href="best-practices.html">Best Practices</a></li>
+                    <li><a href="faq.html">FAQ</a></li>
+                    <li><a href="https://github.com/samueldk12/penetration-test" target="_blank">
+                        <i class="fab fa-github"></i> GitHub
+                    </a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title">
+                    <span class="gradient-text">Penetration Test Suite</span>
+                </h1>
+                <p class="hero-subtitle">
+                    Framework profissional para testes de penetração, reconhecimento e OSINT com suporte multi-linguagem
+                </p>
+                <div class="hero-buttons">
+                    <a href="#quick-start" class="btn btn-primary">
+                        <i class="fas fa-rocket"></i> Quick Start
+                    </a>
+                    <a href="documentation.html" class="btn btn-secondary">
+                        <i class="fas fa-book"></i> Documentation
+                    </a>
+                </div>
+                <div class="hero-stats">
+                    <div class="stat">
+                        <div class="stat-number">50+</div>
+                        <div class="stat-label">Tools</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">3</div>
+                        <div class="stat-label">Languages</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">10+</div>
+                        <div class="stat-label">Plugins</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features">
+        <div class="container">
+            <h2 class="section-title">Core Features</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <h3>Multi-Language Support</h3>
+                    <p>Plugins em Python, JavaScript e Go para máxima flexibilidade e performance</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <h3>Reconnaissance</h3>
+                    <p>Ferramentas avançadas: Nmap, Nuclei, Nikto, FFUF, Katana, Subdominator e mais</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-bug"></i>
+                    </div>
+                    <h3>Vulnerability Scanning</h3>
+                    <p>XSS, SQL Injection, SSRF detection com Dalfox, Nuclei e scanners personalizados</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-user-secret"></i>
+                    </div>
+                    <h3>OSINT Module</h3>
+                    <p>Coleta de informações sobre domínios, emails, pessoas e redes sociais</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-file-alt"></i>
+                    </div>
+                    <h3>Advanced Reporting</h3>
+                    <p>Reports em JSON, HTML, Markdown e PDF com filtros por severidade e tipo</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-bell"></i>
+                    </div>
+                    <h3>Notifications</h3>
+                    <p>Telegram, WhatsApp, Email e Webhook para alertas em tempo real</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-puzzle-piece"></i>
+                    </div>
+                    <h3>Plugin System</h3>
+                    <p>Instale plugins diretamente do GitHub ou crie seus próprios</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-desktop"></i>
+                    </div>
+                    <h3>Web Interface</h3>
+                    <p>Interface web interativa para gerenciar scans, reports e configurações</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quick Start Section -->
+    <section id="quick-start" class="quick-start">
+        <div class="container">
+            <h2 class="section-title">Quick Start</h2>
+            <div class="terminal">
+                <div class="terminal-header">
+                    <span class="terminal-dot red"></span>
+                    <span class="terminal-dot yellow"></span>
+                    <span class="terminal-dot green"></span>
+                    <span class="terminal-title">bash</span>
+                </div>
+                <div class="terminal-body">
+                    <div class="terminal-line">
+                        <span class="prompt">$</span>
+                        <span class="command">git clone https://github.com/samueldk12/penetration-test.git</span>
+                    </div>
+                    <div class="terminal-line">
+                        <span class="prompt">$</span>
+                        <span class="command">cd penetration-test</span>
+                    </div>
+                    <div class="terminal-line">
+                        <span class="prompt">$</span>
+                        <span class="command">pip install -r requirements.txt</span>
+                    </div>
+                    <div class="terminal-line">
+                        <span class="prompt">$</span>
+                        <span class="command">python3 penetration-test.py --help</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="examples-grid">
+                <div class="example-card">
+                    <h4><i class="fas fa-search"></i> Basic Scan</h4>
+                    <code>python3 penetration-test.py scan example.com --all-plugins</code>
+                </div>
+
+                <div class="example-card">
+                    <h4><i class="fas fa-user-secret"></i> OSINT Investigation</h4>
+                    <code>python3 penetration-test.py osint example.com --deep</code>
+                </div>
+
+                <div class="example-card">
+                    <h4><i class="fas fa-file-alt"></i> Generate Report</h4>
+                    <code>python3 penetration-test.py report --type comprehensive</code>
+                </div>
+
+                <div class="example-card">
+                    <h4><i class="fas fa-desktop"></i> Launch Web UI</h4>
+                    <code>python3 penetration-test.py web</code>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tools Section -->
+    <section id="tools" class="tools">
+        <div class="container">
+            <h2 class="section-title">Integrated Tools</h2>
+            <div class="tools-categories">
+                <div class="tool-category">
+                    <h3><i class="fas fa-radar"></i> Reconnaissance</h3>
+                    <ul class="tools-list">
+                        <li><i class="fas fa-check"></i> Nmap - Network Scanner</li>
+                        <li><i class="fas fa-check"></i> Nuclei - Vulnerability Scanner</li>
+                        <li><i class="fas fa-check"></i> Nikto - Web Scanner</li>
+                        <li><i class="fas fa-check"></i> FFUF - Web Fuzzer</li>
+                        <li><i class="fas fa-check"></i> Katana - Web Crawler</li>
+                        <li><i class="fas fa-check"></i> Subdominator - Subdomain Enum</li>
+                        <li><i class="fas fa-check"></i> DNSBruter - DNS Brute Force</li>
+                        <li><i class="fas fa-check"></i> WhatWeb - Web Identifier</li>
+                        <li><i class="fas fa-check"></i> Wafw00f - WAF Detection</li>
+                    </ul>
+                </div>
+
+                <div class="tool-category">
+                    <h3><i class="fas fa-bug"></i> Vulnerability Scanning</h3>
+                    <ul class="tools-list">
+                        <li><i class="fas fa-check"></i> Dalfox - XSS Scanner</li>
+                        <li><i class="fas fa-check"></i> XSS Detector (JS)</li>
+                        <li><i class="fas fa-check"></i> 4-ZERO-3 - 403 Bypass</li>
+                        <li><i class="fas fa-check"></i> Oralyzer - Open Redirect</li>
+                        <li><i class="fas fa-check"></i> Nuclei Templates</li>
+                    </ul>
+                </div>
+
+                <div class="tool-category">
+                    <h3><i class="fas fa-database"></i> OSINT</h3>
+                    <ul class="tools-list">
+                        <li><i class="fas fa-check"></i> SpiderFoot</li>
+                        <li><i class="fas fa-check"></i> Domain Intelligence</li>
+                        <li><i class="fas fa-check"></i> Email Harvesting</li>
+                        <li><i class="fas fa-check"></i> Social Media OSINT</li>
+                        <li><i class="fas fa-check"></i> People Search</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Penetration Test Suite</h4>
+                    <p>Professional security testing framework for ethical hackers and security researchers.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="documentation.html">Documentation</a></li>
+                        <li><a href="theory.html">Theory</a></li>
+                        <li><a href="tutorials.html">Tutorials</a></li>
+                        <li><a href="use-cases.html">Use Cases</a></li>
+                        <li><a href="best-practices.html">Best Practices</a></li>
+                        <li><a href="faq.html">FAQ</a></li>
+                        <li><a href="https://github.com/samueldk12/penetration-test">GitHub</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Legal</h4>
+                    <p class="disclaimer">
+                        <strong>⚠️ Disclaimer:</strong> This tool is for authorized security testing only.
+                        Unauthorized access to computer systems is illegal.
+                    </p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Penetration Test Suite. Licensed under MIT.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

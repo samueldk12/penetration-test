@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documentation - Penetration Test Suite</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/docs.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="navbar">
+            <div class="container">
+                <div class="nav-brand">
+                    <i class="fas fa-shield-alt"></i>
+                    <span>Penetration Test Suite</span>
+                </div>
+                <ul class="nav-menu">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="index.html#features">Features</a></li>
+                    <li><a href="documentation.html" class="active">Docs</a></li>
+                    <li><a href="theory.html">Theory</a></li>
+                    <li><a href="https://github.com/samueldk12/penetration-test" target="_blank">
+                        <i class="fab fa-github"></i> GitHub
+                    </a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Documentation Content -->
+    <div class="docs-container">
+        <aside class="docs-sidebar">
+            <nav class="docs-nav">
+                <h3>Documentation</h3>
+                <ul>
+                    <li><a href="#installation">Installation</a></li>
+                    <li><a href="#getting-started">Getting Started</a></li>
+                    <li><a href="#cli-commands">CLI Commands</a></li>
+                    <li><a href="#scan-command">Scan Command</a></li>
+                    <li><a href="#osint-command">OSINT Command</a></li>
+                    <li><a href="#report-command">Report Command</a></li>
+                    <li><a href="#plugins">Plugin System</a></li>
+                    <li><a href="#web-interface">Web Interface</a></li>
+                    <li><a href="#configuration">Configuration</a></li>
+                    <li><a href="#notifications">Notifications</a></li>
+                    <li><a href="#api-reference">API Reference</a></li>
+                    <li><a href="#troubleshooting">Troubleshooting</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="docs-content">
+            <!-- Installation -->
+            <section id="installation" class="doc-section">
+                <h1><i class="fas fa-download"></i> Installation</h1>
+
+                <h2>Prerequisites</h2>
+                <ul>
+                    <li>Python 3.8 or higher</li>
+                    <li>Node.js 14+ (for JavaScript plugins)</li>
+                    <li>Go 1.18+ (for Go plugins)</li>
+                    <li>Git</li>
+                </ul>
+
+                <h2>Clone Repository</h2>
+                <div class="code-block">
+                    <pre><code>git clone https://github.com/samueldk12/penetration-test.git
+cd penetration-test</code></pre>
+                </div>
+
+                <h2>Install Dependencies</h2>
+                <div class="code-block">
+                    <pre><code># Python dependencies
+pip install -r requirements.txt
+
+# Install external tools (optional)
+sudo apt-get install nmap nikto
+go install -v github.com/projectdiscovery/nuclei/v2/cmd/nuclei@latest
+go install github.com/ffuf/ffuf@latest</code></pre>
+                </div>
+
+                <h2>Verify Installation</h2>
+                <div class="code-block">
+                    <pre><code>python3 penetration-test.py --version
+python3 penetration-test.py plugins</code></pre>
+                </div>
+            </section>
+
+            <!-- Getting Started -->
+            <section id="getting-started" class="doc-section">
+                <h1><i class="fas fa-play"></i> Getting Started</h1>
+
+                <h2>Initialize Configuration</h2>
+                <div class="code-block">
+                    <pre><code>python3 penetration-test.py config --init</code></pre>
+                </div>
+
+                <h2>Your First Scan</h2>
+                <div class="code-block">
+                    <pre><code># Basic scan
+python3 penetration-test.py scan example.com
+
+# Comprehensive scan with all plugins
+python3 penetration-test.py scan example.com --all-plugins --complete --verbose
+
+# Scan specific category
+python3 penetration-test.py scan example.com --categories recon</code></pre>
+                </div>
+
+                <h2>Launch Web Interface</h2>
+                <div class="code-block">
+                    <pre><code>python3 penetration-test.py web
+# Open browser at http://localhost:5000</code></pre>
+                </div>
+            </section>
+
+            <!-- CLI Commands -->
+            <section id="cli-commands" class="doc-section">
+                <h1><i class="fas fa-terminal"></i> CLI Commands</h1>
+
+                <div class="command-card">
+                    <h3>scan</h3>
+                    <p>Scan target with plugins</p>
+                    <div class="code-block">
+                        <pre><code>python3 penetration-test.py scan [TARGET] [OPTIONS]</code></pre>
+                    </div>
+                </div>
+
+                <div class="command-card">
+                    <h3>osint</h3>
+                    <p>OSINT investigation on target</p>
+                    <div class="code-block">
+                        <pre><code>python3 penetration-test.py osint [TARGET] [OPTIONS]</code></pre>
+                    </div>
+                </div>
+
+                <div class="command-card">
+                    <h3>report</h3>
+                    <p>Generate reports from database</p>
+                    <div class="code-block">
+                        <pre><code>python3 penetration-test.py report [OPTIONS]</code></pre>
+                    </div>
+                </div>
+
+                <div class="command-card">
+                    <h3>plugins</h3>
+                    <p>List available plugins</p>
+                    <div class="code-block">
+                        <pre><code>python3 penetration-test.py plugins [-v]</code></pre>
+                    </div>
+                </div>
+
+                <div class="command-card">
+                    <h3>add</h3>
+                    <p>Install plugin from URL</p>
+                    <div class="code-block">
+                        <pre><code>python3 penetration-test.py add [URL] [OPTIONS]</code></pre>
+                    </div>
+                </div>
+
+                <div class="command-card">
+                    <h3>web</h3>
+                    <p>Launch web interface</p>
+                    <div class="code-block">
+                        <pre><code>python3 penetration-test.py web [--port PORT] [--host HOST]</code></pre>
+                    </div>
+                </div>
+
+                <div class="command-card">
+                    <h3>config</h3>
+                    <p>Manage configuration</p>
+                    <div class="code-block">
+                        <pre><code>python3 penetration-test.py config [--init|--show|--edit]</code></pre>
+                    </div>
+                </div>
+
+                <div class="command-card">
+                    <h3>stats</h3>
+                    <p>Show database statistics</p>
+                    <div class="code-block">
+                        <pre><code>python3 penetration-test.py stats</code></pre>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Scan Command -->
+            <section id="scan-command" class="doc-section">
+                <h1><i class="fas fa-search"></i> Scan Command</h1>
+
+                <h2>Basic Usage</h2>
+                <div class="code-block">
+                    <pre><code>python3 penetration-test.py scan [TARGET] [OPTIONS]</code></pre>
+                </div>
+
+                <h2>Options</h2>
+                <table class="options-table">
+                    <tr>
+                        <th>Option</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td><code>--all-plugins</code></td>
+                        <td>Run all available plugins</td>
+                    </tr>
+                    <tr>
+                        <td><code>--plugin PLUGIN</code></td>
+                        <td>Run specific plugin(s)</td>
+                    </tr>
+                    <tr>
+                        <td><code>--categories CAT</code></td>
+                        <td>Run plugins from category (recon, vuln_scan, osint)</td>
+                    </tr>
+                    <tr>
+                        <td><code>--complete</code></td>
+                        <td>Complete scan with all features</td>
+                    </tr>
+                    <tr>
+                        <td><code>--verbose, -v</code></td>
+                        <td>Verbose output</td>
+                    </tr>
+                    <tr>
+                        <td><code>--threads N</code></td>
+                        <td>Number of parallel threads</td>
+                    </tr>
+                    <tr>
+                        <td><code>--timeout N</code></td>
+                        <td>Timeout per plugin in seconds</td>
+                    </tr>
+                </table>
+
+                <h2>Examples</h2>
+                <div class="code-block">
+                    <pre><code># Run specific plugin
+python3 penetration-test.py scan example.com --plugin nuclei_scanner
+
+# Run multiple plugins
+python3 penetration-test.py scan example.com --plugin nmap_scanner,nikto_scanner
+
+# Run all recon plugins
+python3 penetration-test.py scan example.com --categories recon
+
+# Complete verbose scan
+python3 penetration-test.py scan example.com --all-plugins --complete -v
+
+# Custom threads and timeout
+python3 penetration-test.py scan example.com --threads 10 --timeout 600</code></pre>
+                </div>
+            </section>
+
+            <!-- Plugin System -->
+            <section id="plugins" class="doc-section">
+                <h1><i class="fas fa-puzzle-piece"></i> Plugin System</h1>
+
+                <h2>Plugin Types</h2>
+                <p>The suite supports three plugin languages:</p>
+
+                <div class="plugin-type">
+                    <h3><i class="fab fa-python"></i> Python Plugins</h3>
+                    <p>Located in <code>tools/plugins/</code></p>
+                    <div class="code-block">
+                        <pre><code># Example: tools/plugins/my_scanner.py
+from plugin_base import PluginBase
+
+class MyScanner(PluginBase):
+    def __init__(self):
+        super().__init__(
+            name="my_scanner",
+            description="My custom scanner",
+            category="recon",
+            version="1.0.0"
+        )
+
+    def run(self, target, **kwargs):
+        # Implementation
+        return {
+            'success': True,
+            'results': []
+        }</code></pre>
+                    </div>
+                </div>
+
+                <div class="plugin-type">
+                    <h3><i class="fab fa-js"></i> JavaScript Plugins</h3>
+                    <p>Located in <code>tools/js_plugins/</code></p>
+                    <div class="code-block">
+                        <pre><code>// Example: tools/js_plugins/my_tool.js
+// @name my_tool
+// @description My custom JS tool
+// @category vuln_scan
+// @version 1.0.0
+
+const args = JSON.parse(process.argv[2]);
+const target = args.target;
+
+// Implementation
+const results = {
+    success: true,
+    findings: []
+};
+
+console.log(JSON.stringify(results));</code></pre>
+                    </div>
+                </div>
+
+                <div class="plugin-type">
+                    <h3><i class="fas fa-code"></i> Go Plugins</h3>
+                    <p>Located in <code>tools/go_plugins/</code></p>
+                    <div class="code-block">
+                        <pre><code>// Example: tools/go_plugins/my_scanner.go
+// @name my_scanner
+// @description My custom Go scanner
+// @category recon
+// @version 1.0.0
+
+package main
+
+import (
+    "encoding/json"
+    "fmt"
+    "os"
+)
+
+type Result struct {
+    Success bool   `json:"success"`
+    Data    string `json:"data"`
+}
+
+func main() {
+    if len(os.Args) > 1 && os.Args[1] == "--info" {
+        fmt.Println(`{"name":"my_scanner","version":"1.0.0"}`)
+        return
+    }
+
+    // Implementation
+    result := Result{Success: true, Data: "scan complete"}
+    json.NewEncoder(os.Stdout).Encode(result)
+}</code></pre>
+                    </div>
+                </div>
+
+                <h2>Installing Plugins from GitHub</h2>
+                <div class="code-block">
+                    <pre><code># Install from repository
+python3 penetration-test.py add https://github.com/user/plugin-repo
+
+# Install from direct URL
+python3 penetration-test.py add https://raw.githubusercontent.com/user/repo/main/plugin.py
+
+# Install from Gist
+python3 penetration-test.py add https://gist.github.com/user/gist-id
+
+# Force overwrite existing
+python3 penetration-test.py add https://github.com/user/repo --force</code></pre>
+                </div>
+
+                <h2>List Installed Plugins</h2>
+                <div class="code-block">
+                    <pre><code># List all plugins
+python3 penetration-test.py plugins
+
+# Verbose mode with descriptions
+python3 penetration-test.py plugins -v</code></pre>
+                </div>
+            </section>
+
+            <!-- Web Interface -->
+            <section id="web-interface" class="doc-section">
+                <h1><i class="fas fa-desktop"></i> Web Interface</h1>
+
+                <h2>Starting the Web UI</h2>
+                <div class="code-block">
+                    <pre><code># Default (localhost:5000)
+python3 penetration-test.py web
+
+# Custom port
+python3 penetration-test.py web --port 8080
+
+# Bind to all interfaces
+python3 penetration-test.py web --host 0.0.0.0 --port 8080</code></pre>
+                </div>
+
+                <h2>Features</h2>
+                <ul>
+                    <li><strong>Multi-tab Interface:</strong> Each target gets its own tab</li>
+                    <li><strong>Real-time Scanning:</strong> Monitor scans as they run</li>
+                    <li><strong>Report Viewer:</strong> Interactive report visualization</li>
+                    <li><strong>Notes System:</strong> Add notes to targets and findings</li>
+                    <li><strong>Plugin Manager:</strong> Install and manage plugins</li>
+                    <li><strong>Config Editor:</strong> Edit configuration visually</li>
+                    <li><strong>API Key Manager:</strong> Securely manage API keys</li>
+                </ul>
+
+                <h2>Tab Management</h2>
+                <p>The web interface uses a tab system where each target becomes a new tab:</p>
+                <ul>
+                    <li>Click <strong>"+ New Target"</strong> to add a tab</li>
+                    <li>Configure scan options per tab</li>
+                    <li>Run scans independently</li>
+                    <li>View results in real-time</li>
+                    <li>Add notes specific to each target</li>
+                </ul>
+
+                <h2>API Endpoints</h2>
+                <p>The web interface exposes a REST API:</p>
+                <div class="code-block">
+                    <pre><code># Get all scans
+GET /api/scans
+
+# Create new scan
+POST /api/scans
+Body: {"target": "example.com", "plugins": ["nuclei_scanner"]}
+
+# Get scan status
+GET /api/scans/{scan_id}
+
+# Get reports
+GET /api/reports
+
+# Get plugins
+GET /api/plugins
+
+# Update configuration
+PUT /api/config</code></pre>
+                </div>
+            </section>
+
+            <!-- Configuration -->
+            <section id="configuration" class="doc-section">
+                <h1><i class="fas fa-cog"></i> Configuration</h1>
+
+                <h2>Configuration File</h2>
+                <p>The <code>config.yaml</code> file controls all behavior:</p>
+                <div class="code-block">
+                    <pre><code>database:
+  path: ./pentest.db
+
+plugins:
+  python_plugins_dir: ./tools/plugins
+  js_plugins_dir: ./tools/js_plugins
+  go_plugins_dir: ./tools/go_plugins
+
+execution:
+  default_threads: 5
+  default_timeout: 300
+  verbose: false
+
+notifications:
+  enabled: true
+  telegram:
+    enabled: true
+    bot_token: "YOUR_TOKEN"
+    chat_id: "YOUR_CHAT_ID"
+
+  email:
+    enabled: true
+    smtp_host: smtp.gmail.com
+    smtp_port: 587
+    smtp_user: your@email.com
+    smtp_password: password
+    to_emails:
+      - recipient@email.com
+
+reporting:
+  default_format: html
+  output_dir: ./reports
+  include_raw_data: true</code></pre>
+                </div>
+
+                <h2>Managing Configuration</h2>
+                <div class="code-block">
+                    <pre><code># Create default config
+python3 penetration-test.py config --init
+
+# Show current config
+python3 penetration-test.py config --show
+
+# Edit config (opens in $EDITOR)
+python3 penetration-test.py config --edit</code></pre>
+                </div>
+            </section>
+
+            <!-- Notifications -->
+            <section id="notifications" class="doc-section">
+                <h1><i class="fas fa-bell"></i> Notifications</h1>
+
+                <h2>Supported Channels</h2>
+
+                <h3>Telegram</h3>
+                <div class="code-block">
+                    <pre><code>notifications:
+  telegram:
+    enabled: true
+    bot_token: "123456:ABC-DEF..."
+    chat_id: "123456789"</code></pre>
+                </div>
+                <p>Setup:</p>
+                <ol>
+                    <li>Create bot with @BotFather</li>
+                    <li>Get bot token</li>
+                    <li>Get your chat_id from @userinfobot</li>
+                </ol>
+
+                <h3>WhatsApp (CallMeBot)</h3>
+                <div class="code-block">
+                    <pre><code>notifications:
+  whatsapp:
+    enabled: true
+    api_key: "YOUR_API_KEY"
+    phone: "+1234567890"</code></pre>
+                </div>
+
+                <h3>Email</h3>
+                <div class="code-block">
+                    <pre><code>notifications:
+  email:
+    enabled: true
+    smtp_host: smtp.gmail.com
+    smtp_port: 587
+    smtp_user: your@email.com
+    smtp_password: app_password
+    from_email: your@email.com
+    to_emails:
+      - recipient@email.com</code></pre>
+                </div>
+
+                <h3>Webhook</h3>
+                <div class="code-block">
+                    <pre><code>notifications:
+  webhook:
+    enabled: true
+    url: https://your-webhook-url.com/hook
+    headers:
+      Authorization: "Bearer token"</code></pre>
+                </div>
+
+                <h2>Notification Triggers</h2>
+                <ul>
+                    <li><strong>Scan Complete:</strong> When a scan finishes</li>
+                    <li><strong>Critical Findings:</strong> High severity vulnerabilities found</li>
+                    <li><strong>Errors:</strong> When plugins fail or errors occur</li>
+                </ul>
+            </section>
+
+            <!-- Troubleshooting -->
+            <section id="troubleshooting" class="doc-section">
+                <h1><i class="fas fa-wrench"></i> Troubleshooting</h1>
+
+                <h2>Common Issues</h2>
+
+                <div class="issue-card">
+                    <h3>DNS Resolution Errors</h3>
+                    <p><strong>Error:</strong> "no nameservers found"</p>
+                    <p><strong>Solution:</strong> The tools use public DNS (8.8.8.8, 1.1.1.1) as fallback automatically.</p>
+                </div>
+
+                <div class="issue-card">
+                    <h3>Permission Denied</h3>
+                    <p><strong>Error:</strong> Permission denied when running Nmap</p>
+                    <p><strong>Solution:</strong></p>
+                    <div class="code-block">
+                        <pre><code>sudo setcap cap_net_raw,cap_net_admin+eip $(which nmap)</code></pre>
+                    </div>
+                </div>
+
+                <div class="issue-card">
+                    <h3>Go Plugin Won't Compile</h3>
+                    <p><strong>Error:</strong> "go: command not found"</p>
+                    <p><strong>Solution:</strong> Install Go or add to PATH:</p>
+                    <div class="code-block">
+                        <pre><code>export PATH=$PATH:/usr/local/go/bin</code></pre>
+                    </div>
+                </div>
+
+                <div class="issue-card">
+                    <h3>Node.js Plugin Fails</h3>
+                    <p><strong>Error:</strong> "node: command not found"</p>
+                    <p><strong>Solution:</strong> Install Node.js:</p>
+                    <div class="code-block">
+                        <pre><code>curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
+sudo apt-get install -y nodejs</code></pre>
+                    </div>
+                </div>
+
+                <h2>Debug Mode</h2>
+                <p>Enable debug logging:</p>
+                <div class="code-block">
+                    <pre><code>python3 penetration-test.py scan example.com --debug</code></pre>
+                </div>
+
+                <h2>Check Logs</h2>
+                <div class="code-block">
+                    <pre><code># View recent logs
+tail -f pentest.log
+
+# Search for errors
+grep ERROR pentest.log</code></pre>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="js/main.js"></script>
+    <script src="js/docs.js"></script>
+</body>
+</html>

@@ -1,0 +1,887 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQ - Frequently Asked Questions</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/docs.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .faq-grid {
+            display: grid;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .faq-category {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 2rem;
+            border: 1px solid rgba(0, 212, 255, 0.1);
+        }
+
+        .faq-category h2 {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .faq-item {
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 1.5rem;
+        }
+
+        .faq-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .faq-question {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem;
+            background: rgba(0, 212, 255, 0.05);
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .faq-question:hover {
+            background: rgba(0, 212, 255, 0.1);
+        }
+
+        .faq-question i {
+            transition: transform 0.3s ease;
+        }
+
+        .faq-item.active .faq-question i {
+            transform: rotate(180deg);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            padding: 0 1rem;
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 2000px;
+            padding: 1rem;
+        }
+
+        .faq-answer p {
+            margin-bottom: 1rem;
+            line-height: 1.7;
+        }
+
+        .faq-answer ul {
+            margin-left: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .faq-answer li {
+            margin-bottom: 0.5rem;
+        }
+
+        .search-box {
+            margin-bottom: 2rem;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 1rem 1rem 1rem 3rem;
+            background: var(--card-bg);
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            border-radius: 8px;
+            color: var(--text);
+            font-size: 1rem;
+        }
+
+        .search-box {
+            position: relative;
+        }
+
+        .search-box i {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--primary);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="navbar">
+            <div class="container">
+                <div class="nav-brand">
+                    <i class="fas fa-shield-alt"></i>
+                    <span>Penetration Test Suite</span>
+                </div>
+                <ul class="nav-menu">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="index.html#features">Features</a></li>
+                    <li><a href="documentation.html">Docs</a></li>
+                    <li><a href="theory.html">Theory</a></li>
+                    <li><a href="faq.html" class="active">FAQ</a></li>
+                    <li><a href="https://github.com/samueldk12/penetration-test" target="_blank">
+                        <i class="fab fa-github"></i> GitHub
+                    </a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <!-- FAQ Content -->
+    <div class="docs-container">
+        <aside class="docs-sidebar">
+            <nav class="docs-nav">
+                <h3>Categories</h3>
+                <ul>
+                    <li><a href="#general">General</a></li>
+                    <li><a href="#installation">Installation</a></li>
+                    <li><a href="#usage">Usage</a></li>
+                    <li><a href="#plugins">Plugins</a></li>
+                    <li><a href="#web-interface">Web Interface</a></li>
+                    <li><a href="#troubleshooting">Troubleshooting</a></li>
+                    <li><a href="#legal">Legal & Ethics</a></li>
+                    <li><a href="#advanced">Advanced</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="docs-content">
+            <h1><i class="fas fa-question-circle"></i> Frequently Asked Questions</h1>
+            <p>Find answers to common questions about the Penetration Test Suite.</p>
+
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" id="faq-search" placeholder="Search FAQ...">
+            </div>
+
+            <div class="faq-grid">
+                <!-- General Questions -->
+                <div class="faq-category" id="general">
+                    <h2><i class="fas fa-info-circle"></i> General Questions</h2>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            What is the Penetration Test Suite?
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>
+                                The Penetration Test Suite is a comprehensive security testing framework that integrates
+                                multiple reconnaissance, vulnerability scanning, and OSINT tools into a unified platform.
+                                It supports plugins in Python, JavaScript, and Go, providing flexibility and extensibility
+                                for security professionals.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            Who should use this tool?
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>This tool is designed for:</p>
+                            <ul>
+                                <li>Penetration testers and ethical hackers</li>
+                                <li>Security researchers and analysts</li>
+                                <li>Bug bounty hunters</li>
+                                <li>Red team operators</li>
+                                <li>Security students and learners</li>
+                                <li>SOC teams for reconnaissance</li>
+                            </ul>
+                            <p><strong>Important:</strong> Always ensure you have proper authorization before testing any systems.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            Is this tool free and open source?
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>
+                                Yes! The Penetration Test Suite is completely free and open source, released under the MIT License.
+                                You can use, modify, and distribute it freely. Contributions are welcome on our GitHub repository.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            What makes this tool different from others?
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Key differentiators include:</p>
+                            <ul>
+                                <li><strong>Multi-language plugins:</strong> Python, JavaScript, and Go support</li>
+                                <li><strong>Unified interface:</strong> Both CLI and web interface available</li>
+                                <li><strong>Extensible architecture:</strong> Easy plugin installation from GitHub</li>
+                                <li><strong>Notification system:</strong> Telegram, Email, WhatsApp, Webhook support</li>
+                                <li><strong>Comprehensive reporting:</strong> Multiple formats (JSON, HTML, Markdown, PDF)</li>
+                                <li><strong>Active development:</strong> Regular updates and community support</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Installation Questions -->
+                <div class="faq-category" id="installation">
+                    <h2><i class="fas fa-download"></i> Installation</h2>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            What are the system requirements?
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p><strong>Minimum Requirements:</strong></p>
+                            <ul>
+                                <li>Python 3.8 or higher</li>
+                                <li>2GB RAM (4GB recommended)</li>
+                                <li>1GB free disk space</li>
+                                <li>Linux, macOS, or Windows with WSL</li>
+                                <li>Internet connection for plugin downloads</li>
+                            </ul>
+                            <p><strong>Optional:</strong></p>
+                            <ul>
+                                <li>Node.js 14+ for JavaScript plugins</li>
+                                <li>Go 1.16+ for Go plugins</li>
+                                <li>Docker for containerized deployment</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            How do I install the tool?
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <div class="code-block">
+                                <pre><code># Clone the repository
+git clone https://github.com/samueldk12/penetration-test.git
+cd penetration-test
+
+# Install Python dependencies
+pip install -r requirements.txt
+
+# Verify installation
+python3 penetration-test.py --help</code></pre>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            Can I install this on Windows?
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>
+                                Yes, but we recommend using Windows Subsystem for Linux (WSL) for the best experience.
+                                Some tools (like Nmap, Nuclei) may require native Linux binaries.
+                            </p>
+                            <div class="code-block">
+                                <pre><code># Install WSL2
+wsl --install
+
+# Inside WSL, follow the Linux installation steps
+git clone https://github.com/samueldk12/penetration-test.git
+cd penetration-test
+pip install -r requirements.txt</code></pre>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            Do I need to install external tools manually?
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>
+                                Most tools are installed automatically as plugins. However, some core tools should be
+                                installed system-wide:
+                            </p>
+                            <ul>
+                                <li><strong>Nmap:</strong> <code>sudo apt install nmap</code></li>
+                                <li><strong>Nuclei:</strong> Installed via plugin system</li>
+                                <li><strong>FFUF:</strong> Installed via plugin system</li>
+                                <li><strong>Katana:</strong> Installed via plugin system</li>
+                            </ul>
+                            <p>The tool will warn you if a required dependency is missing.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Usage Questions -->
+                <div class="faq-category" id="usage">
+                    <h2><i class="fas fa-terminal"></i> Usage</h2>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            How do I perform a basic scan?
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <div class="code-block">
+                                <pre><code># Basic scan with all plugins
+python3 penetration-test.py scan example.com --all-plugins
+
+# Scan specific category
+python3 penetration-test.py scan example.com --categories recon
+
+# Scan with specific plugins
+python3 penetration-test.py scan example.com --plugins subdominator,nmap_scanner</code></pre>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            How do I view scan results?
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Results are stored in the <code>results/</code> directory by default. You can view them using:</p>
+                            <div class="code-block">
+                                <pre><code># List all scans
+python3 penetration-test.py list
+
+# View specific scan
+python3 penetration-test.py view &lt;scan_id&gt;
+
+# Generate report
+python3 penetration-test.py report --scan &lt;scan_id&gt; --format html</code></pre>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            Can I scan multiple targets at once?
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Yes! You can provide multiple targets or use a file:</p>
+                            <div class="code-block">
+                                <pre><code># Multiple targets
+python3 penetration-test.py scan example.com,target2.com,target3.com --all-plugins
+
+# From file
+echo "example.com" > targets.txt
+echo "target2.com" >> targets.txt
+python3 penetration-test.py scan --file targets.txt --all-plugins</code></pre>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            How do I schedule automated scans?
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Use cron jobs for scheduling:</p>
+                            <div class="code-block">
+                                <pre><code># Edit crontab
+crontab -e
+
+# Run daily at 2 AM
+0 2 * * * cd /path/to/penetration-test && python3 penetration-test.py scan example.com --all-plugins --notify telegram
+
+# Run weekly on Sunday
+0 0 * * 0 cd /path/to/penetration-test && python3 penetration-test.py scan example.com --all-plugins --report</code></pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Plugin Questions -->
+                <div class="faq-category" id="plugins">
+                    <h2><i class="fas fa-puzzle-piece"></i> Plugins</h2>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            How do I install a plugin?
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <div class="code-block">
+                                <pre><code># Install from GitHub
+python3 penetration-test.py plugin install https://github.com/user/plugin-repo
+
+# Install specific type
+python3 penetration-test.py plugin install https://github.com/user/plugin-repo --type python
+
+# Force overwrite existing
+python3 penetration-test.py plugin install https://github.com/user/plugin-repo --force</code></pre>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            How do I create a custom plugin?
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Create a plugin manifest file (plugin.json):</p>
+                            <div class="code-block">
+                                <pre><code>{
+  "name": "my_plugin",
+  "version": "1.0.0",
+  "description": "My custom plugin",
+  "type": "python",
+  "category": "recon",
+  "author": "Your Name",
+  "entrypoint": "plugin.py",
+  "dependencies": []
+}</code></pre>
+                            </div>
+                            <p>See the <a href="tutorials.html#creating-plugins">tutorial section</a> for complete examples.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            Which programming languages can I use for plugins?
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>The suite supports three languages:</p>
+                            <ul>
+                                <li><strong>Python:</strong> Most flexible, best for integrations and API calls</li>
+                                <li><strong>JavaScript:</strong> Great for web-based testing and Node.js tools</li>
+                                <li><strong>Go:</strong> High performance, ideal for network tools and scanners</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            How do I update plugins?
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <div class="code-block">
+                                <pre><code># Update all plugins
+python3 penetration-test.py plugin update --all
+
+# Update specific plugin
+python3 penetration-test.py plugin update my_plugin
+
+# List plugins with available updates
+python3 penetration-test.py plugin list --outdated</code></pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Web Interface Questions -->
+                <div class="faq-category" id="web-interface">
+                    <h2><i class="fas fa-desktop"></i> Web Interface</h2>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            How do I access the web interface?
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <div class="code-block">
+                                <pre><code># Start web interface
+python3 penetration-test.py web
+
+# Custom host and port
+python3 penetration-test.py web --host 0.0.0.0 --port 8080
+
+# Enable debug mode
+python3 penetration-test.py web --debug</code></pre>
+                            </div>
+                            <p>Then open your browser to <code>http://localhost:5000</code></p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            Is the web interface secure?
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>
+                                The web interface is designed for local use by default. For production deployments:
+                            </p>
+                            <ul>
+                                <li>Use HTTPS with a reverse proxy (nginx, Apache)</li>
+                                <li>Implement authentication (basic auth, OAuth)</li>
+                                <li>Restrict access by IP address</li>
+                                <li>Run behind a VPN</li>
+                                <li>Use firewall rules to limit access</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            Can I access the web interface remotely?
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Yes, but with security precautions:</p>
+                            <div class="code-block">
+                                <pre><code># Allow remote access (use with caution!)
+python3 penetration-test.py web --host 0.0.0.0 --port 5000
+
+# Better: Use SSH tunnel
+ssh -L 5000:localhost:5000 user@remote-server
+# Then access http://localhost:5000 on your local machine</code></pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Troubleshooting -->
+                <div class="faq-category" id="troubleshooting">
+                    <h2><i class="fas fa-wrench"></i> Troubleshooting</h2>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            Plugin execution failed - what should I check?
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Common issues and solutions:</p>
+                            <ul>
+                                <li><strong>Missing dependencies:</strong> Check plugin.json and install required packages</li>
+                                <li><strong>Permission issues:</strong> Ensure plugin files are executable</li>
+                                <li><strong>Path problems:</strong> Verify the plugin is in the correct directory</li>
+                                <li><strong>Syntax errors:</strong> Check plugin code for errors</li>
+                            </ul>
+                            <div class="code-block">
+                                <pre><code># Debug mode for detailed output
+python3 penetration-test.py scan example.com --plugin my_plugin --debug
+
+# Check plugin status
+python3 penetration-test.py plugin list --verbose</code></pre>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            Scans are running slowly - how to improve performance?
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Performance optimization tips:</p>
+                            <ul>
+                                <li>Use specific plugins instead of --all-plugins</li>
+                                <li>Increase thread count: <code>--threads 20</code></li>
+                                <li>Reduce timeout values: <code>--timeout 5</code></li>
+                                <li>Skip unnecessary plugins</li>
+                                <li>Run scans during off-peak hours</li>
+                                <li>Use faster DNS resolvers</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            API rate limiting issues - what to do?
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Handle rate limits:</p>
+                            <ul>
+                                <li>Add delays between requests: <code>--delay 2</code></li>
+                                <li>Use API keys when available</li>
+                                <li>Distribute scans across multiple API keys</li>
+                                <li>Run scans over longer time periods</li>
+                                <li>Use proxy rotation</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            How do I enable verbose logging?
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <div class="code-block">
+                                <pre><code># Enable debug output
+python3 penetration-test.py scan example.com --debug --verbose
+
+# Log to file
+python3 penetration-test.py scan example.com --log-file scan.log
+
+# Different log levels
+python3 penetration-test.py scan example.com --log-level DEBUG</code></pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Legal & Ethics -->
+                <div class="faq-category" id="legal">
+                    <h2><i class="fas fa-balance-scale"></i> Legal & Ethics</h2>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            Is it legal to use this tool?
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>
+                                <strong>Yes</strong>, when used legally and ethically. However:
+                            </p>
+                            <div class="alert alert-danger">
+                                <strong>⚠️ CRITICAL:</strong> You MUST have explicit written authorization before
+                                testing any systems you don't own. Unauthorized access is illegal in most jurisdictions.
+                            </div>
+                            <p>Legal use cases include:</p>
+                            <ul>
+                                <li>Testing your own systems</li>
+                                <li>Authorized penetration testing engagements</li>
+                                <li>Bug bounty programs (within scope)</li>
+                                <li>Security research with permission</li>
+                                <li>Educational purposes on your own lab</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            What authorization do I need?
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Required documentation:</p>
+                            <ul>
+                                <li>Written contract or letter of authorization</li>
+                                <li>Clearly defined scope (IP ranges, domains)</li>
+                                <li>Testing time windows</li>
+                                <li>Emergency contact information</li>
+                                <li>Rules of engagement</li>
+                                <li>Data handling agreement</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            Can I use this for bug bounty programs?
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>
+                                Yes! This tool is excellent for bug bounty hunting. However:
+                            </p>
+                            <ul>
+                                <li>Always read and follow the program's scope and rules</li>
+                                <li>Stay within authorized targets only</li>
+                                <li>Respect rate limits and don't cause DoS</li>
+                                <li>Don't access or modify user data</li>
+                                <li>Report findings responsibly</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            What if I accidentally scan something unauthorized?
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>
+                                Stop immediately and:
+                            </p>
+                            <ul>
+                                <li>Cease all scanning activities</li>
+                                <li>Document what happened</li>
+                                <li>Notify the system owner if possible</li>
+                                <li>Delete any collected data</li>
+                                <li>Learn from the mistake and double-check scope going forward</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Advanced Questions -->
+                <div class="faq-category" id="advanced">
+                    <h2><i class="fas fa-rocket"></i> Advanced Topics</h2>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            Can I integrate this with CI/CD pipelines?
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Yes! Example GitHub Actions workflow:</p>
+                            <div class="code-block">
+                                <pre><code>name: Security Scan
+on: [push]
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.9'
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+      - name: Run scan
+        run: python3 penetration-test.py scan ${{ secrets.TARGET }} --plugins nuclei_scanner
+      - name: Upload results
+        uses: actions/upload-artifact@v2
+        with:
+          name: scan-results
+          path: results/</code></pre>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            How do I use proxies and VPNs?
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <div class="code-block">
+                                <pre><code># HTTP proxy
+python3 penetration-test.py scan example.com --proxy http://proxy:8080
+
+# SOCKS5 proxy
+python3 penetration-test.py scan example.com --proxy socks5://proxy:1080
+
+# Proxy with authentication
+python3 penetration-test.py scan example.com --proxy http://user:pass@proxy:8080
+
+# Environment variable
+export HTTP_PROXY=http://proxy:8080
+export HTTPS_PROXY=http://proxy:8080</code></pre>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            Can I run this in Docker?
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Yes! Create a Dockerfile:</p>
+                            <div class="code-block">
+                                <pre><code>FROM python:3.9-slim
+
+RUN apt-get update && apt-get install -y \
+    nmap \
+    git \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /app
+COPY requirements.txt .
+RUN pip install -r requirements.txt
+
+COPY . .
+
+ENTRYPOINT ["python3", "penetration-test.py"]</code></pre>
+                            </div>
+                            <div class="code-block">
+                                <pre><code># Build and run
+docker build -t pentest-suite .
+docker run -v $(pwd)/results:/app/results pentest-suite scan example.com --all-plugins</code></pre>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            How do I contribute to the project?
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>We welcome contributions! See our <a href="contributing.html">contribution guide</a> for details.</p>
+                            <ul>
+                                <li>Fork the repository</li>
+                                <li>Create a feature branch</li>
+                                <li>Make your changes</li>
+                                <li>Write tests</li>
+                                <li>Submit a pull request</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="alert alert-info" style="margin-top: 3rem;">
+                <strong>❓ Still have questions?</strong> Join our <a href="https://github.com/samueldk12/penetration-test/discussions">GitHub Discussions</a> or open an issue on GitHub.
+            </div>
+        </main>
+    </div>
+
+    <script src="js/main.js"></script>
+    <script>
+        // FAQ accordion
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', () => {
+                const item = question.parentElement;
+                const wasActive = item.classList.contains('active');
+
+                // Close all items
+                document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('active'));
+
+                // Open clicked item if it wasn't active
+                if (!wasActive) {
+                    item.classList.add('active');
+                }
+            });
+        });
+
+        // Search functionality
+        const searchInput = document.getElementById('faq-search');
+        searchInput.addEventListener('input', (e) => {
+            const searchTerm = e.target.value.toLowerCase();
+
+            document.querySelectorAll('.faq-item').forEach(item => {
+                const question = item.querySelector('.faq-question').textContent.toLowerCase();
+                const answer = item.querySelector('.faq-answer').textContent.toLowerCase();
+
+                if (question.includes(searchTerm) || answer.includes(searchTerm)) {
+                    item.style.display = 'block';
+                    if (searchTerm.length > 2) {
+                        item.classList.add('active');
+                    }
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+
+            // Hide empty categories
+            document.querySelectorAll('.faq-category').forEach(category => {
+                const visibleItems = category.querySelectorAll('.faq-item[style="display: block"], .faq-item:not([style*="display: none"])');
+                category.style.display = visibleItems.length > 0 ? 'block' : 'none';
+            });
+        });
+    </script>
+</body>
+</html>

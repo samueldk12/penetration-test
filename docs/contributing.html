@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contributing - Penetration Test Suite</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/docs.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <header class="header">
+        <nav class="navbar">
+            <div class="container">
+                <div class="nav-brand">
+                    <i class="fas fa-shield-alt"></i>
+                    <span>Penetration Test Suite</span>
+                </div>
+                <button class="mobile-menu-toggle" id="mobile-menu-toggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <ul class="nav-menu" id="nav-menu">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="documentation.html">Docs</a></li>
+                    <li><a href="tutorials.html">Tutorials</a></li>
+                    <li><a href="contributing.html" class="active">Contributing</a></li>
+                    <li><a href="roadmap.html">Roadmap</a></li>
+                    <li><a href="https://github.com/samueldk12/penetration-test" target="_blank">
+                        <i class="fab fa-github"></i> GitHub
+                    </a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <div class="docs-container">
+        <aside class="docs-sidebar">
+            <nav class="docs-nav">
+                <h3>Contributing</h3>
+                <ul>
+                    <li><a href="#welcome">Welcome</a></li>
+                    <li><a href="#code-of-conduct">Code of Conduct</a></li>
+                    <li><a href="#getting-started">Getting Started</a></li>
+                    <li><a href="#development-setup">Development Setup</a></li>
+                    <li><a href="#making-changes">Making Changes</a></li>
+                    <li><a href="#pull-requests">Pull Requests</a></li>
+                    <li><a href="#coding-standards">Coding Standards</a></li>
+                    <li><a href="#testing">Testing</a></li>
+                    <li><a href="#documentation">Documentation</a></li>
+                    <li><a href="#community">Community</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="docs-content">
+            <section id="welcome" class="doc-section">
+                <h1><i class="fas fa-hands-helping"></i> Contributing Guide</h1>
+                <p>Thank you for considering contributing to Penetration Test Suite! We welcome contributions from everyone.</p>
+                
+                <div class="alert alert-success">
+                    <strong>All contributions are valuable!</strong> Whether it is code, documentation, bug reports, feature requests, or spreading the word.
+                </div>
+            </section>
+
+            <section id="code-of-conduct" class="doc-section">
+                <h1><i class="fas fa-gavel"></i> Code of Conduct</h1>
+                <h2>Our Pledge</h2>
+                <p>We are committed to providing a welcoming and inspiring community for all. We pledge to:</p>
+                <ul>
+                    <li>Use welcoming and inclusive language</li>
+                    <li>Be respectful of differing viewpoints</li>
+                    <li>Accept constructive criticism gracefully</li>
+                    <li>Focus on what is best for the community</li>
+                    <li>Show empathy towards others</li>
+                </ul>
+            </section>
+
+            <section id="getting-started" class="doc-section">
+                <h1><i class="fas fa-rocket"></i> Getting Started</h1>
+                <h2>Ways to Contribute</h2>
+                <div class="features-grid" style="grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));">
+                    <div class="feature-card">
+                        <div class="feature-icon"><i class="fas fa-code"></i></div>
+                        <h3>Code</h3>
+                        <p>Fix bugs, add features, improve performance</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon"><i class="fas fa-bug"></i></div>
+                        <h3>Bug Reports</h3>
+                        <p>Report issues and help improve stability</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon"><i class="fas fa-lightbulb"></i></div>
+                        <h3>Ideas</h3>
+                        <p>Suggest new features and improvements</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon"><i class="fas fa-book"></i></div>
+                        <h3>Documentation</h3>
+                        <p>Improve guides, fix typos, add examples</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon"><i class="fas fa-puzzle-piece"></i></div>
+                        <h3>Plugins</h3>
+                        <p>Create new security scanning plugins</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon"><i class="fas fa-users"></i></div>
+                        <h3>Community</h3>
+                        <p>Help others, answer questions, share knowledge</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="development-setup" class="doc-section">
+                <h1><i class="fas fa-tools"></i> Development Setup</h1>
+                <h2>Fork and Clone</h2>
+                <div class="code-block">
+                    <pre><code># Fork the repository on GitHub
+# Then clone your fork
+git clone https://github.com/YOUR-USERNAME/penetration-test.git
+cd penetration-test
+
+# Add upstream remote
+git remote add upstream https://github.com/samueldk12/penetration-test.git</code></pre>
+                </div>
+
+                <h2>Install Development Dependencies</h2>
+                <div class="code-block">
+                    <pre><code># Install Python requirements
+pip install -r requirements.txt
+pip install -r requirements-dev.txt  # If available
+
+# Install pre-commit hooks (optional)
+pip install pre-commit
+pre-commit install</code></pre>
+                </div>
+
+                <h2>Create a Branch</h2>
+                <div class="code-block">
+                    <pre><code># Create and switch to a new branch
+git checkout -b feature/my-new-feature
+
+# Or for bug fixes
+git checkout -b fix/bug-description</code></pre>
+                </div>
+            </section>
+
+            <section id="making-changes" class="doc-section">
+                <h1><i class="fas fa-edit"></i> Making Changes</h1>
+                <h2>Development Workflow</h2>
+                <div class="methodology-steps">
+                    <div class="step">
+                        <h3>1. Update Your Fork</h3>
+                        <div class="code-block">
+                            <pre><code>git fetch upstream
+git checkout main
+git merge upstream/main</code></pre>
+                        </div>
+                    </div>
+
+                    <div class="step">
+                        <h3>2. Make Your Changes</h3>
+                        <p>Edit files, add features, fix bugs. Keep commits focused and atomic.</p>
+                    </div>
+
+                    <div class="step">
+                        <h3>3. Test Your Changes</h3>
+                        <div class="code-block">
+                            <pre><code># Run tests
+python3 -m pytest
+
+# Test specific plugin
+python3 penetration-test.py plugins
+python3 penetration-test.py scan example.com --plugin your_plugin</code></pre>
+                        </div>
+                    </div>
+
+                    <div class="step">
+                        <h3>4. Commit Your Changes</h3>
+                        <div class="code-block">
+                            <pre><code>git add .
+git commit -m "Add brief description of changes"</code></pre>
+                        </div>
+                    </div>
+
+                    <div class="step">
+                        <h3>5. Push to Your Fork</h3>
+                        <div class="code-block">
+                            <pre><code>git push origin feature/my-new-feature</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="pull-requests" class="doc-section">
+                <h1><i class="fas fa-code-branch"></i> Submitting Pull Requests</h1>
+                <h2>PR Checklist</h2>
+                <ul class="feature-list">
+                    <li><i class="fas fa-check"></i> Code follows project style guidelines</li>
+                    <li><i class="fas fa-check"></i> Tests pass successfully</li>
+                    <li><i class="fas fa-check"></i> Documentation is updated</li>
+                    <li><i class="fas fa-check"></i> Commits are clear and descriptive</li>
+                    <li><i class="fas fa-check"></i> Branch is up-to-date with main</li>
+                    <li><i class="fas fa-check"></i> No merge conflicts</li>
+                </ul>
+
+                <h2>PR Template</h2>
+                <div class="code-block">
+                    <pre><code>## Description
+Brief description of changes
+
+## Type of Change
+- [ ] Bug fix
+- [ ] New feature
+- [ ] Documentation update
+- [ ] Performance improvement
+- [ ] Code refactoring
+
+## Testing
+Describe how you tested your changes
+
+## Screenshots (if applicable)
+Add screenshots here
+
+## Checklist
+- [ ] Code follows style guidelines
+- [ ] Tests pass
+- [ ] Documentation updated
+- [ ] No breaking changes</code></pre>
+                </div>
+            </section>
+
+            <section id="coding-standards" class="doc-section">
+                <h1><i class="fas fa-code"></i> Coding Standards</h1>
+                <h2>Python Style Guide</h2>
+                <ul>
+                    <li>Follow PEP 8 style guide</li>
+                    <li>Use 4 spaces for indentation</li>
+                    <li>Maximum line length: 100 characters</li>
+                    <li>Use descriptive variable names</li>
+                    <li>Add docstrings to all functions/classes</li>
+                </ul>
+
+                <h2>Example</h2>
+                <div class="code-block">
+                    <pre><code>class MyPlugin(PluginBase):
+    """
+    Brief description of plugin.
+    
+    Attributes:
+        name: Plugin name
+        version: Plugin version
+    """
+    
+    def __init__(self):
+        super().__init__(
+            name="my_plugin",
+            description="My plugin description",
+            category="recon",
+            version="1.0.0"
+        )
+    
+    def run(self, target: str, **kwargs) -> dict:
+        """
+        Run the plugin scan.
+        
+        Args:
+            target: Target domain or IP
+            **kwargs: Additional arguments
+            
+        Returns:
+            dict: Scan results
+        """
+        # Implementation
+        pass</code></pre>
+                </div>
+            </section>
+
+            <section id="testing" class="doc-section">
+                <h1><i class="fas fa-vial"></i> Testing</h1>
+                <h2>Writing Tests</h2>
+                <div class="code-block">
+                    <pre><code># tests/test_my_plugin.py
+import pytest
+from tools.plugins.my_plugin import MyPlugin
+
+def test_plugin_initialization():
+    plugin = MyPlugin()
+    assert plugin.name == "my_plugin"
+    assert plugin.version == "1.0.0"
+
+def test_plugin_run():
+    plugin = MyPlugin()
+    result = plugin.run("example.com")
+    assert result['success'] is True</code></pre>
+                </div>
+
+                <h2>Running Tests</h2>
+                <div class="code-block">
+                    <pre><code># Run all tests
+pytest
+
+# Run with coverage
+pytest --cov=tools
+
+# Run specific test
+pytest tests/test_my_plugin.py</code></pre>
+                </div>
+            </section>
+
+            <section id="documentation" class="doc-section">
+                <h1><i class="fas fa-book"></i> Documentation</h1>
+                <h2>Documentation Standards</h2>
+                <ul>
+                    <li>All public functions must have docstrings</li>
+                    <li>Update README.md if adding features</li>
+                    <li>Add examples to documentation</li>
+                    <li>Keep documentation up-to-date</li>
+                </ul>
+
+                <h2>Documentation Locations</h2>
+                <ul>
+                    <li><strong>Code:</strong> Inline comments and docstrings</li>
+                    <li><strong>User Guide:</strong> docs/documentation.html</li>
+                    <li><strong>Theory:</strong> docs/theory.html</li>
+                    <li><strong>Tutorials:</strong> docs/tutorials.html</li>
+                    <li><strong>README:</strong> README.md</li>
+                </ul>
+            </section>
+
+            <section id="community" class="doc-section">
+                <h1><i class="fas fa-users"></i> Community</h1>
+                <h2>Get Help</h2>
+                <ul>
+                    <li><strong>GitHub Discussions:</strong> Ask questions and share ideas</li>
+                    <li><strong>GitHub Issues:</strong> Report bugs and request features</li>
+                    <li><strong>Pull Requests:</strong> Contribute code and improvements</li>
+                </ul>
+
+                <h2>Recognition</h2>
+                <p>All contributors are recognized in:</p>
+                <ul>
+                    <li>README.md contributors section</li>
+                    <li>GitHub contributors page</li>
+                    <li>Release notes</li>
+                </ul>
+
+                <div style="margin-top: 3rem; padding: 2rem; background: var(--dark-light); border-radius: 12px; text-align: center;">
+                    <h2>Ready to Contribute?</h2>
+                    <p>Join our community and start making an impact!</p>
+                    <div style="display: flex; gap: 1rem; justify-content: center; margin-top: 1.5rem; flex-wrap: wrap;">
+                        <a href="https://github.com/samueldk12/penetration-test/issues" class="btn btn-primary">
+                            <i class="fas fa-bug"></i> Report Issue
+                        </a>
+                        <a href="https://github.com/samueldk12/penetration-test/pulls" class="btn btn-secondary">
+                            <i class="fas fa-code-branch"></i> Submit PR
+                        </a>
+                        <a href="https://github.com/samueldk12/penetration-test/discussions" class="btn btn-outline">
+                            <i class="fas fa-comments"></i> Discussions
+                        </a>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom">
+                <p>&copy; 2024 Penetration Test Suite. Licensed under MIT.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script src="js/docs.js"></script>
+</body>
+</html>

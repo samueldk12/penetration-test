@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Screenshots - Penetration Test Suite</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/docs.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        .gallery-item {
+            background: var(--dark-light);
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        .gallery-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 212, 255, 0.3);
+            border-color: var(--primary);
+        }
+        .gallery-image {
+            width: 100%;
+            aspect-ratio: 16/10;
+            background: var(--dark);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .gallery-placeholder {
+            text-align: center;
+            color: var(--text-muted);
+        }
+        .gallery-placeholder i {
+            font-size: 4rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            display: block;
+        }
+        .gallery-info {
+            padding: 1.5rem;
+        }
+        .gallery-info h3 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+        .gallery-info p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+        .gallery-tags {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-top: 1rem;
+        }
+        .tag {
+            padding: 0.25rem 0.75rem;
+            background: rgba(0, 212, 255, 0.1);
+            border: 1px solid var(--primary);
+            border-radius: 20px;
+            font-size: 0.8rem;
+            color: var(--primary);
+        }
+        .filter-tabs {
+            display: flex;
+            gap: 1rem;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .filter-btn {
+            padding: 0.75rem 1.5rem;
+            background: var(--dark-light);
+            border: 1px solid rgba(0, 212, 255, 0.3);
+            border-radius: 8px;
+            color: var(--text);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .filter-btn:hover, .filter-btn.active {
+            background: var(--primary);
+            color: var(--dark);
+            border-color: var(--primary);
+        }
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 10000;
+            align-items: center;
+            justify-content: center;
+        }
+        .lightbox.active {
+            display: flex;
+        }
+        .lightbox-content {
+            max-width: 90%;
+            max-height: 90%;
+            position: relative;
+        }
+        .lightbox-close {
+            position: absolute;
+            top: 2rem;
+            right: 2rem;
+            background: var(--primary);
+            color: var(--dark);
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            cursor: pointer;
+            z-index: 10001;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="navbar">
+            <div class="container">
+                <div class="nav-brand">
+                    <i class="fas fa-shield-alt"></i>
+                    <span>Penetration Test Suite</span>
+                </div>
+                <button class="mobile-menu-toggle" id="mobile-menu-toggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <ul class="nav-menu" id="nav-menu">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="index.html#features">Features</a></li>
+                    <li><a href="screenshots.html" class="active">Screenshots</a></li>
+                    <li><a href="documentation.html">Docs</a></li>
+                    <li><a href="tutorials.html">Tutorials</a></li>
+                    <li><a href="changelog.html">Changelog</a></li>
+                    <li><a href="https://github.com/samueldk12/penetration-test" target="_blank">
+                        <i class="fab fa-github"></i> GitHub
+                    </a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Content -->
+    <section class="docs-content" style="padding: 4rem 2rem; max-width: 1400px; margin: 0 auto;">
+        <div class="section-header">
+            <h1 class="section-title">
+                <i class="fas fa-images"></i> Screenshots & Gallery
+            </h1>
+            <p class="section-subtitle">Visual tour of the Penetration Test Suite interface and features</p>
+        </div>
+
+        <!-- Filter Tabs -->
+        <div class="filter-tabs">
+            <button class="filter-btn active" data-filter="all">All</button>
+            <button class="filter-btn" data-filter="cli">CLI</button>
+            <button class="filter-btn" data-filter="web">Web Interface</button>
+            <button class="filter-btn" data-filter="reports">Reports</button>
+            <button class="filter-btn" data-filter="plugins">Plugins</button>
+        </div>
+
+        <!-- Gallery Grid -->
+        <div class="gallery-grid">
+            <!-- CLI Screenshots -->
+            <div class="gallery-item" data-category="cli">
+                <div class="gallery-image">
+                    <div class="gallery-placeholder">
+                        <i class="fas fa-terminal"></i>
+                        <p>CLI Main Interface</p>
+                    </div>
+                </div>
+                <div class="gallery-info">
+                    <h3>Command Line Interface</h3>
+                    <p>Main CLI showing available commands and help menu with color-coded output</p>
+                    <div class="gallery-tags">
+                        <span class="tag">CLI</span>
+                        <span class="tag">Terminal</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="gallery-item" data-category="cli">
+                <div class="gallery-image">
+                    <div class="gallery-placeholder">
+                        <i class="fas fa-search"></i>
+                        <p>Scan in Progress</p>
+                    </div>
+                </div>
+                <div class="gallery-info">
+                    <h3>Active Scan Output</h3>
+                    <p>Real-time scan execution with verbose output showing plugin progress</p>
+                    <div class="gallery-tags">
+                        <span class="tag">CLI</span>
+                        <span class="tag">Scanning</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="gallery-item" data-category="cli">
+                <div class="gallery-image">
+                    <div class="gallery-placeholder">
+                        <i class="fas fa-plug"></i>
+                        <p>Plugin List</p>
+                    </div>
+                </div>
+                <div class="gallery-info">
+                    <h3>Available Plugins</h3>
+                    <p>Complete list of installed plugins categorized by type (Python, JS, Go)</p>
+                    <div class="gallery-tags">
+                        <span class="tag">CLI</span>
+                        <span class="tag">Plugins</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Web Interface Screenshots -->
+            <div class="gallery-item" data-category="web">
+                <div class="gallery-image">
+                    <div class="gallery-placeholder">
+                        <i class="fas fa-desktop"></i>
+                        <p>Web Dashboard</p>
+                    </div>
+                </div>
+                <div class="gallery-info">
+                    <h3>Interactive Dashboard</h3>
+                    <p>Main web interface dashboard with statistics, recent scans, and charts</p>
+                    <div class="gallery-tags">
+                        <span class="tag">Web UI</span>
+                        <span class="tag">Dashboard</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="gallery-item" data-category="web">
+                <div class="gallery-image">
+                    <div class="gallery-placeholder">
+                        <i class="fas fa-crosshairs"></i>
+                        <p>Multi-Tab System</p>
+                    </div>
+                </div>
+                <div class="gallery-info">
+                    <h3>Target Management</h3>
+                    <p>Multi-tab interface allowing management of multiple targets simultaneously</p>
+                    <div class="gallery-tags">
+                        <span class="tag">Web UI</span>
+                        <span class="tag">Targets</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="gallery-item" data-category="web">
+                <div class="gallery-image">
+                    <div class="gallery-placeholder">
+                        <i class="fas fa-play-circle"></i>
+                        <p>Scan Configuration</p>
+                    </div>
+                </div>
+                <div class="gallery-info">
+                    <h3>Scan Setup Wizard</h3>
+                    <p>Modal for configuring new scans with plugin and category selection</p>
+                    <div class="gallery-tags">
+                        <span class="tag">Web UI</span>
+                        <span class="tag">Configuration</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="gallery-item" data-category="web">
+                <div class="gallery-image">
+                    <div class="gallery-placeholder">
+                        <i class="fas fa-sticky-note"></i>
+                        <p>Notes System</p>
+                    </div>
+                </div>
+                <div class="gallery-info">
+                    <h3>Notes Management</h3>
+                    <p>Built-in notes system for documenting findings per target</p>
+                    <div class="gallery-tags">
+                        <span class="tag">Web UI</span>
+                        <span class="tag">Notes</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Reports Screenshots -->
+            <div class="gallery-item" data-category="reports">
+                <div class="gallery-image">
+                    <div class="gallery-placeholder">
+                        <i class="fas fa-file-alt"></i>
+                        <p>HTML Report</p>
+                    </div>
+                </div>
+                <div class="gallery-info">
+                    <h3>HTML Report Format</h3>
+                    <p>Professional HTML report with syntax highlighting and filtering</p>
+                    <div class="gallery-tags">
+                        <span class="tag">Reports</span>
+                        <span class="tag">HTML</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="gallery-item" data-category="reports">
+                <div class="gallery-image">
+                    <div class="gallery-placeholder">
+                        <i class="fas fa-chart-bar"></i>
+                        <p>Report Statistics</p>
+                    </div>
+                </div>
+                <div class="gallery-info">
+                    <h3>Vulnerability Statistics</h3>
+                    <p>Charts and graphs showing vulnerability distribution by severity</p>
+                    <div class="gallery-tags">
+                        <span class="tag">Reports</span>
+                        <span class="tag">Statistics</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="gallery-item" data-category="reports">
+                <div class="gallery-image">
+                    <div class="gallery-placeholder">
+                        <i class="fas fa-filter"></i>
+                        <p>Advanced Filters</p>
+                    </div>
+                </div>
+                <div class="gallery-info">
+                    <h3>Report Filtering</h3>
+                    <p>Filter reports by severity, type, domain, and date range</p>
+                    <div class="gallery-tags">
+                        <span class="tag">Reports</span>
+                        <span class="tag">Filters</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Plugins Screenshots -->
+            <div class="gallery-item" data-category="plugins">
+                <div class="gallery-image">
+                    <div class="gallery-placeholder">
+                        <i class="fas fa-puzzle-piece"></i>
+                        <p>Plugin Manager</p>
+                    </div>
+                </div>
+                <div class="gallery-info">
+                    <h3>Plugin Management Interface</h3>
+                    <p>Visual interface for managing and installing plugins from multiple sources</p>
+                    <div class="gallery-tags">
+                        <span class="tag">Plugins</span>
+                        <span class="tag">Management</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="gallery-item" data-category="plugins">
+                <div class="gallery-image">
+                    <div class="gallery-placeholder">
+                        <i class="fas fa-download"></i>
+                        <p>GitHub Install</p>
+                    </div>
+                </div>
+                <div class="gallery-info">
+                    <h3>Plugin Installation</h3>
+                    <p>Install plugins directly from GitHub repositories with one command</p>
+                    <div class="gallery-tags">
+                        <span class="tag">Plugins</span>
+                        <span class="tag">Installation</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="gallery-item" data-category="plugins">
+                <div class="gallery-image">
+                    <div class="gallery-placeholder">
+                        <i class="fas fa-code"></i>
+                        <p>Plugin Details</p>
+                    </div>
+                </div>
+                <div class="gallery-info">
+                    <h3>Plugin Information</h3>
+                    <p>Detailed view of plugin metadata, version, and compatibility</p>
+                    <div class="gallery-tags">
+                        <span class="tag">Plugins</span>
+                        <span class="tag">Details</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Additional Features -->
+            <div class="gallery-item" data-category="web">
+                <div class="gallery-image">
+                    <div class="gallery-placeholder">
+                        <i class="fas fa-key"></i>
+                        <p>API Keys Manager</p>
+                    </div>
+                </div>
+                <div class="gallery-info">
+                    <h3>Secure API Key Storage</h3>
+                    <p>Manage API keys for various services with masked display</p>
+                    <div class="gallery-tags">
+                        <span class="tag">Web UI</span>
+                        <span class="tag">Security</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="gallery-item" data-category="web">
+                <div class="gallery-image">
+                    <div class="gallery-placeholder">
+                        <i class="fas fa-cog"></i>
+                        <p>Configuration Editor</p>
+                    </div>
+                </div>
+                <div class="gallery-info">
+                    <h3>Visual Config Editor</h3>
+                    <p>Edit system configuration through intuitive web interface</p>
+                    <div class="gallery-tags">
+                        <span class="tag">Web UI</span>
+                        <span class="tag">Configuration</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="gallery-item" data-category="web">
+                <div class="gallery-image">
+                    <div class="gallery-placeholder">
+                        <i class="fas fa-bell"></i>
+                        <p>Real-time Notifications</p>
+                    </div>
+                </div>
+                <div class="gallery-info">
+                    <h3>Live Status Updates</h3>
+                    <p>WebSocket-powered real-time notifications for scan progress</p>
+                    <div class="gallery-tags">
+                        <span class="tag">Web UI</span>
+                        <span class="tag">Real-time</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Call to Action -->
+        <div style="text-align: center; margin-top: 4rem; padding: 3rem; background: var(--dark-light); border-radius: 12px;">
+            <h2 style="margin-bottom: 1rem;">Want to See It in Action?</h2>
+            <p style="color: var(--text-muted); margin-bottom: 2rem;">
+                Clone the repository and start exploring all features
+            </p>
+            <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                <a href="https://github.com/samueldk12/penetration-test" class="btn btn-primary">
+                    <i class="fab fa-github"></i> Get Started
+                </a>
+                <a href="documentation.html" class="btn btn-secondary">
+                    <i class="fas fa-book"></i> Read Docs
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom">
+                <p>&copy; 2024 Penetration Test Suite. Licensed under MIT.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script>
+        // Filter functionality
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const galleryItems = document.querySelectorAll('.gallery-item');
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+
+                const filter = btn.dataset.filter;
+
+                galleryItems.forEach(item => {
+                    if (filter === 'all' || item.dataset.category === filter) {
+                        item.style.display = 'block';
+                        item.style.animation = 'fadeInUp 0.5s ease-out';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+            });
+        });
+
+        // Gallery item click (lightbox placeholder)
+        galleryItems.forEach(item => {
+            item.addEventListener('click', () => {
+                const title = item.querySelector('h3').textContent;
+                alert(`Screenshot: ${title}\n\n(In a production environment, this would open a lightbox with the full-size image)`);
+            });
+        });
+    </script>
+</body>
+</html>

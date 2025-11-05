@@ -1,0 +1,24 @@
+{
+  "proxies": null,
+  "proxy_list": null,
+  "rotate_proxy": false,
+  "verify_ssl": false,
+  "ssl_cert": null,
+  "ssl_key": null,
+  "auth_type": null,
+  "username": null,
+  "password": null,
+  "bearer_token": null,
+  "custom_headers": {
+    "X-Custom-Header": "value"
+  },
+  "timeout": 10,
+  "max_retries": 3,
+  "retry_delay": 2,
+  "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
+  "requests_per_second": null,
+  "delay_between_requests": 0,
+  "follow_redirects": true,
+  "max_redirects": 5,
+  "cookies": null
+}
