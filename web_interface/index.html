@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Penetration Test Suite - Web Interface</title>
+    <link rel="stylesheet" href="css/app.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <i class="fas fa-shield-alt"></i>
+            <span>PenTest Suite</span>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="#" class="nav-item active" data-view="dashboard">
+                <i class="fas fa-th-large"></i>
+                <span>Dashboard</span>
+            </a>
+            <a href="#" class="nav-item" data-view="targets">
+                <i class="fas fa-crosshairs"></i>
+                <span>Targets</span>
+            </a>
+            <a href="#" class="nav-item" data-view="scans">
+                <i class="fas fa-search"></i>
+                <span>Scans</span>
+            </a>
+            <a href="#" class="nav-item" data-view="reports">
+                <i class="fas fa-file-alt"></i>
+                <span>Reports</span>
+            </a>
+            <a href="#" class="nav-item" data-view="notes">
+                <i class="fas fa-sticky-note"></i>
+                <span>Notes</span>
+            </a>
+            <a href="#" class="nav-item" data-view="plugins">
+                <i class="fas fa-puzzle-piece"></i>
+                <span>Plugins</span>
+            </a>
+            <a href="#" class="nav-item" data-view="config">
+                <i class="fas fa-cog"></i>
+                <span>Configuration</span>
+            </a>
+            <a href="#" class="nav-item" data-view="api-keys">
+                <i class="fas fa-key"></i>
+                <span>API Keys</span>
+            </a>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-left">
+                <button class="btn-icon" id="sidebar-toggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <h1 class="header-title">Dashboard</h1>
+            </div>
+            <div class="header-right">
+                <div class="connection-status" id="connection-status">
+                    <i class="fas fa-circle"></i>
+                    <span>Connected</span>
+                </div>
+                <button class="btn btn-primary" id="new-scan-btn">
+                    <i class="fas fa-plus"></i>
+                    New Scan
+                </button>
+            </div>
+        </header>
+
+        <!-- Tab Bar (for targets) -->
+        <div class="tab-bar" id="tab-bar">
+            <div class="tab active" data-tab="dashboard">
+                <i class="fas fa-home"></i>
+                <span>Dashboard</span>
+            </div>
+        </div>
+
+        <!-- Views Container -->
+        <div class="views-container">
+            <!-- Dashboard View -->
+            <div class="view active" id="dashboard-view">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon bg-primary">
+                            <i class="fas fa-crosshairs"></i>
+                        </div>
+                        <div class="stat-content">
+                            <div class="stat-label">Total Targets</div>
+                            <div class="stat-value" id="stat-targets">0</div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon bg-success">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <div class="stat-content">
+                            <div class="stat-label">Completed Scans</div>
+                            <div class="stat-value" id="stat-completed">0</div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon bg-warning">
+                            <i class="fas fa-exclamation-triangle"></i>
+                        </div>
+                        <div class="stat-content">
+                            <div class="stat-label">Vulnerabilities</div>
+                            <div class="stat-value" id="stat-vulns">0</div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon bg-info">
+                            <i class="fas fa-plug"></i>
+                        </div>
+                        <div class="stat-content">
+                            <div class="stat-label">Plugins</div>
+                            <div class="stat-value" id="stat-plugins">0</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="dashboard-grid">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3><i class="fas fa-history"></i> Recent Scans</h3>
+                        </div>
+                        <div class="card-body">
+                            <div id="recent-scans-list"></div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <h3><i class="fas fa-chart-bar"></i> Statistics</h3>
+                        </div>
+                        <div class="card-body">
+                            <canvas id="stats-chart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Targets View -->
+            <div class="view" id="targets-view">
+                <div class="view-header">
+                    <h2>Targets</h2>
+                    <button class="btn btn-primary" id="add-target-btn">
+                        <i class="fas fa-plus"></i> Add Target
+                    </button>
+                </div>
+                <div class="targets-grid" id="targets-grid"></div>
+            </div>
+
+            <!-- Scans View -->
+            <div class="view" id="scans-view">
+                <div class="view-header">
+                    <h2>Scans</h2>
+                    <div class="view-actions">
+                        <input type="text" class="form-control" id="scan-filter" placeholder="Filter scans...">
+                    </div>
+                </div>
+                <div class="scans-list" id="scans-list"></div>
+            </div>
+
+            <!-- Reports View -->
+            <div class="view" id="reports-view">
+                <div class="view-header">
+                    <h2>Reports</h2>
+                    <div class="view-actions">
+                        <select class="form-control" id="report-severity">
+                            <option value="">All Severities</option>
+                            <option value="critical">Critical</option>
+                            <option value="high">High</option>
+                            <option value="medium">Medium</option>
+                            <option value="low">Low</option>
+                        </select>
+                        <button class="btn btn-success" id="generate-report-btn">
+                            <i class="fas fa-file-download"></i> Generate Report
+                        </button>
+                    </div>
+                </div>
+                <div class="report-content" id="report-content"></div>
+            </div>
+
+            <!-- Notes View -->
+            <div class="view" id="notes-view">
+                <div class="view-header">
+                    <h2>Notes</h2>
+                    <button class="btn btn-primary" id="add-note-btn">
+                        <i class="fas fa-plus"></i> Add Note
+                    </button>
+                </div>
+                <div class="notes-list" id="notes-list"></div>
+            </div>
+
+            <!-- Plugins View -->
+            <div class="view" id="plugins-view">
+                <div class="view-header">
+                    <h2>Plugins</h2>
+                    <button class="btn btn-primary" id="install-plugin-btn">
+                        <i class="fas fa-download"></i> Install Plugin
+                    </button>
+                </div>
+                <div class="plugins-grid" id="plugins-grid"></div>
+            </div>
+
+            <!-- Configuration View -->
+            <div class="view" id="config-view">
+                <div class="view-header">
+                    <h2>Configuration</h2>
+                    <button class="btn btn-success" id="save-config-btn">
+                        <i class="fas fa-save"></i> Save Configuration
+                    </button>
+                </div>
+                <div class="config-editor" id="config-editor"></div>
+            </div>
+
+            <!-- API Keys View -->
+            <div class="view" id="api-keys-view">
+                <div class="view-header">
+                    <h2>API Keys</h2>
+                    <button class="btn btn-primary" id="add-key-btn">
+                        <i class="fas fa-plus"></i> Add API Key
+                    </button>
+                </div>
+                <div class="keys-list" id="keys-list"></div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modals -->
+    <div class="modal" id="new-scan-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>New Scan</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Target</label>
+                    <input type="text" class="form-control" id="scan-target" placeholder="example.com">
+                </div>
+                <div class="form-group">
+                    <label>Scan Type</label>
+                    <select class="form-control" id="scan-type">
+                        <option value="all">All Plugins</option>
+                        <option value="category">By Category</option>
+                        <option value="specific">Specific Plugins</option>
+                    </select>
+                </div>
+                <div class="form-group" id="category-select" style="display:none;">
+                    <label>Categories</label>
+                    <select class="form-control" id="scan-categories" multiple>
+                        <option value="recon">Reconnaissance</option>
+                        <option value="vuln_scan">Vulnerability Scanning</option>
+                        <option value="osint">OSINT</option>
+                    </select>
+                </div>
+                <div class="form-group" id="plugin-select" style="display:none;">
+                    <label>Plugins</label>
+                    <select class="form-control" id="scan-plugins" multiple></select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary modal-close">Cancel</button>
+                <button class="btn btn-primary" id="start-scan-btn">Start Scan</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="note-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="note-modal-title">Add Note</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Target</label>
+                    <input type="text" class="form-control" id="note-target" placeholder="example.com">
+                </div>
+                <div class="form-group">
+                    <label>Note</label>
+                    <textarea class="form-control" id="note-content" rows="6"></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary modal-close">Cancel</button>
+                <button class="btn btn-primary" id="save-note-btn">Save Note</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="key-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Add API Key</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Service</label>
+                    <input type="text" class="form-control" id="key-service" placeholder="telegram, shodan, etc.">
+                </div>
+                <div class="form-group">
+                    <label>API Key</label>
+                    <input type="password" class="form-control" id="key-value">
+                </div>
+                <div class="form-group">
+                    <label>Description (optional)</label>
+                    <input type="text" class="form-control" id="key-description">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary modal-close">Cancel</button>
+                <button class="btn btn-primary" id="save-key-btn">Save Key</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="plugin-install-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Install Plugin</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Plugin URL</label>
+                    <input type="text" class="form-control" id="plugin-url" placeholder="https://github.com/user/plugin">
+                </div>
+                <div class="form-group">
+                    <label>Type (optional)</label>
+                    <select class="form-control" id="plugin-type">
+                        <option value="">Auto-detect</option>
+                        <option value="python">Python</option>
+                        <option value="javascript">JavaScript</option>
+                        <option value="go">Go</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>
+                        <input type="checkbox" id="plugin-force"> Force overwrite if exists
+                    </label>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary modal-close">Cancel</button>
+                <button class="btn btn-primary" id="install-plugin-confirm-btn">Install</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div class="toast-container" id="toast-container"></div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>

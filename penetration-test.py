@@ -362,6 +362,33 @@ class PentestCLI:
         db.close()
         return 0
 
+    def cmd_web(self, args):
+        """Comando: web - Inicia interface web."""
+        try:
+            # Import web server
+            import web_server
+
+            # Start server
+            host = args.host
+            port = args.port
+            debug = args.debug
+
+            print(f"🌐 Starting web interface on http://{host}:{port}")
+            print("   Press Ctrl+C to stop")
+
+            web_server.start_server(host=host, port=port, debug=debug)
+
+        except KeyboardInterrupt:
+            print("\n\n✓ Web server stopped")
+            return 0
+        except ImportError as e:
+            print(f"❌ Error: Failed to import web server: {e}")
+            print("   Install requirements: pip install flask flask-cors flask-socketio")
+            return 1
+        except Exception as e:
+            print(f"❌ Error starting web server: {e}")
+            return 1
+
     def main(self):
         """Main CLI entry point."""
         parser = argparse.ArgumentParser(
@@ -500,6 +527,15 @@ For more information, visit: https://github.com/samueldk12/penetration-test
         stats_parser = subparsers.add_parser('stats', help='Show database statistics')
         stats_parser.add_argument('--config', default='config.yaml')
 
+        # Web command
+        web_parser = subparsers.add_parser('web', help='Launch web interface')
+        web_parser.add_argument('--host', default='127.0.0.1',
+                               help='Host to bind to (default: 127.0.0.1)')
+        web_parser.add_argument('--port', type=int, default=5000,
+                               help='Port to bind to (default: 5000)')
+        web_parser.add_argument('--debug', action='store_true',
+                               help='Enable debug mode')
+
         # Parse arguments
         if len(sys.argv) == 1:
             parser.print_help()
@@ -522,6 +558,8 @@ For more information, visit: https://github.com/samueldk12/penetration-test
             return self.cmd_config(args)
         elif args.command == 'stats':
             return self.cmd_stats(args)
+        elif args.command == 'web':
+            return self.cmd_web(args)
         else:
             parser.print_help()
             return 1

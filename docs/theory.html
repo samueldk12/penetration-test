@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Theory - Penetration Testing Fundamentals</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/docs.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="navbar">
+            <div class="container">
+                <div class="nav-brand">
+                    <i class="fas fa-shield-alt"></i>
+                    <span>Penetration Test Suite</span>
+                </div>
+                <ul class="nav-menu">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="index.html#features">Features</a></li>
+                    <li><a href="documentation.html">Docs</a></li>
+                    <li><a href="theory.html" class="active">Theory</a></li>
+                    <li><a href="https://github.com/samueldk12/penetration-test" target="_blank">
+                        <i class="fab fa-github"></i> GitHub
+                    </a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Theory Content -->
+    <div class="docs-container">
+        <aside class="docs-sidebar">
+            <nav class="docs-nav">
+                <h3>Theory</h3>
+                <ul>
+                    <li><a href="#introduction">Introduction</a></li>
+                    <li><a href="#methodology">Methodology</a></li>
+                    <li><a href="#reconnaissance">Reconnaissance</a></li>
+                    <li><a href="#enumeration">Enumeration</a></li>
+                    <li><a href="#vulnerability-analysis">Vulnerability Analysis</a></li>
+                    <li><a href="#exploitation">Exploitation</a></li>
+                    <li><a href="#post-exploitation">Post-Exploitation</a></li>
+                    <li><a href="#osint">OSINT</a></li>
+                    <li><a href="#web-security">Web Security</a></li>
+                    <li><a href="#network-security">Network Security</a></li>
+                    <li><a href="#reporting">Reporting</a></li>
+                    <li><a href="#legal-ethical">Legal & Ethical</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="docs-content">
+            <!-- Introduction -->
+            <section id="introduction" class="doc-section">
+                <h1><i class="fas fa-book-open"></i> Introduction to Penetration Testing</h1>
+
+                <p>
+                    Penetration testing, also known as "pentesting" or ethical hacking, is an authorized
+                    simulated cyberattack on a computer system, performed to evaluate the security of the system.
+                </p>
+
+                <div class="concept-card">
+                    <h3><i class="fas fa-bullseye"></i> What is Penetration Testing?</h3>
+                    <p>
+                        Penetration testing is the practice of testing a computer system, network, or web application
+                        to find security vulnerabilities that an attacker could exploit. The goal is to identify
+                        weaknesses before malicious actors do and provide recommendations for remediation.
+                    </p>
+                </div>
+
+                <h2>Types of Penetration Tests</h2>
+
+                <div class="concept-card">
+                    <h3><i class="fas fa-box"></i> Black Box Testing</h3>
+                    <p>
+                        The tester has no prior knowledge of the system. This simulates an external attacker's
+                        perspective and tests the system as an outsider would.
+                    </p>
+                    <ul>
+                        <li>No credentials or internal information</li>
+                        <li>Most realistic external threat simulation</li>
+                        <li>Longer testing time required</li>
+                    </ul>
+                </div>
+
+                <div class="concept-card">
+                    <h3><i class="fas fa-box-open"></i> Gray Box Testing</h3>
+                    <p>
+                        The tester has partial knowledge of the system, such as login credentials or network
+                        diagrams. This simulates an insider threat or compromised account.
+                    </p>
+                    <ul>
+                        <li>Limited credentials and information</li>
+                        <li>Balances depth and breadth of testing</li>
+                        <li>Most common in practice</li>
+                    </ul>
+                </div>
+
+                <div class="concept-card">
+                    <h3><i class="fas fa-eye"></i> White Box Testing</h3>
+                    <p>
+                        The tester has complete knowledge of the system including source code, architecture,
+                        and credentials. This enables the most comprehensive security assessment.
+                    </p>
+                    <ul>
+                        <li>Full access to system information</li>
+                        <li>Can identify deeper vulnerabilities</li>
+                        <li>Most efficient use of testing time</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Methodology -->
+            <section id="methodology" class="doc-section">
+                <h1><i class="fas fa-tasks"></i> Penetration Testing Methodology</h1>
+
+                <p>
+                    A structured approach is essential for effective penetration testing. The most widely
+                    adopted methodologies include PTES, OWASP, and NIST guidelines.
+                </p>
+
+                <div class="methodology-steps">
+                    <div class="step">
+                        <h3>Planning & Reconnaissance</h3>
+                        <p>
+                            Define the scope and goals of a test, including the systems to be addressed and
+                            the testing methods to be used. Gather intelligence (OSINT) to better understand
+                            how a target works.
+                        </p>
+                        <ul>
+                            <li>Define scope and objectives</li>
+                            <li>Obtain necessary authorizations</li>
+                            <li>Gather passive information</li>
+                            <li>Identify target assets</li>
+                        </ul>
+                    </div>
+
+                    <div class="step">
+                        <h3>Scanning & Enumeration</h3>
+                        <p>
+                            Use technical tools to probe the target for vulnerabilities. This includes port
+                            scanning, network mapping, service enumeration, and application scanning.
+                        </p>
+                        <ul>
+                            <li>Port scanning (Nmap)</li>
+                            <li>Service version detection</li>
+                            <li>OS fingerprinting</li>
+                            <li>Web application scanning</li>
+                        </ul>
+                    </div>
+
+                    <div class="step">
+                        <h3>Vulnerability Analysis</h3>
+                        <p>
+                            Analyze the information gathered to identify potential vulnerabilities. This
+                            involves both automated scanning and manual analysis.
+                        </p>
+                        <ul>
+                            <li>Automated vulnerability scanning</li>
+                            <li>Manual code review</li>
+                            <li>Configuration analysis</li>
+                            <li>Vulnerability prioritization</li>
+                        </ul>
+                    </div>
+
+                    <div class="step">
+                        <h3>Exploitation</h3>
+                        <p>
+                            Attempt to exploit identified vulnerabilities to gain unauthorized access or
+                            demonstrate the potential impact of the vulnerability.
+                        </p>
+                        <ul>
+                            <li>Exploit development/selection</li>
+                            <li>Privilege escalation</li>
+                            <li>Lateral movement</li>
+                            <li>Maintain access</li>
+                        </ul>
+                    </div>
+
+                    <div class="step">
+                        <h3>Post-Exploitation</h3>
+                        <p>
+                            Determine the value of the compromised system and maintain access for further
+                            testing. Assess the impact and potential damage.
+                        </p>
+                        <ul>
+                            <li>Data exfiltration simulation</li>
+                            <li>Persistence mechanisms</li>
+                            <li>Privilege escalation</li>
+                            <li>Network pivoting</li>
+                        </ul>
+                    </div>
+
+                    <div class="step">
+                        <h3>Reporting</h3>
+                        <p>
+                            Document all findings, including vulnerabilities discovered, data accessed, and
+                            the amount of time the tester was able to remain in the system undetected.
+                        </p>
+                        <ul>
+                            <li>Executive summary</li>
+                            <li>Technical findings</li>
+                            <li>Risk assessment</li>
+                            <li>Remediation recommendations</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Reconnaissance -->
+            <section id="reconnaissance" class="doc-section">
+                <h1><i class="fas fa-binoculars"></i> Reconnaissance</h1>
+
+                <p>
+                    Reconnaissance is the process of gathering information about a target before launching
+                    an attack. It's divided into passive and active reconnaissance.
+                </p>
+
+                <h2>Passive Reconnaissance</h2>
+                <div class="concept-card">
+                    <p>
+                        Gathering information without directly interacting with the target system, minimizing
+                        the risk of detection.
+                    </p>
+                    <ul>
+                        <li><strong>WHOIS:</strong> Domain registration information</li>
+                        <li><strong>DNS Records:</strong> MX, TXT, A, AAAA records</li>
+                        <li><strong>Search Engines:</strong> Google dorking, Shodan</li>
+                        <li><strong>Social Media:</strong> Employee information, technologies used</li>
+                        <li><strong>Job Postings:</strong> Technology stack clues</li>
+                        <li><strong>Public Databases:</strong> Certificate transparency logs</li>
+                    </ul>
+                </div>
+
+                <h2>Active Reconnaissance</h2>
+                <div class="concept-card">
+                    <p>
+                        Directly interacting with the target system to gather information. More likely to
+                        be detected but yields more detailed information.
+                    </p>
+                    <ul>
+                        <li><strong>Port Scanning:</strong> Nmap for open ports</li>
+                        <li><strong>Service Enumeration:</strong> Banner grabbing</li>
+                        <li><strong>Network Mapping:</strong> Topology discovery</li>
+                        <li><strong>Web Crawling:</strong> Directory enumeration</li>
+                        <li><strong>DNS Zone Transfers:</strong> Full DNS records</li>
+                    </ul>
+                </div>
+
+                <h2>Tools for Reconnaissance</h2>
+                <div class="code-block">
+                    <pre><code># Subdomain enumeration
+python3 penetration-test.py scan example.com --plugin subdominator
+
+# DNS brute force
+python3 penetration-test.py scan example.com --plugin dnsbruter
+
+# Network scanning
+nmap -sV -sC -p- example.com
+
+# Web crawling
+katana -u https://example.com -d 3 -jc
+
+# OSINT gathering
+python3 penetration-test.py osint example.com --deep</code></pre>
+                </div>
+            </section>
+
+            <!-- Vulnerability Analysis -->
+            <section id="vulnerability-analysis" class="doc-section">
+                <h1><i class="fas fa-search-plus"></i> Vulnerability Analysis</h1>
+
+                <p>
+                    Vulnerability analysis involves identifying, quantifying, and prioritizing vulnerabilities
+                    in a system. This phase bridges reconnaissance and exploitation.
+                </p>
+
+                <h2>Common Vulnerability Types</h2>
+
+                <div class="concept-card">
+                    <h3><i class="fas fa-database"></i> SQL Injection</h3>
+                    <p>
+                        Injecting malicious SQL code into application queries to manipulate or extract database
+                        information.
+                    </p>
+                    <div class="code-block">
+                        <pre><code># Example vulnerable query
+SELECT * FROM users WHERE username='$username' AND password='$password'
+
+# Injection payload
+username: admin' OR '1'='1' --
+password: anything</code></pre>
+                    </div>
+                </div>
+
+                <div class="concept-card">
+                    <h3><i class="fas fa-code"></i> Cross-Site Scripting (XSS)</h3>
+                    <p>
+                        Injecting malicious scripts into web pages viewed by other users. Three main types:
+                        Stored, Reflected, and DOM-based XSS.
+                    </p>
+                    <div class="code-block">
+                        <pre><code># Reflected XSS example
+https://vulnerable.com/search?q=&lt;script&gt;alert(document.cookie)&lt;/script&gt;
+
+# Detection with our tool
+python3 penetration-test.py scan example.com --plugin dalfox_xss
+python3 penetration-test.py scan example.com --plugin xss_detector</code></pre>
+                    </div>
+                </div>
+
+                <div class="concept-card">
+                    <h3><i class="fas fa-lock-open"></i> Broken Authentication</h3>
+                    <p>
+                        Flaws in authentication mechanisms that allow attackers to compromise passwords,
+                        keys, or session tokens.
+                    </p>
+                    <ul>
+                        <li>Weak password policies</li>
+                        <li>Session fixation</li>
+                        <li>Credential stuffing</li>
+                        <li>Broken password recovery</li>
+                    </ul>
+                </div>
+
+                <div class="concept-card">
+                    <h3><i class="fas fa-shield-virus"></i> Security Misconfiguration</h3>
+                    <p>
+                        Insecure default configurations, incomplete setups, open cloud storage, misconfigured
+                        HTTP headers, and verbose error messages.
+                    </p>
+                    <ul>
+                        <li>Default credentials</li>
+                        <li>Directory listing enabled</li>
+                        <li>Unnecessary features enabled</li>
+                        <li>Detailed error messages</li>
+                    </ul>
+                </div>
+
+                <h2>Vulnerability Scanning Tools</h2>
+                <div class="code-block">
+                    <pre><code># Nuclei - Template-based scanner
+python3 penetration-test.py scan example.com --plugin nuclei_scanner
+
+# Nikto - Web server scanner
+python3 penetration-test.py scan example.com --plugin nikto_scanner
+
+# Comprehensive scan
+python3 penetration-test.py scan example.com --all-plugins --complete</code></pre>
+                </div>
+
+                <h2>Vulnerability Severity Rating (CVSS)</h2>
+                <table class="options-table">
+                    <tr>
+                        <th>Severity</th>
+                        <th>CVSS Score</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td><strong style="color: #ff4444;">Critical</strong></td>
+                        <td>9.0 - 10.0</td>
+                        <td>Requires immediate action</td>
+                    </tr>
+                    <tr>
+                        <td><strong style="color: #ff8800;">High</strong></td>
+                        <td>7.0 - 8.9</td>
+                        <td>Should be fixed soon</td>
+                    </tr>
+                    <tr>
+                        <td><strong style="color: #ffaa00;">Medium</strong></td>
+                        <td>4.0 - 6.9</td>
+                        <td>Plan to fix in near future</td>
+                    </tr>
+                    <tr>
+                        <td><strong style="color: #00ff88;">Low</strong></td>
+                        <td>0.1 - 3.9</td>
+                        <td>Minimal risk</td>
+                    </tr>
+                </table>
+            </section>
+
+            <!-- OSINT -->
+            <section id="osint" class="doc-section">
+                <h1><i class="fas fa-user-secret"></i> Open Source Intelligence (OSINT)</h1>
+
+                <p>
+                    OSINT involves collecting and analyzing publicly available information to gather
+                    intelligence about a target. It's a critical part of reconnaissance.
+                </p>
+
+                <h2>OSINT Categories</h2>
+
+                <div class="concept-card">
+                    <h3><i class="fas fa-globe"></i> Domain Intelligence</h3>
+                    <ul>
+                        <li>WHOIS records and registration history</li>
+                        <li>DNS records (A, AAAA, MX, TXT, etc.)</li>
+                        <li>Subdomain enumeration</li>
+                        <li>SSL/TLS certificate information</li>
+                        <li>Historical DNS data</li>
+                    </ul>
+                </div>
+
+                <div class="concept-card">
+                    <h3><i class="fas fa-envelope"></i> Email Intelligence</h3>
+                    <ul>
+                        <li>Email format patterns</li>
+                        <li>Employee email addresses</li>
+                        <li>Email breach databases</li>
+                        <li>Email headers and routing</li>
+                    </ul>
+                </div>
+
+                <div class="concept-card">
+                    <h3><i class="fas fa-users"></i> People & Social Media</h3>
+                    <ul>
+                        <li>LinkedIn employee profiles</li>
+                        <li>GitHub accounts and repositories</li>
+                        <li>Twitter/X mentions and discussions</li>
+                        <li>Stack Overflow profiles</li>
+                        <li>Personal blogs and websites</li>
+                    </ul>
+                </div>
+
+                <div class="concept-card">
+                    <h3><i class="fas fa-code-branch"></i> Code & Technology</h3>
+                    <ul>
+                        <li>GitHub repositories</li>
+                        <li>Technology stack analysis</li>
+                        <li>Leaked credentials in code</li>
+                        <li>API endpoints and documentation</li>
+                    </ul>
+                </div>
+
+                <h2>OSINT Tools</h2>
+                <div class="code-block">
+                    <pre><code># Comprehensive OSINT scan
+python3 penetration-test.py osint example.com --deep
+
+# Domain intelligence
+whois example.com
+dig example.com ANY
+
+# Subdomain enumeration
+python3 penetration-test.py scan example.com --plugin subdominator
+
+# Search engine dorking
+site:example.com filetype:pdf
+site:example.com inurl:admin
+site:github.com "example.com" "api_key"</code></pre>
+                </div>
+            </section>
+
+            <!-- Web Security -->
+            <section id="web-security" class="doc-section">
+                <h1><i class="fas fa-globe"></i> Web Application Security</h1>
+
+                <p>
+                    Web applications are a primary target for attackers due to their accessibility and
+                    frequent vulnerabilities. Understanding OWASP Top 10 is essential.
+                </p>
+
+                <h2>OWASP Top 10 (2021)</h2>
+
+                <div class="methodology-steps">
+                    <div class="step">
+                        <h3>Broken Access Control</h3>
+                        <p>
+                            Restrictions on what authenticated users can do are not properly enforced.
+                            Attackers can exploit these flaws to access unauthorized functionality or data.
+                        </p>
+                    </div>
+
+                    <div class="step">
+                        <h3>Cryptographic Failures</h3>
+                        <p>
+                            Failures related to cryptography which often lead to exposure of sensitive data.
+                            Includes weak encryption, hardcoded keys, and improper storage.
+                        </p>
+                    </div>
+
+                    <div class="step">
+                        <h3>Injection</h3>
+                        <p>
+                            SQL, NoSQL, OS command, and LDAP injection occur when untrusted data is sent
+                            to an interpreter as part of a command or query.
+                        </p>
+                    </div>
+
+                    <div class="step">
+                        <h3>Insecure Design</h3>
+                        <p>
+                            A broad category representing different weaknesses in design and architecture,
+                            with a focus on risks related to design flaws.
+                        </p>
+                    </div>
+
+                    <div class="step">
+                        <h3>Security Misconfiguration</h3>
+                        <p>
+                            Missing appropriate security hardening across any part of the application stack,
+                            or improperly configured permissions on cloud services.
+                        </p>
+                    </div>
+
+                    <div class="step">
+                        <h3>Vulnerable and Outdated Components</h3>
+                        <p>
+                            Using components with known vulnerabilities. This includes libraries, frameworks,
+                            and other software modules.
+                        </p>
+                    </div>
+
+                    <div class="step">
+                        <h3>Identification and Authentication Failures</h3>
+                        <p>
+                            Authentication and session management implemented incorrectly, allowing attackers
+                            to compromise passwords, keys, or session tokens.
+                        </p>
+                    </div>
+
+                    <div class="step">
+                        <h3>Software and Data Integrity Failures</h3>
+                        <p>
+                            Code and infrastructure that does not protect against integrity violations,
+                            including insecure CI/CD pipelines and auto-update functionality.
+                        </p>
+                    </div>
+
+                    <div class="step">
+                        <h3>Security Logging and Monitoring Failures</h3>
+                        <p>
+                            Without logging and monitoring, breaches cannot be detected. Insufficient logging
+                            and ineffective integration with incident response systems.
+                        </p>
+                    </div>
+
+                    <div class="step">
+                        <h3>Server-Side Request Forgery (SSRF)</h3>
+                        <p>
+                            Occurs when a web application fetches a remote resource without validating the
+                            user-supplied URL, allowing attackers to coerce the application to send requests
+                            to an unintended destination.
+                        </p>
+                    </div>
+                </div>
+
+                <h2>Web Testing Tools</h2>
+                <div class="code-block">
+                    <pre><code># Web vulnerability scanning
+python3 penetration-test.py scan example.com --categories vuln_scan
+
+# Directory fuzzing
+ffuf -u https://example.com/FUZZ -w wordlist.txt
+
+# Web crawling
+python3 penetration-test.py scan example.com --plugin katana_crawler
+
+# XSS detection
+python3 penetration-test.py scan example.com --plugin dalfox_xss
+
+# 403 bypass
+python3 penetration-test.py scan example.com --plugin 403_bypass</code></pre>
+                </div>
+            </section>
+
+            <!-- Reporting -->
+            <section id="reporting" class="doc-section">
+                <h1><i class="fas fa-file-alt"></i> Penetration Testing Reports</h1>
+
+                <p>
+                    A well-written report is crucial for communicating findings and recommendations. It should
+                    be clear, actionable, and tailored to the audience.
+                </p>
+
+                <h2>Report Structure</h2>
+
+                <div class="concept-card">
+                    <h3>1. Executive Summary</h3>
+                    <p>High-level overview for non-technical stakeholders:</p>
+                    <ul>
+                        <li>Overall risk assessment</li>
+                        <li>Key findings summary</li>
+                        <li>Business impact</li>
+                        <li>Critical recommendations</li>
+                    </ul>
+                </div>
+
+                <div class="concept-card">
+                    <h3>2. Methodology</h3>
+                    <p>Detailed description of the testing process:</p>
+                    <ul>
+                        <li>Scope and limitations</li>
+                        <li>Testing approach</li>
+                        <li>Tools used</li>
+                        <li>Timeline</li>
+                    </ul>
+                </div>
+
+                <div class="concept-card">
+                    <h3>3. Technical Findings</h3>
+                    <p>Detailed vulnerability information:</p>
+                    <ul>
+                        <li>Vulnerability description</li>
+                        <li>Severity rating (CVSS)</li>
+                        <li>Proof of concept</li>
+                        <li>Affected systems/components</li>
+                        <li>Remediation steps</li>
+                    </ul>
+                </div>
+
+                <div class="concept-card">
+                    <h3>4. Appendices</h3>
+                    <p>Supporting information:</p>
+                    <ul>
+                        <li>Full scan results</li>
+                        <li>Screenshots and evidence</li>
+                        <li>Tool outputs</li>
+                        <li>References and resources</li>
+                    </ul>
+                </div>
+
+                <h2>Generating Reports</h2>
+                <div class="code-block">
+                    <pre><code># Generate comprehensive report
+python3 penetration-test.py report --type comprehensive --format html json
+
+# Filter by severity
+python3 penetration-test.py report --severity critical high
+
+# Filter by domain
+python3 penetration-test.py report --domain example.com
+
+# Filter by vulnerability type
+python3 penetration-test.py report --vuln-type xss sqli
+
+# Custom date range
+python3 penetration-test.py report --from 2024-01-01 --to 2024-12-31</code></pre>
+                </div>
+            </section>
+
+            <!-- Legal & Ethical -->
+            <section id="legal-ethical" class="doc-section">
+                <h1><i class="fas fa-balance-scale"></i> Legal & Ethical Considerations</h1>
+
+                <div class="alert alert-danger">
+                    <strong>⚠️ WARNING:</strong> Unauthorized access to computer systems is illegal in most
+                    jurisdictions. Always obtain proper authorization before conducting any security testing.
+                </div>
+
+                <h2>Legal Requirements</h2>
+
+                <div class="concept-card">
+                    <h3><i class="fas fa-file-contract"></i> Authorization</h3>
+                    <p>Always obtain written authorization before testing:</p>
+                    <ul>
+                        <li>Signed contract or letter of authorization</li>
+                        <li>Clearly defined scope</li>
+                        <li>Specified testing windows</li>
+                        <li>Contact information for emergencies</li>
+                        <li>Rules of engagement</li>
+                    </ul>
+                </div>
+
+                <div class="concept-card">
+                    <h3><i class="fas fa-shield-alt"></i> Scope Limitations</h3>
+                    <p>Stay within the agreed scope:</p>
+                    <ul>
+                        <li>Only test authorized systems</li>
+                        <li>Respect time windows</li>
+                        <li>Avoid testing production during business hours (unless authorized)</li>
+                        <li>Do not cause denial of service</li>
+                        <li>Do not access or modify data beyond what's necessary for PoC</li>
+                    </ul>
+                </div>
+
+                <h2>Ethical Guidelines</h2>
+
+                <div class="concept-card">
+                    <h3><i class="fas fa-handshake"></i> Professional Conduct</h3>
+                    <ul>
+                        <li>Maintain confidentiality</li>
+                        <li>Protect client data</li>
+                        <li>Report all findings honestly</li>
+                        <li>Don't exploit vulnerabilities beyond demonstration</li>
+                        <li>Provide actionable remediation advice</li>
+                    </ul>
+                </div>
+
+                <h2>Common Legal Frameworks</h2>
+                <ul>
+                    <li><strong>Computer Fraud and Abuse Act (CFAA)</strong> - United States</li>
+                    <li><strong>Computer Misuse Act</strong> - United Kingdom</li>
+                    <li><strong>GDPR</strong> - European Union (data protection)</li>
+                    <li><strong>PCI DSS</strong> - Payment card industry standards</li>
+                    <li><strong>HIPAA</strong> - Healthcare data protection (US)</li>
+                </ul>
+
+                <div class="alert alert-info">
+                    <strong>ℹ️ Best Practice:</strong> Always consult with legal counsel before conducting
+                    penetration tests, especially for client engagements or cross-border testing.
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="js/main.js"></script>
+    <script src="js/docs.js"></script>
+</body>
+</html>
