@@ -4,7 +4,36 @@ Sistema completo de reconnaissance que **detecta secrets, testa permissões e ar
 
 ---
 
+## 🚀 Quick Start
+
+**Novo no sistema?** Veja [EXAMPLE_WORKFLOW.md](EXAMPLE_WORKFLOW.md) para exemplos práticos completos!
+
+### Opção 1: Auto Recon (Mais Simples)
+```bash
+# Reconnaissance completo automatizado
+python auto_recon.py example.com
+```
+
+### Opção 2: Recon Wrapper (Com ferramentas externas)
+```bash
+# Usa subfinder, httpx, ffuf
+python recon_wrapper.py example.com --full
+```
+
+### Opção 3: Manual (Controle total)
+```bash
+# Passo a passo com componentes individuais
+python secret_scanner.py /path/to/code
+python permission_tester.py aws --access-key ... --secret-key ...
+```
+
+---
+
 ## 📦 Componentes
+
+### Componentes Core (Biblioteca)
+
+**Estes são os building blocks do sistema:**
 
 ### 1. **discovery_storage.py** - Banco de Dados de Descobertas
 
@@ -372,6 +401,169 @@ recon.close()
     }
   ]
 }
+```
+
+---
+
+### Componentes Automatizados (End-to-End)
+
+**Estes automatizam o workflow completo:**
+
+### 5. **auto_recon.py** - Reconnaissance Automatizado
+
+**Automatiza todo o processo** sem precisar de ferramentas externas.
+
+**O que faz:**
+1. ✅ Subdomain discovery (passivo via crt.sh + DNS brute force)
+2. ✅ URL probing (HTTP/HTTPS assíncrono)
+3. ✅ Secret scanning em respostas HTTP
+4. ✅ Endpoint discovery
+5. ✅ Storage automático no banco
+6. ✅ Testes de permissões
+7. ✅ Relatório JSON
+
+**Uso CLI:**
+```bash
+# Reconnaissance completo
+python auto_recon.py example.com
+
+# Com output customizado
+python auto_recon.py example.com -o report.json --db custom.db
+```
+
+**Output:**
+```
+==========================================================
+AUTO RECONNAISSANCE - example.com
+==========================================================
+
+[FASE 1] SUBDOMAIN DISCOVERY
+[+] crt.sh: 45 subdomínios encontrados
+[+] DNS brute force: 52 total de subdomínios
+
+[FASE 2] URL PROBING
+[+] 38 URLs acessíveis encontradas
+
+[FASE 3] SECRET SCANNING & STORAGE
+[!] 3 secrets encontradas em https://api.example.com/config
+[*] Testando permissões para AWS Access Key ID...
+
+[FASE 4] ENDPOINT DISCOVERY
+[+] Endpoint encontrado: https://api.example.com/admin [403]
+
+[FASE 5] REPORT GENERATION
+
+==========================================================
+RECONNAISSANCE COMPLETO!
+==========================================================
+Tempo total: 245.32s
+
+Subdomínios: 52
+URLs: 38
+Endpoints: 15
+Secrets: 4
+  └─ Alto risco: 2
+Permissões testadas: 2
+
+Relatório salvo em: auto_recon_example_com.json
+Banco de dados: auto_recon.db
+==========================================================
+```
+
+**Vantagens:**
+- 🚀 **Rápido**: Assíncrono, múltiplas requisições paralelas
+- 🔋 **Self-contained**: Não precisa de ferramentas externas
+- 📊 **Completo**: Tudo em um único comando
+- 💾 **Storage integrado**: Tudo salvo automaticamente
+
+**Desvantagens:**
+- Wordlist limitada (50 subdomínios comuns)
+- Menos subdomínios que ferramentas especializadas
+
+---
+
+### 6. **recon_wrapper.py** - Integração com Ferramentas Externas
+
+**Integra ferramentas populares** (subfinder, httpx, ffuf, nuclei) com o sistema de storage.
+
+**Ferramentas suportadas:**
+- 🔍 **Subdomain**: subfinder, amass, assetfinder
+- 🌐 **URL Probing**: httpx
+- 📁 **Endpoints**: ffuf, gobuster
+- 🔒 **Vulnerabilities**: nuclei
+
+**Uso CLI:**
+```bash
+# Workflow completo (subdomain + URLs + endpoints)
+python recon_wrapper.py example.com --full
+
+# Apenas subdomain enumeration
+python recon_wrapper.py example.com --subdomain
+
+# Subdomain + URL probing
+python recon_wrapper.py example.com --subdomain --url-probing
+
+# Tudo + vulnerability scanning
+python recon_wrapper.py example.com --full --vuln-scan
+```
+
+**Output:**
+```
+==========================================================
+RECON WRAPPER - example.com
+==========================================================
+
+[FASE 1] SUBDOMAIN ENUMERATION
+[*] Executando subfinder em example.com...
+[+] subfinder: 67 subdomínios encontrados
+[*] Executando assetfinder em example.com...
+[+] assetfinder: 43 subdomínios encontrados
+[+] Total de subdomínios únicos: 89
+
+[FASE 2] URL PROBING
+[*] Executando httpx em 89 subdomínios...
+[+] httpx: 52 URLs acessíveis
+
+[FASE 3] ENDPOINT DISCOVERY
+[*] Executando ffuf em https://api.example.com...
+[+] ffuf: 23 endpoints encontrados
+
+Subdomínios: 89
+URLs: 52
+Endpoints: 31
+
+Relatório salvo em: recon_wrapper_example_com.json
+Banco de dados: example_wrapper.db
+```
+
+**Vantagens:**
+- 🎯 **Melhores resultados**: Usa ferramentas especializadas da indústria
+- 🔧 **Flexível**: Escolhe quais ferramentas executar
+- 📊 **Storage automático**: Tudo integrado com o banco
+- 🚀 **Paralelização**: Ferramentas Go são muito rápidas
+
+**Desvantagens:**
+- Requer instalação de ferramentas externas (Go tools)
+- Depende de ferramentas de terceiros
+
+**Instalação de ferramentas:**
+```bash
+# Subdomain
+go install -v github.com/projectdiscovery/subfinder/v2/cmd/subfinder@latest
+go install github.com/tomnomnom/assetfinder@latest
+
+# URL Probing
+go install -v github.com/projectdiscovery/httpx/cmd/httpx@latest
+
+# Endpoints
+go install github.com/ffuf/ffuf/v2@latest
+sudo apt install gobuster
+
+# Vulnerabilities
+go install -v github.com/projectdiscovery/nuclei/v3/cmd/nuclei@latest
+
+# Adiciona ao PATH
+export PATH=$PATH:~/go/bin
 ```
 
 ---
