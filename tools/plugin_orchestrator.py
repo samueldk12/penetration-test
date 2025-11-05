@@ -16,8 +16,10 @@ sys.path.insert(0, str(Path(__file__).parent))
 
 from plugin_system import PluginManager
 from js_plugin_runner import JSPluginRunner
+from go_plugin_runner import GoPluginRunner
 from discovery_storage import DiscoveryDatabase
 from config_manager import ConfigManager
+from notification_system import NotificationSystem
 
 
 class PluginOrchestrator:
@@ -39,11 +41,14 @@ class PluginOrchestrator:
         # Initialize managers
         self.plugin_manager = PluginManager()
         self.js_runner = JSPluginRunner()
+        self.go_runner = GoPluginRunner()
         self.db = DiscoveryDatabase(config.get('general.database'))
+        self.notifier = NotificationSystem(config.get('notifications', {}))
 
         # Discover plugins
         self.plugin_manager.discover_plugins()
         self.js_plugins = self.js_runner.discover_js_plugins() if self.js_runner.is_available() else []
+        self.go_plugins = self.go_runner.discover_go_plugins() if self.go_runner.is_available() else []
 
         # Results storage
         self.results = {
@@ -108,6 +113,16 @@ class PluginOrchestrator:
                     'category': js_plugin['category']
                 })
 
+        # Go plugins
+        for go_plugin in self.go_plugins:
+            if go_plugin['category'] in categories and go_plugin['name'] not in exclude_plugins:
+                plugins_to_run.append({
+                    'type': 'go',
+                    'plugin': go_plugin,
+                    'name': go_plugin['name'],
+                    'category': go_plugin['category']
+                })
+
         self.logger.info(f"Total plugins to run: {len(plugins_to_run)}")
 
         # Executa plugins em paralelo
@@ -132,6 +147,12 @@ class PluginOrchestrator:
         # Gera resumo
         self._generate_summary()
 
+        # Envia notificação de conclusão
+        try:
+            self.notifier.send_scan_complete(self.results['summary'])
+        except Exception as e:
+            self.logger.error(f"Failed to send notification: {e}")
+
         return self.results
 
     def _run_plugin_safe(self, plugin_info: Dict, target: str, **kwargs) -> Dict:
@@ -148,6 +169,13 @@ class PluginOrchestrator:
                 result = plugin_info['plugin'].run(target, **kwargs)
             elif plugin_type == 'javascript':
                 result = self.js_runner.run_plugin(
+                    plugin_info['plugin']['file'],
+                    target,
+                    verbose=self.verbose,
+                    **kwargs
+                )
+            elif plugin_type == 'go':
+                result = self.go_runner.run_plugin(
                     plugin_info['plugin']['file'],
                     target,
                     verbose=self.verbose,

@@ -17,6 +17,8 @@ from config_manager import ConfigManager
 from plugin_orchestrator import PluginOrchestrator
 from plugin_system import PluginManager
 from js_plugin_runner import JSPluginRunner
+from go_plugin_runner import GoPluginRunner
+from plugin_installer import PluginInstaller
 from advanced_reporter import AdvancedReporter
 from osint_module import OSINTModule
 from discovery_storage import DiscoveryDatabase
@@ -196,6 +198,10 @@ class PentestCLI:
         js_runner = JSPluginRunner()
         js_plugins = js_runner.discover_js_plugins() if js_runner.is_available() else []
 
+        # Go plugins
+        go_runner = GoPluginRunner()
+        go_plugins = go_runner.discover_go_plugins() if go_runner.is_available() else []
+
         print("=" * 70)
         print("AVAILABLE PLUGINS")
         print("=" * 70)
@@ -206,7 +212,7 @@ class PentestCLI:
         for name, plugin in plugin_manager.plugins.items():
             category = plugin.category
             if category not in categories:
-                categories[category] = {'python': [], 'js': []}
+                categories[category] = {'python': [], 'js': [], 'go': []}
 
             categories[category]['python'].append({
                 'name': name,
@@ -217,9 +223,16 @@ class PentestCLI:
         for js_plugin in js_plugins:
             category = js_plugin['category']
             if category not in categories:
-                categories[category] = {'python': [], 'js': []}
+                categories[category] = {'python': [], 'js': [], 'go': []}
 
             categories[category]['js'].append(js_plugin)
+
+        for go_plugin in go_plugins:
+            category = go_plugin['category']
+            if category not in categories:
+                categories[category] = {'python': [], 'js': [], 'go': []}
+
+            categories[category]['go'].append(go_plugin)
 
         # Print by category
         for category in sorted(categories.keys()):
@@ -242,14 +255,56 @@ class PentestCLI:
                     if args.verbose:
                         print(f"      {p['description']}")
 
+            # Go plugins
+            if categories[category]['go']:
+                print("  Go Plugins:")
+                for p in sorted(categories[category]['go'], key=lambda x: x['name']):
+                    status = "✓ Compiled" if p.get('compiled') else "⚠ Source"
+                    print(f"    • {p['name']} (v{p['version']}) {status}")
+                    if args.verbose:
+                        print(f"      {p['description']}")
+
         # Summary
         total_python = len(plugin_manager.plugins)
         total_js = len(js_plugins)
-        total = total_python + total_js
+        total_go = len(go_plugins)
+        total = total_python + total_js + total_go
 
         print("\n" + "=" * 70)
-        print(f"Total Plugins: {total} ({total_python} Python + {total_js} JavaScript)")
+        print(f"Total Plugins: {total} ({total_python} Python + {total_js} JavaScript + {total_go} Go)")
         print("=" * 70)
+
+        return 0
+
+    def cmd_add(self, args):
+        """Comando: add - Instala plugin de URL."""
+        self.setup_logging(args.verbose, args.debug)
+
+        installer = PluginInstaller()
+
+        print(f"📥 Installing plugin from: {args.url}")
+
+        result = installer.install_from_url(
+            args.url,
+            plugin_type=args.type,
+            force=args.force
+        )
+
+        if result['success']:
+            print("\n✅ Plugin installed successfully!")
+            print(f"   Type:     {result.get('type', 'unknown')}")
+            print(f"   Location: {result.get('installed_path', 'unknown')}")
+
+            if result.get('installed_plugins'):
+                print(f"\n   Installed {len(result['installed_plugins'])} plugin(s):")
+                for plugin in result['installed_plugins']:
+                    print(f"     • {plugin}")
+        else:
+            print("\n❌ Installation failed")
+            print(f"   Error: {result.get('error', 'Unknown error')}")
+            if args.verbose:
+                print(json.dumps(result, indent=2))
+            return 1
 
         return 0
 
@@ -331,6 +386,10 @@ Examples:
 
   # List all available plugins
   %(prog)s plugins -v
+
+  # Install plugin from GitHub
+  %(prog)s add https://github.com/user/repo
+  %(prog)s add https://raw.githubusercontent.com/user/repo/main/plugin.py
 
   # Initialize configuration
   %(prog)s config --init
@@ -416,6 +475,16 @@ For more information, visit: https://github.com/samueldk12/penetration-test
                                    help='Show plugin descriptions')
         plugins_parser.add_argument('--debug', action='store_true')
 
+        # Add command
+        add_parser = subparsers.add_parser('add', help='Install plugin from URL')
+        add_parser.add_argument('url', help='Plugin URL (GitHub repo, direct file, or Gist)')
+        add_parser.add_argument('--type', choices=['python', 'javascript', 'go'],
+                               help='Plugin type (auto-detected if not specified)')
+        add_parser.add_argument('--force', action='store_true',
+                               help='Overwrite if plugin exists')
+        add_parser.add_argument('--verbose', '-v', action='store_true')
+        add_parser.add_argument('--debug', action='store_true')
+
         # Config command
         config_parser = subparsers.add_parser('config', help='Manage configuration')
         config_parser.add_argument('--init', action='store_true',
@@ -447,6 +516,8 @@ For more information, visit: https://github.com/samueldk12/penetration-test
             return self.cmd_report(args)
         elif args.command == 'plugins':
             return self.cmd_plugins(args)
+        elif args.command == 'add':
+            return self.cmd_add(args)
         elif args.command == 'config':
             return self.cmd_config(args)
         elif args.command == 'stats':

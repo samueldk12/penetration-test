@@ -11,6 +11,7 @@ plugins:
   disabled_plugins: []
   python_plugins_dir: ./plugins
   js_plugins_dir: ./js_plugins
+  go_plugins_dir: ./go_plugins
 scanning:
   max_depth: 3
   follow_redirects: true
@@ -38,9 +39,29 @@ osint:
   shodan_api_key: ''
 notifications:
   enabled: false
-  webhook_url: ''
   notify_on_critical: true
   notify_on_complete: true
+  notify_on_error: true
+  telegram:
+    enabled: false
+    bot_token: ''
+    chat_id: ''
+  whatsapp:
+    enabled: false
+    api_key: ''
+    phone: ''
+  email:
+    enabled: false
+    smtp_host: smtp.gmail.com
+    smtp_port: 587
+    smtp_user: ''
+    smtp_password: ''
+    from_email: ''
+    to_emails: []
+  webhook:
+    enabled: false
+    url: ''
+    headers: {}
 advanced:
   concurrent_scans: 3
   retry_failed: true
