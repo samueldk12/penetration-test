@@ -1,0 +1,988 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Use Cases - Real-World Scenarios</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/docs.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .use-case {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 2.5rem;
+            margin-bottom: 3rem;
+            border: 1px solid rgba(0, 212, 255, 0.1);
+        }
+
+        .use-case-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .use-case-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: #000;
+        }
+
+        .use-case h2 {
+            margin: 0;
+            color: var(--primary);
+        }
+
+        .use-case-meta {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-muted);
+        }
+
+        .meta-item i {
+            color: var(--primary);
+        }
+
+        .scenario {
+            background: rgba(0, 212, 255, 0.05);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+            border-left: 3px solid var(--primary);
+        }
+
+        .scenario h3 {
+            color: var(--primary);
+            margin-top: 0;
+        }
+
+        .workflow {
+            margin: 2rem 0;
+        }
+
+        .workflow-step {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        .workflow-step::before {
+            content: '';
+            position: absolute;
+            left: 19px;
+            top: 45px;
+            bottom: -25px;
+            width: 2px;
+            background: rgba(0, 212, 255, 0.2);
+        }
+
+        .workflow-step:last-child::before {
+            display: none;
+        }
+
+        .step-number {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: #000;
+            flex-shrink: 0;
+            z-index: 1;
+        }
+
+        .step-content {
+            flex: 1;
+        }
+
+        .step-content h4 {
+            margin-top: 0.5rem;
+            color: var(--text);
+        }
+
+        .tags {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-top: 1rem;
+        }
+
+        .tag {
+            padding: 0.25rem 0.75rem;
+            background: rgba(0, 212, 255, 0.1);
+            border: 1px solid rgba(0, 212, 255, 0.3);
+            border-radius: 20px;
+            font-size: 0.85rem;
+            color: var(--primary);
+        }
+
+        .results {
+            background: rgba(0, 255, 136, 0.05);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-top: 1.5rem;
+            border-left: 3px solid #00ff88;
+        }
+
+        .results h3 {
+            color: #00ff88;
+            margin-top: 0;
+        }
+
+        .stat-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .stat {
+            text-align: center;
+            padding: 1rem;
+            background: rgba(0, 212, 255, 0.05);
+            border-radius: 8px;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-top: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="navbar">
+            <div class="container">
+                <div class="nav-brand">
+                    <i class="fas fa-shield-alt"></i>
+                    <span>Penetration Test Suite</span>
+                </div>
+                <ul class="nav-menu">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="index.html#features">Features</a></li>
+                    <li><a href="documentation.html">Docs</a></li>
+                    <li><a href="theory.html">Theory</a></li>
+                    <li><a href="use-cases.html" class="active">Use Cases</a></li>
+                    <li><a href="https://github.com/samueldk12/penetration-test" target="_blank">
+                        <i class="fab fa-github"></i> GitHub
+                    </a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Use Cases Content -->
+    <div class="docs-container">
+        <aside class="docs-sidebar">
+            <nav class="docs-nav">
+                <h3>Use Cases</h3>
+                <ul>
+                    <li><a href="#bug-bounty">Bug Bounty Hunting</a></li>
+                    <li><a href="#enterprise">Enterprise Security</a></li>
+                    <li><a href="#startup">Startup Assessment</a></li>
+                    <li><a href="#red-team">Red Team Engagement</a></li>
+                    <li><a href="#compliance">Compliance Testing</a></li>
+                    <li><a href="#cicd">CI/CD Integration</a></li>
+                    <li><a href="#osint">OSINT Investigation</a></li>
+                    <li><a href="#education">Security Education</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="docs-content">
+            <h1><i class="fas fa-briefcase"></i> Real-World Use Cases</h1>
+            <p>Discover how security professionals use the Penetration Test Suite to solve real-world challenges.</p>
+
+            <!-- Bug Bounty Hunting -->
+            <div class="use-case" id="bug-bounty">
+                <div class="use-case-header">
+                    <div class="use-case-icon">
+                        <i class="fas fa-bug"></i>
+                    </div>
+                    <div>
+                        <h2>Bug Bounty Hunting</h2>
+                        <p>Maximizing findings in competitive bug bounty programs</p>
+                    </div>
+                </div>
+
+                <div class="use-case-meta">
+                    <div class="meta-item">
+                        <i class="fas fa-user"></i>
+                        <span>Bug Bounty Hunter</span>
+                    </div>
+                    <div class="meta-item">
+                        <i class="fas fa-clock"></i>
+                        <span>Continuous</span>
+                    </div>
+                    <div class="meta-item">
+                        <i class="fas fa-layer-group"></i>
+                        <span>Reconnaissance, Vulnerability Scanning</span>
+                    </div>
+                </div>
+
+                <div class="scenario">
+                    <h3><i class="fas fa-map-marked-alt"></i> Scenario</h3>
+                    <p>
+                        Alex is a bug bounty hunter who participates in programs on HackerOne and Bugcrowd.
+                        He needs to quickly identify attack surfaces and vulnerabilities across multiple targets
+                        while staying within program scope and avoiding rate limits.
+                    </p>
+                </div>
+
+                <div class="workflow">
+                    <h3><i class="fas fa-sitemap"></i> Workflow</h3>
+
+                    <div class="workflow-step">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <h4>Initial Reconnaissance</h4>
+                            <p>Run comprehensive subdomain enumeration and asset discovery:</p>
+                            <div class="code-block">
+                                <pre><code>python3 penetration-test.py scan target.com \
+  --plugins subdominator,dnsbruter,katana_crawler \
+  --threads 10 \
+  --save-to target-recon</code></pre>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="workflow-step">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <h4>Web Technology Detection</h4>
+                            <p>Identify technologies and potential vulnerabilities:</p>
+                            <div class="code-block">
+                                <pre><code>python3 penetration-test.py scan target.com \
+  --plugins whatweb,wafw00f,nikto_scanner \
+  --delay 1  # Respect rate limits</code></pre>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="workflow-step">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <h4>Automated Vulnerability Scanning</h4>
+                            <p>Run targeted vulnerability scans:</p>
+                            <div class="code-block">
+                                <pre><code>python3 penetration-test.py scan target.com \
+  --plugins nuclei_scanner,dalfox_xss,403_bypass \
+  --notify telegram  # Get instant alerts</code></pre>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="workflow-step">
+                        <div class="step-number">4</div>
+                        <div class="step-content">
+                            <h4>Generate Report</h4>
+                            <p>Create detailed report for submission:</p>
+                            <div class="code-block">
+                                <pre><code>python3 penetration-test.py report \
+  --severity critical,high \
+  --format markdown \
+  --output bounty-report.md</code></pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="results">
+                    <h3><i class="fas fa-trophy"></i> Results</h3>
+                    <div class="stat-grid">
+                        <div class="stat">
+                            <div class="stat-value">127</div>
+                            <div class="stat-label">Subdomains Found</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">23</div>
+                            <div class="stat-label">Vulnerabilities</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">$8,500</div>
+                            <div class="stat-label">Bounty Earned</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">4h</div>
+                            <div class="stat-label">Time Saved</div>
+                        </div>
+                    </div>
+                    <p style="margin-top: 1rem;">
+                        <strong>Key Finding:</strong> Discovered subdomain takeover vulnerability worth $2,500 and
+                        multiple XSS issues earning $6,000 in total bounties.
+                    </p>
+                </div>
+
+                <div class="tags">
+                    <span class="tag">Subdomain Enumeration</span>
+                    <span class="tag">XSS</span>
+                    <span class="tag">Subdomain Takeover</span>
+                    <span class="tag">Automation</span>
+                </div>
+            </div>
+
+            <!-- Enterprise Security Assessment -->
+            <div class="use-case" id="enterprise">
+                <div class="use-case-header">
+                    <div class="use-case-icon">
+                        <i class="fas fa-building"></i>
+                    </div>
+                    <div>
+                        <h2>Enterprise Security Assessment</h2>
+                        <p>Comprehensive security testing for large organizations</p>
+                    </div>
+                </div>
+
+                <div class="use-case-meta">
+                    <div class="meta-item">
+                        <i class="fas fa-user"></i>
+                        <span>Security Consultant</span>
+                    </div>
+                    <div class="meta-item">
+                        <i class="fas fa-clock"></i>
+                        <span>2-4 Weeks</span>
+                    </div>
+                    <div class="meta-item">
+                        <i class="fas fa-layer-group"></i>
+                        <span>Full Penetration Test</span>
+                    </div>
+                </div>
+
+                <div class="scenario">
+                    <h3><i class="fas fa-map-marked-alt"></i> Scenario</h3>
+                    <p>
+                        A security consulting firm is conducting an external penetration test for a Fortune 500
+                        company with over 50 domains and 500+ subdomains. The assessment requires comprehensive
+                        scanning, detailed reporting, and executive-level summaries.
+                    </p>
+                </div>
+
+                <div class="workflow">
+                    <h3><i class="fas fa-sitemap"></i> Workflow</h3>
+
+                    <div class="workflow-step">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <h4>Asset Discovery Phase</h4>
+                            <div class="code-block">
+                                <pre><code># Create target list
+cat > targets.txt <<EOF
+company.com
+subsidiary1.com
+subsidiary2.com
+...
+EOF
+
+# Comprehensive asset discovery
+python3 penetration-test.py scan \
+  --file targets.txt \
+  --categories recon \
+  --complete \
+  --threads 20</code></pre>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="workflow-step">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <h4>Vulnerability Assessment</h4>
+                            <div class="code-block">
+                                <pre><code># Scan all discovered assets
+python3 penetration-test.py scan \
+  --file discovered-assets.txt \
+  --categories vuln_scan \
+  --all-plugins \
+  --log-file enterprise-scan.log</code></pre>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="workflow-step">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <h4>Manual Verification</h4>
+                            <p>Review automated findings and conduct manual testing on high-value targets.</p>
+                        </div>
+                    </div>
+
+                    <div class="workflow-step">
+                        <div class="step-number">4</div>
+                        <div class="step-content">
+                            <h4>Comprehensive Reporting</h4>
+                            <div class="code-block">
+                                <pre><code># Generate multiple report formats
+python3 penetration-test.py report \
+  --type comprehensive \
+  --format html,pdf,json \
+  --severity all \
+  --output enterprise-report</code></pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="results">
+                    <h3><i class="fas fa-chart-line"></i> Results</h3>
+                    <div class="stat-grid">
+                        <div class="stat">
+                            <div class="stat-value">542</div>
+                            <div class="stat-label">Assets Scanned</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">87</div>
+                            <div class="stat-label">Vulnerabilities</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">12</div>
+                            <div class="stat-label">Critical Issues</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">60%</div>
+                            <div class="stat-label">Time Saved</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tags">
+                    <span class="tag">Enterprise</span>
+                    <span class="tag">External Testing</span>
+                    <span class="tag">Compliance</span>
+                    <span class="tag">Reporting</span>
+                </div>
+            </div>
+
+            <!-- Startup Security Assessment -->
+            <div class="use-case" id="startup">
+                <div class="use-case-header">
+                    <div class="use-case-icon">
+                        <i class="fas fa-rocket"></i>
+                    </div>
+                    <div>
+                        <h2>Startup Security Assessment</h2>
+                        <p>Fast-paced security testing for startups</p>
+                    </div>
+                </div>
+
+                <div class="use-case-meta">
+                    <div class="meta-item">
+                        <i class="fas fa-user"></i>
+                        <span>CTO / Security Engineer</span>
+                    </div>
+                    <div class="meta-item">
+                        <i class="fas fa-clock"></i>
+                        <span>1-2 Days</span>
+                    </div>
+                    <div class="meta-item">
+                        <i class="fas fa-layer-group"></i>
+                        <span>Quick Assessment</span>
+                    </div>
+                </div>
+
+                <div class="scenario">
+                    <h3><i class="fas fa-map-marked-alt"></i> Scenario</h3>
+                    <p>
+                        A fintech startup is preparing for Series A funding and needs to demonstrate security
+                        due diligence to investors. They need a quick but thorough security assessment before
+                        the investor meeting next week.
+                    </p>
+                </div>
+
+                <div class="workflow">
+                    <h3><i class="fas fa-sitemap"></i> Workflow</h3>
+
+                    <div class="workflow-step">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <h4>Rapid Assessment</h4>
+                            <div class="code-block">
+                                <pre><code>python3 penetration-test.py scan startup.com \
+  --all-plugins \
+  --fast \
+  --notify email</code></pre>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="workflow-step">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <h4>Priority Fixes</h4>
+                            <p>Focus on critical and high severity issues for immediate remediation.</p>
+                        </div>
+                    </div>
+
+                    <div class="workflow-step">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <h4>Executive Report</h4>
+                            <div class="code-block">
+                                <pre><code>python3 penetration-test.py report \
+  --severity critical,high \
+  --format pdf \
+  --executive-summary</code></pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="results">
+                    <h3><i class="fas fa-check-circle"></i> Results</h3>
+                    <p>
+                        Found and fixed 3 critical vulnerabilities in 48 hours. Successfully demonstrated security
+                        posture to investors, securing $5M Series A funding.
+                    </p>
+                </div>
+
+                <div class="tags">
+                    <span class="tag">Startup</span>
+                    <span class="tag">Rapid Assessment</span>
+                    <span class="tag">Investor Due Diligence</span>
+                </div>
+            </div>
+
+            <!-- Red Team Engagement -->
+            <div class="use-case" id="red-team">
+                <div class="use-case-header">
+                    <div class="use-case-icon">
+                        <i class="fas fa-user-ninja"></i>
+                    </div>
+                    <div>
+                        <h2>Red Team Engagement</h2>
+                        <p>Advanced persistent threat simulation</p>
+                    </div>
+                </div>
+
+                <div class="use-case-meta">
+                    <div class="meta-item">
+                        <i class="fas fa-user"></i>
+                        <span>Red Team Operator</span>
+                    </div>
+                    <div class="meta-item">
+                        <i class="fas fa-clock"></i>
+                        <span>4-8 Weeks</span>
+                    </div>
+                    <div class="meta-item">
+                        <i class="fas fa-layer-group"></i>
+                        <span>APT Simulation</span>
+                    </div>
+                </div>
+
+                <div class="scenario">
+                    <h3><i class="fas fa-map-marked-alt"></i> Scenario</h3>
+                    <p>
+                        A financial institution wants to test their security operations center (SOC) and incident
+                        response capabilities against a sophisticated attacker. The red team needs to conduct
+                        stealthy reconnaissance and identify entry points.
+                    </p>
+                </div>
+
+                <div class="workflow">
+                    <h3><i class="fas fa-sitemap"></i> Workflow</h3>
+
+                    <div class="workflow-step">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <h4>OSINT & Passive Reconnaissance</h4>
+                            <div class="code-block">
+                                <pre><code>python3 penetration-test.py osint target.com \
+  --deep \
+  --passive-only \
+  --no-logs  # Avoid detection</code></pre>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="workflow-step">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <h4>Slow and Stealthy Scanning</h4>
+                            <div class="code-block">
+                                <pre><code>python3 penetration-test.py scan target.com \
+  --plugins subdominator \
+  --delay 10 \
+  --threads 1 \
+  --stealth-mode</code></pre>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="workflow-step">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <h4>Initial Access</h4>
+                            <p>Use discovered information for social engineering and initial compromise.</p>
+                        </div>
+                    </div>
+
+                    <div class="workflow-step">
+                        <div class="step-number">4</div>
+                        <div class="step-content">
+                            <h4>Post-Engagement Report</h4>
+                            <p>Document TTPs, detection gaps, and recommendations for blue team.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="results">
+                    <h3><i class="fas fa-shield-alt"></i> Results</h3>
+                    <p>
+                        Successfully gained initial access via spear-phishing using information gathered from OSINT.
+                        Identified 15 detection gaps and provided comprehensive recommendations for SOC improvement.
+                    </p>
+                </div>
+
+                <div class="tags">
+                    <span class="tag">Red Team</span>
+                    <span class="tag">OSINT</span>
+                    <span class="tag">Stealth</span>
+                    <span class="tag">APT Simulation</span>
+                </div>
+            </div>
+
+            <!-- Compliance Testing -->
+            <div class="use-case" id="compliance">
+                <div class="use-case-header">
+                    <div class="use-case-icon">
+                        <i class="fas fa-clipboard-check"></i>
+                    </div>
+                    <div>
+                        <h2>Compliance Testing (PCI-DSS)</h2>
+                        <p>Meeting regulatory security requirements</p>
+                    </div>
+                </div>
+
+                <div class="use-case-meta">
+                    <div class="meta-item">
+                        <i class="fas fa-user"></i>
+                        <span>Compliance Officer</span>
+                    </div>
+                    <div class="meta-item">
+                        <i class="fas fa-clock"></i>
+                        <span>Quarterly</span>
+                    </div>
+                    <div class="meta-item">
+                        <i class="fas fa-layer-group"></i>
+                        <span>Compliance Scan</span>
+                    </div>
+                </div>
+
+                <div class="scenario">
+                    <h3><i class="fas fa-map-marked-alt"></i> Scenario</h3>
+                    <p>
+                        An e-commerce company needs quarterly vulnerability scans to maintain PCI-DSS compliance.
+                        They need automated scanning with detailed reports for auditors.
+                    </p>
+                </div>
+
+                <div class="workflow">
+                    <h3><i class="fas fa-sitemap"></i> Workflow</h3>
+
+                    <div class="workflow-step">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <h4>Scheduled Compliance Scan</h4>
+                            <div class="code-block">
+                                <pre><code># Add to crontab for quarterly execution
+0 0 1 */3 * cd /path/to/tool && \
+  python3 penetration-test.py scan \
+    --file pci-scope.txt \
+    --compliance pci-dss \
+    --report-format pdf \
+    --notify email</code></pre>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="workflow-step">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <h4>Vulnerability Remediation</h4>
+                            <p>Fix identified vulnerabilities within SLA timeframes.</p>
+                        </div>
+                    </div>
+
+                    <div class="workflow-step">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <h4>Auditor Report</h4>
+                            <p>Generate compliance-ready reports for submission to auditors.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tags">
+                    <span class="tag">PCI-DSS</span>
+                    <span class="tag">Compliance</span>
+                    <span class="tag">Quarterly</span>
+                    <span class="tag">Automated</span>
+                </div>
+            </div>
+
+            <!-- CI/CD Integration -->
+            <div class="use-case" id="cicd">
+                <div class="use-case-header">
+                    <div class="use-case-icon">
+                        <i class="fas fa-code-branch"></i>
+                    </div>
+                    <div>
+                        <h2>CI/CD Security Integration</h2>
+                        <p>Shift-left security in development pipeline</p>
+                    </div>
+                </div>
+
+                <div class="use-case-meta">
+                    <div class="meta-item">
+                        <i class="fas fa-user"></i>
+                        <span>DevSecOps Engineer</span>
+                    </div>
+                    <div class="meta-item">
+                        <i class="fas fa-clock"></i>
+                        <span>Every Deployment</span>
+                    </div>
+                    <div class="meta-item">
+                        <i class="fas fa-layer-group"></i>
+                        <span>Automated Security</span>
+                    </div>
+                </div>
+
+                <div class="scenario">
+                    <h3><i class="fas fa-map-marked-alt"></i> Scenario</h3>
+                    <p>
+                        A SaaS company wants to integrate security testing into their CI/CD pipeline to catch
+                        vulnerabilities before they reach production.
+                    </p>
+                </div>
+
+                <div class="workflow">
+                    <h3><i class="fas fa-sitemap"></i> Workflow</h3>
+
+                    <div class="workflow-step">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <h4>GitHub Actions Workflow</h4>
+                            <div class="code-block">
+                                <pre><code>name: Security Scan
+on: [push, pull_request]
+jobs:
+  security:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Run Security Scan
+        run: |
+          python3 penetration-test.py scan \
+            ${{ secrets.STAGING_URL }} \
+            --plugins nuclei_scanner,xss_detector \
+            --severity critical,high \
+            --fail-on-critical
+      - name: Upload Report
+        if: always()
+        uses: actions/upload-artifact@v2
+        with:
+          name: security-report
+          path: results/</code></pre>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="workflow-step">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <h4>Block Deployment on Critical</h4>
+                            <p>Pipeline fails if critical vulnerabilities are found, preventing deployment.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tags">
+                    <span class="tag">CI/CD</span>
+                    <span class="tag">DevSecOps</span>
+                    <span class="tag">Automation</span>
+                    <span class="tag">GitHub Actions</span>
+                </div>
+            </div>
+
+            <!-- OSINT Investigation -->
+            <div class="use-case" id="osint">
+                <div class="use-case-header">
+                    <div class="use-case-icon">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <div>
+                        <h2>OSINT Investigation</h2>
+                        <p>Intelligence gathering and threat research</p>
+                    </div>
+                </div>
+
+                <div class="use-case-meta">
+                    <div class="meta-item">
+                        <i class="fas fa-user"></i>
+                        <span>Threat Intelligence Analyst</span>
+                    </div>
+                    <div class="meta-item">
+                        <i class="fas fa-clock"></i>
+                        <span>Ad-hoc</span>
+                    </div>
+                    <div class="meta-item">
+                        <i class="fas fa-layer-group"></i>
+                        <span>Intelligence Gathering</span>
+                    </div>
+                </div>
+
+                <div class="scenario">
+                    <h3><i class="fas fa-map-marked-alt"></i> Scenario</h3>
+                    <p>
+                        A security analyst needs to investigate a potentially malicious domain that appeared
+                        in phishing emails targeting their organization.
+                    </p>
+                </div>
+
+                <div class="workflow">
+                    <h3><i class="fas fa-sitemap"></i> Workflow</h3>
+
+                    <div class="workflow-step">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <h4>Deep OSINT</h4>
+                            <div class="code-block">
+                                <pre><code>python3 penetration-test.py osint suspicious-domain.com \
+  --deep \
+  --passive \
+  --output investigation-report</code></pre>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="workflow-step">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <h4>Infrastructure Analysis</h4>
+                            <p>Analyze hosting, registration, SSL certificates, and related infrastructure.</p>
+                        </div>
+                    </div>
+
+                    <div class="workflow-step">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <h4>Threat Intelligence Report</h4>
+                            <p>Document findings and share with security team and threat intel platforms.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tags">
+                    <span class="tag">OSINT</span>
+                    <span class="tag">Threat Intel</span>
+                    <span class="tag">Investigation</span>
+                    <span class="tag">Phishing</span>
+                </div>
+            </div>
+
+            <!-- Security Education -->
+            <div class="use-case" id="education">
+                <div class="use-case-header">
+                    <div class="use-case-icon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <div>
+                        <h2>Security Education & Training</h2>
+                        <p>Learning penetration testing and security concepts</p>
+                    </div>
+                </div>
+
+                <div class="use-case-meta">
+                    <div class="meta-item">
+                        <i class="fas fa-user"></i>
+                        <span>Security Student / Trainer</span>
+                    </div>
+                    <div class="meta-item">
+                        <i class="fas fa-clock"></i>
+                        <span>Ongoing</span>
+                    </div>
+                    <div class="meta-item">
+                        <i class="fas fa-layer-group"></i>
+                        <span>Learning Platform</span>
+                    </div>
+                </div>
+
+                <div class="scenario">
+                    <h3><i class="fas fa-map-marked-alt"></i> Scenario</h3>
+                    <p>
+                        A university cybersecurity program uses the tool to teach students practical penetration
+                        testing skills in a controlled lab environment.
+                    </p>
+                </div>
+
+                <div class="workflow">
+                    <h3><i class="fas fa-sitemap"></i> Workflow</h3>
+
+                    <div class="workflow-step">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <h4>Lab Setup</h4>
+                            <p>Create vulnerable test environments for students to practice on.</p>
+                        </div>
+                    </div>
+
+                    <div class="workflow-step">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <h4>Guided Exercises</h4>
+                            <p>Students follow tutorials to learn reconnaissance, scanning, and exploitation.</p>
+                        </div>
+                    </div>
+
+                    <div class="workflow-step">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <h4>Capture The Flag (CTF)</h4>
+                            <p>Students compete in CTF challenges using the tool's capabilities.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tags">
+                    <span class="tag">Education</span>
+                    <span class="tag">Training</span>
+                    <span class="tag">CTF</span>
+                    <span class="tag">Lab</span>
+                </div>
+            </div>
+
+            <div class="alert alert-info" style="margin-top: 3rem;">
+                <strong>💡 Have a use case to share?</strong> We'd love to feature your story! Submit it on our <a href="https://github.com/samueldk12/penetration-test">GitHub</a>.
+            </div>
+        </main>
+    </div>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
