@@ -1,0 +1,63 @@
+# Core dependencies
+requests>=2.31.0
+beautifulsoup4>=4.12.0
+pyyaml>=6.0
+
+# AWS SDK
+boto3>=1.28.0
+botocore>=1.31.0
+
+# Azure SDK
+azure-identity>=1.14.0
+azure-mgmt-resource>=23.0.0
+azure-mgmt-storage>=21.0.0
+azure-mgmt-compute>=30.0.0
+azure-core>=1.29.0
+
+# GCP SDK
+google-cloud-storage>=2.10.0
+google-auth>=2.23.0
+google-api-python-client>=2.100.0
+
+# HTML parsing
+lxml>=4.9.3
+html5lib>=1.1
+
+# Security tools
+cryptography>=41.0.0
+pyOpenSSL>=23.2.0
+
+# Network tools
+dnspython>=2.4.0
+python-whois>=0.8.0
+
+# Optional but recommended
+colorama>=0.4.6
+tqdm>=4.66.0
+tabulate>=0.9.0
+
+# For better JSON handling
+ujson>=5.8.0
+
+# HTTP/2 support
+httpx>=0.25.0
+
+# Async support
+aiohttp>=3.8.5
+
+# Database support (for connection string testing)
+pymongo>=4.5.0
+psycopg2-binary>=2.9.7
+mysql-connector-python>=8.1.0
+redis>=5.0.0
+
+# For advanced scanning
+python-nmap>=0.7.1
+scapy>=2.5.0
+
+# For report generation
+jinja2>=3.1.2
+markdown>=3.5.0
+
+# API testing
+python-dotenv>=1.0.0

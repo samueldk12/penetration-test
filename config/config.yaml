@@ -1,0 +1,65 @@
+# Cloud Pentest Framework Configuration
+
+# Logging settings
+log_level: INFO
+log_file: logs/pentest.log
+
+# Report settings
+report_dir: reports
+
+# Performance settings
+max_threads: 5
+timeout: 30
+
+# Scanner settings
+max_scan_depth: 3
+max_files_to_scan: 1000
+follow_redirects: true
+verify_ssl: false
+
+# Tool enablement
+enable_nmap: true
+enable_sqlmap: false  # Disabled by default - requires explicit authorization
+enable_nikto: true
+enable_nuclei: true
+enable_dirb: true
+enable_wpscan: true
+
+# API key testing
+test_aws_keys: true
+test_azure_keys: true
+test_gcp_keys: true
+test_generic_keys: true
+
+# Cloud provider regions (for testing)
+aws_regions:
+  - us-east-1
+  - us-west-2
+  - eu-west-1
+
+# Wordlists (customize paths)
+wordlist_directories: /usr/share/wordlists/dirb/common.txt
+wordlist_files: /usr/share/wordlists/rockyou.txt
+
+# Rate limiting
+requests_per_second: 10
+max_concurrent_requests: 5
+
+# Excluded directories (won't be scanned)
+exclude_dirs:
+  - node_modules
+  - vendor
+  - .git
+  - venv
+  - __pycache__
+
+# Excluded file extensions (won't be scanned)
+exclude_extensions:
+  - .jpg
+  - .jpeg
+  - .png
+  - .gif
+  - .ico
+  - .woff
+  - .ttf
+  - .eot
