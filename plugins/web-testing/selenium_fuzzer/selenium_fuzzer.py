@@ -42,6 +42,7 @@ class SeleniumFuzzer:
         self.check_errors = self.options.get('check_errors', True)
         self.check_sql = self.options.get('check_sql', True)
         self.check_xss = self.options.get('check_xss', True)
+        self.check_iframe = self.options.get('check_iframe', True)
 
         self.driver = None
         self.wordlist = []
@@ -56,7 +57,8 @@ class SeleniumFuzzer:
                 'tests': 0,
                 'errors_found': 0,
                 'sql_errors': 0,
-                'xss_reflected': 0
+                'xss_reflected': 0,
+                'iframe_injected': 0
             }
         }
 
@@ -101,7 +103,7 @@ class SeleniumFuzzer:
 
             # Try to load from wordlists directory
             wordlist_dir = self.options.get('wordlist_dir', 'wordlists')
-            default_lists = ['sqli.txt', 'xss.txt', 'lfi.txt', 'rce.txt']
+            default_lists = ['sqli.txt', 'xss.txt', 'lfi.txt', 'rce.txt', 'iframe.txt']
 
             for wordlist_file in default_lists:
                 possible_paths = [
@@ -271,6 +273,57 @@ class SeleniumFuzzer:
                                     'description': f'Payload reflected in {tag.name} {attr} attribute'
                                 })
                                 break
+
+            # Check for iframe injection
+            if self.check_iframe:
+                if 'iframe' in payload.lower() or 'frame' in payload.lower():
+                    soup = BeautifulSoup(self.driver.page_source, 'html.parser')
+
+                    # Check for injected iframes
+                    iframes = soup.find_all('iframe')
+                    for iframe in iframes:
+                        iframe_str = str(iframe).lower()
+                        # Check for dangerous iframe attributes
+                        if any(indicator in iframe_str for indicator in ['javascript:', 'data:text/html', 'srcdoc=', 'onload=', 'onerror=']):
+                            # Check if this iframe contains our payload
+                            if payload.lower() in self.driver.page_source.lower():
+                                findings.append({
+                                    'type': 'iframe_injection',
+                                    'severity': 'high',
+                                    'payload': payload,
+                                    'url': url,
+                                    'iframe_src': iframe.get('src', 'N/A'),
+                                    'description': 'Iframe injection detected - potentially dangerous iframe injected'
+                                })
+                                self.results['stats']['iframe_injected'] += 1
+                                break
+
+                    # Check for clickjacking vulnerability (lack of X-Frame-Options)
+                    try:
+                        script = """
+                        return (async () => {
+                            const response = await fetch(window.location.href);
+                            return {
+                                'x-frame-options': response.headers.get('x-frame-options'),
+                                'csp': response.headers.get('content-security-policy')
+                            };
+                        })();
+                        """
+                        headers = self.driver.execute_script(script)
+                        if headers:
+                            x_frame = headers.get('x-frame-options')
+                            csp = headers.get('csp')
+
+                            if not x_frame and (not csp or 'frame-ancestors' not in str(csp).lower()):
+                                findings.append({
+                                    'type': 'clickjacking',
+                                    'severity': 'medium',
+                                    'payload': payload,
+                                    'url': url,
+                                    'description': 'No X-Frame-Options or CSP frame-ancestors header - clickjacking possible'
+                                })
+                    except:
+                        pass
 
             # Take screenshot if enabled
             if self.screenshot and findings:

