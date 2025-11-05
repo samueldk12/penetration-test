@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Best Practices - Security Testing Guidelines</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/docs.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="navbar">
+            <div class="container">
+                <div class="nav-brand">
+                    <i class="fas fa-shield-alt"></i>
+                    <span>Penetration Test Suite</span>
+                </div>
+                <ul class="nav-menu">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="index.html#features">Features</a></li>
+                    <li><a href="documentation.html">Docs</a></li>
+                    <li><a href="theory.html">Theory</a></li>
+                    <li><a href="best-practices.html" class="active">Best Practices</a></li>
+                    <li><a href="https://github.com/samueldk12/penetration-test" target="_blank">
+                        <i class="fab fa-github"></i> GitHub
+                    </a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Content -->
+    <div class="docs-container">
+        <aside class="docs-sidebar">
+            <nav class="docs-nav">
+                <h3>Best Practices</h3>
+                <ul>
+                    <li><a href="#authorization">Authorization</a></li>
+                    <li><a href="#reconnaissance">Reconnaissance</a></li>
+                    <li><a href="#scanning">Scanning</a></li>
+                    <li><a href="#reporting">Reporting</a></li>
+                    <li><a href="#data-handling">Data Handling</a></li>
+                    <li><a href="#tool-usage">Tool Usage</a></li>
+                    <li><a href="#performance">Performance</a></li>
+                    <li><a href="#security">Security</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="docs-content">
+            <h1><i class="fas fa-check-circle"></i> Security Testing Best Practices</h1>
+            <p>Professional guidelines for effective and responsible penetration testing.</p>
+
+            <!-- Authorization -->
+            <section id="authorization" class="doc-section">
+                <h2><i class="fas fa-file-contract"></i> Authorization & Scope</h2>
+                
+                <div class="alert alert-danger">
+                    <strong>⚠️ CRITICAL:</strong> Never perform security testing without explicit written authorization.
+                </div>
+
+                <div class="concept-card">
+                    <h3>Before You Begin</h3>
+                    <ul>
+                        <li>✅ Obtain written authorization (contract, letter, email)</li>
+                        <li>✅ Clearly define scope (IPs, domains, systems)</li>
+                        <li>✅ Agree on testing windows and schedules</li>
+                        <li>✅ Establish emergency contact procedures</li>
+                        <li>✅ Define rules of engagement</li>
+                        <li>✅ Document exclusions and off-limits areas</li>
+                        <li>✅ Agree on reporting timeline and format</li>
+                        <li>✅ Establish communication protocol</li>
+                    </ul>
+                </div>
+
+                <div class="concept-card">
+                    <h3>Scope Management</h3>
+                    <div class="code-block">
+                        <pre><code># Create scope file
+cat > scope.txt <<EOF
+# In-scope targets
+example.com
+*.example.com
+192.168.1.0/24
+
+# Excluded
+admin.example.com
+production-db.example.com
+EOF
+
+# Verify scope before scanning
+python3 penetration-test.py scan --file scope.txt --verify-scope</code></pre>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Reconnaissance -->
+            <section id="reconnaissance" class="doc-section">
+                <h2><i class="fas fa-binoculars"></i> Reconnaissance Best Practices</h2>
+
+                <div class="concept-card">
+                    <h3>Start Passive</h3>
+                    <p>Always begin with passive reconnaissance to minimize detection:</p>
+                    <ul>
+                        <li>Use OSINT techniques first</li>
+                        <li>Gather publicly available information</li>
+                        <li>Check search engines, social media, public databases</li>
+                        <li>Review company websites, job postings, documents</li>
+                    </ul>
+                    <div class="code-block">
+                        <pre><code># Passive OSINT first
+python3 penetration-test.py osint example.com --passive --deep
+
+# Then active reconnaissance
+python3 penetration-test.py scan example.com --categories recon</code></pre>
+                    </div>
+                </div>
+
+                <div class="concept-card">
+                    <h3>Document Everything</h3>
+                    <ul>
+                        <li>📝 Keep detailed notes of all findings</li>
+                        <li>📸 Take screenshots as evidence</li>
+                        <li>⏰ Record timestamps of activities</li>
+                        <li>🔗 Save URLs and specific requests</li>
+                        <li>💾 Backup all scan results</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Scanning -->
+            <section id="scanning" class="doc-section">
+                <h2><i class="fas fa-radar"></i> Scanning Best Practices</h2>
+
+                <div class="concept-card">
+                    <h3>Progressive Approach</h3>
+                    <p>Start gentle, increase intensity gradually:</p>
+                    <div class="code-block">
+                        <pre><code># 1. Start with non-intrusive scans
+python3 penetration-test.py scan example.com --plugins subdominator,whatweb
+
+# 2. Increase to moderate scanning
+python3 penetration-test.py scan example.com --categories recon
+
+# 3. Finally, full vulnerability scanning
+python3 penetration-test.py scan example.com --all-plugins</code></pre>
+                    </div>
+                </div>
+
+                <div class="concept-card">
+                    <h3>Rate Limiting & Respect</h3>
+                    <ul>
+                        <li>⏱️ Add delays between requests</li>
+                        <li>🔢 Limit concurrent threads</li>
+                        <li>🚫 Avoid DoS conditions</li>
+                        <li>⏰ Scan during off-peak hours when possible</li>
+                        <li>📊 Monitor target system health</li>
+                    </ul>
+                    <div class="code-block">
+                        <pre><code># Good practices
+python3 penetration-test.py scan example.com \
+  --threads 5 \
+  --delay 2 \
+  --timeout 10 \
+  --respect-robots</code></pre>
+                    </div>
+                </div>
+
+                <div class="concept-card">
+                    <h3>Avoid Common Mistakes</h3>
+                    <ul>
+                        <li>❌ Don't scan outside defined scope</li>
+                        <li>❌ Don't use default wordlists blindly</li>
+                        <li>❌ Don't ignore false positives</li>
+                        <li>❌ Don't run all plugins without understanding them</li>
+                        <li>❌ Don't forget to clean up test data</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Reporting -->
+            <section id="reporting" class="doc-section">
+                <h2><i class="fas fa-file-alt"></i> Reporting Best Practices</h2>
+
+                <div class="concept-card">
+                    <h3>Report Structure</h3>
+                    <p>Every report should include:</p>
+                    <ol>
+                        <li><strong>Executive Summary</strong> - High-level overview for management</li>
+                        <li><strong>Methodology</strong> - How testing was conducted</li>
+                        <li><strong>Findings</strong> - Detailed vulnerability information</li>
+                        <li><strong>Risk Assessment</strong> - Impact and likelihood ratings</li>
+                        <li><strong>Recommendations</strong> - Actionable remediation steps</li>
+                        <li><strong>Appendices</strong> - Technical details, evidence, references</li>
+                    </ol>
+                </div>
+
+                <div class="concept-card">
+                    <h3>Writing Findings</h3>
+                    <p>For each vulnerability, include:</p>
+                    <ul>
+                        <li>📋 <strong>Title:</strong> Clear, descriptive name</li>
+                        <li>⚠️ <strong>Severity:</strong> Critical, High, Medium, Low</li>
+                        <li>📝 <strong>Description:</strong> What is the vulnerability?</li>
+                        <li>🎯 <strong>Location:</strong> Where was it found?</li>
+                        <li>💥 <strong>Impact:</strong> What could an attacker do?</li>
+                        <li>🔬 <strong>Proof of Concept:</strong> Steps to reproduce</li>
+                        <li>🛠️ <strong>Remediation:</strong> How to fix it</li>
+                        <li>📚 <strong>References:</strong> CVEs, articles, documentation</li>
+                    </ul>
+                </div>
+
+                <div class="concept-card">
+                    <h3>Report Generation</h3>
+                    <div class="code-block">
+                        <pre><code># Generate comprehensive report
+python3 penetration-test.py report \
+  --type comprehensive \
+  --format html,pdf,json \
+  --severity all \
+  --output pentest-report
+
+# Filter for executive summary
+python3 penetration-test.py report \
+  --severity critical,high \
+  --format pdf \
+  --executive-summary</code></pre>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Data Handling -->
+            <section id="data-handling" class="doc-section">
+                <h2><i class="fas fa-database"></i> Data Handling & Privacy</h2>
+
+                <div class="concept-card">
+                    <h3>Sensitive Data</h3>
+                    <ul>
+                        <li>🔒 Encrypt all scan results and reports</li>
+                        <li>🗑️ Securely delete data after engagement</li>
+                        <li>📧 Use secure channels for sharing findings</li>
+                        <li>👤 Anonymize personal data in reports</li>
+                        <li>🚫 Never exfiltrate production data</li>
+                        <li>📜 Follow data protection regulations (GDPR, etc.)</li>
+                    </ul>
+                </div>
+
+                <div class="concept-card">
+                    <h3>Evidence Management</h3>
+                    <div class="code-block">
+                        <pre><code># Encrypt sensitive results
+tar czf results.tar.gz results/
+gpg -c results.tar.gz
+rm results.tar.gz
+
+# Secure deletion after engagement
+shred -vfz -n 10 results/*
+rm -rf results/</code></pre>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Tool Usage -->
+            <section id="tool-usage" class="doc-section">
+                <h2><i class="fas fa-tools"></i> Tool Usage Best Practices</h2>
+
+                <div class="concept-card">
+                    <h3>Plugin Selection</h3>
+                    <ul>
+                        <li>✅ Understand what each plugin does</li>
+                        <li>✅ Use specific plugins for targeted testing</li>
+                        <li>✅ Test plugins in lab environment first</li>
+                        <li>✅ Review plugin output for accuracy</li>
+                        <li>✅ Manually verify automated findings</li>
+                    </ul>
+                </div>
+
+                <div class="concept-card">
+                    <h3>Verify Results</h3>
+                    <p><strong>Always manually verify automated findings!</strong></p>
+                    <ul>
+                        <li>🔍 False positives are common</li>
+                        <li>🎯 Understand the vulnerability before reporting</li>
+                        <li>💡 Provide proof of concept for critical findings</li>
+                        <li>📊 Use multiple tools for confirmation</li>
+                    </ul>
+                </div>
+
+                <div class="concept-card">
+                    <h3>Logging & Debugging</h3>
+                    <div class="code-block">
+                        <pre><code># Enable verbose logging
+python3 penetration-test.py scan example.com \
+  --debug \
+  --verbose \
+  --log-file scan-$(date +%Y%m%d).log
+
+# Review logs regularly
+tail -f scan-*.log</code></pre>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Performance -->
+            <section id="performance" class="doc-section">
+                <h2><i class="fas fa-tachometer-alt"></i> Performance Optimization</h2>
+
+                <div class="concept-card">
+                    <h3>Optimize Scanning</h3>
+                    <ul>
+                        <li>🎯 <strong>Target Specific:</strong> Use plugins relevant to target</li>
+                        <li>🧵 <strong>Threading:</strong> Balance speed vs. stability</li>
+                        <li>⏱️ <strong>Timeouts:</strong> Set appropriate values</li>
+                        <li>📦 <strong>Batch Processing:</strong> Group similar targets</li>
+                        <li>🔄 <strong>Resume:</strong> Save state for long scans</li>
+                    </ul>
+                    <div class="code-block">
+                        <pre><code># Optimized scan
+python3 penetration-test.py scan targets.txt \
+  --threads 10 \
+  --timeout 5 \
+  --batch-size 20 \
+  --resume scan-state.json</code></pre>
+                    </div>
+                </div>
+
+                <div class="concept-card">
+                    <h3>Resource Management</h3>
+                    <ul>
+                        <li>💾 Monitor disk space for results</li>
+                        <li>🧠 Watch memory usage for large scans</li>
+                        <li>🌐 Consider network bandwidth limits</li>
+                        <li>⚡ Use caching when possible</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Security -->
+            <section id="security" class="doc-section">
+                <h2><i class="fas fa-lock"></i> Tool Security</h2>
+
+                <div class="concept-card">
+                    <h3>Secure Your Testing Environment</h3>
+                    <ul>
+                        <li>🔐 Use VPN or dedicated network for testing</li>
+                        <li>🖥️ Keep testing machines isolated</li>
+                        <li>🔄 Regularly update the tool and plugins</li>
+                        <li>🔑 Secure API keys and credentials</li>
+                        <li>🗂️ Use dedicated directories for sensitive data</li>
+                    </ul>
+                </div>
+
+                <div class="concept-card">
+                    <h3>API Keys & Credentials</h3>
+                    <div class="code-block">
+                        <pre><code># Store keys securely
+export SHODAN_API_KEY="your-key-here"
+export TELEGRAM_BOT_TOKEN="your-token"
+
+# Or use configuration file (encrypted)
+python3 penetration-test.py config set --key shodan_api --value "key" --encrypt
+
+# Never commit credentials to git!
+echo ".env" >> .gitignore
+echo "config/keys.json" >> .gitignore</code></pre>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Summary -->
+            <div class="concept-card" style="margin-top: 3rem;">
+                <h2><i class="fas fa-star"></i> Golden Rules</h2>
+                <ol style="font-size: 1.1rem; line-height: 2;">
+                    <li><strong>Always get authorization in writing</strong></li>
+                    <li><strong>Stay within defined scope</strong></li>
+                    <li><strong>Document everything</strong></li>
+                    <li><strong>Verify automated findings manually</strong></li>
+                    <li><strong>Report responsibly and professionally</strong></li>
+                    <li><strong>Protect sensitive data</strong></li>
+                    <li><strong>Never cause harm or disruption</strong></li>
+                    <li><strong>Continuously learn and improve</strong></li>
+                </ol>
+            </div>
+
+            <div class="alert alert-info" style="margin-top: 2rem;">
+                <strong>💡 Remember:</strong> Great power comes with great responsibility. Use these tools ethically and professionally.
+            </div>
+        </main>
+    </div>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
