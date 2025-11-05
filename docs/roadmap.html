@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roadmap - Penetration Test Suite</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/docs.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .roadmap-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+        .timeline {
+            position: relative;
+            padding: 2rem 0;
+        }
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(180deg, var(--primary), var(--secondary));
+        }
+        .milestone {
+            position: relative;
+            margin-bottom: 4rem;
+        }
+        .milestone-content {
+            background: var(--dark-light);
+            border-radius: 12px;
+            padding: 2rem;
+            width: calc(50% - 4rem);
+            border: 1px solid rgba(0,212,255,0.2);
+            transition: all 0.3s;
+        }
+        .milestone-content:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0,212,255,0.3);
+        }
+        .milestone:nth-child(odd) .milestone-content {
+            margin-left: 0;
+        }
+        .milestone:nth-child(even) .milestone-content {
+            margin-left: calc(50% + 4rem);
+        }
+        .milestone-marker {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--dark);
+            font-weight: bold;
+            z-index: 1;
+        }
+        .milestone-date {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            top: 50px;
+            background: var(--primary);
+            color: var(--dark);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.9rem;
+            white-space: nowrap;
+        }
+        .milestone-title {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1.8rem;
+        }
+        .milestone-status {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+        .status-completed { background: var(--success); color: var(--dark); }
+        .status-in-progress { background: var(--warning); color: var(--dark); }
+        .status-planned { background: rgba(0,212,255,0.2); color: var(--primary); border: 1px solid var(--primary); }
+        .feature-list {
+            list-style: none;
+            padding: 0;
+        }
+        .feature-list li {
+            padding: 0.75rem 0;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            color: var(--text-muted);
+        }
+        .feature-list i {
+            color: var(--success);
+        }
+        .progress-bar-container {
+            background: rgba(0,212,255,0.1);
+            height: 8px;
+            border-radius: 10px;
+            margin: 1rem 0;
+            overflow: hidden;
+        }
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            transition: width 0.3s;
+        }
+        .votes {
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .vote-btn {
+            background: transparent;
+            border: 1px solid var(--primary);
+            color: var(--primary);
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .vote-btn:hover {
+            background: var(--primary);
+            color: var(--dark);
+        }
+        @media (max-width: 768px) {
+            .timeline::before { left: 20px; }
+            .milestone-content {
+                width: calc(100% - 60px);
+                margin-left: 60px !important;
+            }
+            .milestone-marker { left: 20px; }
+            .milestone-date { left: 20px; transform: none; }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <nav class="navbar">
+            <div class="container">
+                <div class="nav-brand">
+                    <i class="fas fa-shield-alt"></i>
+                    <span>Penetration Test Suite</span>
+                </div>
+                <button class="mobile-menu-toggle" id="mobile-menu-toggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <ul class="nav-menu" id="nav-menu">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="documentation.html">Docs</a></li>
+                    <li><a href="tutorials.html">Tutorials</a></li>
+                    <li><a href="changelog.html">Changelog</a></li>
+                    <li><a href="roadmap.html" class="active">Roadmap</a></li>
+                    <li><a href="https://github.com/samueldk12/penetration-test" target="_blank">
+                        <i class="fab fa-github"></i> GitHub
+                    </a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <div class="roadmap-container">
+        <div class="section-header" style="text-align: center; margin-bottom: 4rem;">
+            <h1 class="section-title">
+                <i class="fas fa-road"></i> Product Roadmap
+            </h1>
+            <p class="section-subtitle">Our vision for the future of security testing</p>
+        </div>
+
+        <div class="timeline">
+            <!-- Q1 2025 -->
+            <div class="milestone">
+                <div class="milestone-marker"><i class="fas fa-star"></i></div>
+                <div class="milestone-date">Q1 2025</div>
+                <div class="milestone-content">
+                    <span class="milestone-status status-in-progress">IN PROGRESS</span>
+                    <h2 class="milestone-title">Enhanced Analysis Engine</h2>
+                    <p>Advanced vulnerability analysis with AI-powered recommendations and automated remediation suggestions.</p>
+                    
+                    <div class="progress-bar-container">
+                        <div class="progress-bar" style="width: 60%;"></div>
+                    </div>
+                    <small>60% Complete</small>
+
+                    <ul class="feature-list">
+                        <li><i class="fas fa-check-circle"></i> Machine learning vulnerability detection</li>
+                        <li><i class="fas fa-check-circle"></i> Automated false positive filtering</li>
+                        <li><i class="fas fa-spinner fa-spin"></i> AI-powered remediation suggestions</li>
+                        <li><i class="fas fa-clock"></i> Vulnerability correlation engine</li>
+                    </ul>
+
+                    <div class="votes">
+                        <span style="color: var(--text-muted);">
+                            <i class="fas fa-thumbs-up"></i> 245 upvotes
+                        </span>
+                        <button class="vote-btn">
+                            <i class="fas fa-thumbs-up"></i> Upvote
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Q2 2025 -->
+            <div class="milestone">
+                <div class="milestone-marker"><i class="fas fa-cloud"></i></div>
+                <div class="milestone-date">Q2 2025</div>
+                <div class="milestone-content">
+                    <span class="milestone-status status-planned">PLANNED</span>
+                    <h2 class="milestone-title">Cloud Integration</h2>
+                    <p>Comprehensive cloud security testing for AWS, Azure, GCP with automated compliance checks.</p>
+
+                    <ul class="feature-list">
+                        <li><i class="fas fa-clock"></i> AWS security assessment</li>
+                        <li><i class="fas fa-clock"></i> Azure security posture</li>
+                        <li><i class="fas fa-clock"></i> GCP vulnerability scanning</li>
+                        <li><i class="fas fa-clock"></i> Kubernetes security audit</li>
+                        <li><i class="fas fa-clock"></i> Container security scanning</li>
+                    </ul>
+
+                    <div class="votes">
+                        <span style="color: var(--text-muted);">
+                            <i class="fas fa-thumbs-up"></i> 189 upvotes
+                        </span>
+                        <button class="vote-btn">
+                            <i class="fas fa-thumbs-up"></i> Upvote
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Q3 2025 -->
+            <div class="milestone">
+                <div class="milestone-marker"><i class="fas fa-mobile-alt"></i></div>
+                <div class="milestone-date">Q3 2025</div>
+                <div class="milestone-content">
+                    <span class="milestone-status status-planned">PLANNED</span>
+                    <h2 class="milestone-title">Mobile Security Testing</h2>
+                    <p>Native mobile app security testing for iOS and Android with automated analysis.</p>
+
+                    <ul class="feature-list">
+                        <li><i class="fas fa-clock"></i> APK/IPA analysis</li>
+                        <li><i class="fas fa-clock"></i> Static code analysis for mobile</li>
+                        <li><i class="fas fa-clock"></i> Dynamic runtime analysis</li>
+                        <li><i class="fas fa-clock"></i> SSL pinning bypass detection</li>
+                        <li><i class="fas fa-clock"></i> Mobile API security testing</li>
+                    </ul>
+
+                    <div class="votes">
+                        <span style="color: var(--text-muted);">
+                            <i class="fas fa-thumbs-up"></i> 156 upvotes
+                        </span>
+                        <button class="vote-btn">
+                            <i class="fas fa-thumbs-up"></i> Upvote
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Q4 2025 -->
+            <div class="milestone">
+                <div class="milestone-marker"><i class="fas fa-network-wired"></i></div>
+                <div class="milestone-date">Q4 2025</div>
+                <div class="milestone-content">
+                    <span class="milestone-status status-planned">PLANNED</span>
+                    <h2 class="milestone-title">Enterprise Features</h2>
+                    <p>Enterprise-grade features for large organizations and team collaboration.</p>
+
+                    <ul class="feature-list">
+                        <li><i class="fas fa-clock"></i> Multi-tenant architecture</li>
+                        <li><i class="fas fa-clock"></i> Role-based access control</li>
+                        <li><i class="fas fa-clock"></i> Team collaboration features</li>
+                        <li><i class="fas fa-clock"></i> Advanced workflow automation</li>
+                        <li><i class="fas fa-clock"></i> Integration with Jira/ServiceNow</li>
+                        <li><i class="fas fa-clock"></i> Compliance reporting (PCI-DSS HIPAA SOC2)</li>
+                    </ul>
+
+                    <div class="votes">
+                        <span style="color: var(--text-muted);">
+                            <i class="fas fa-thumbs-up"></i> 203 upvotes
+                        </span>
+                        <button class="vote-btn">
+                            <i class="fas fa-thumbs-up"></i> Upvote
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2026 -->
+            <div class="milestone">
+                <div class="milestone-marker"><i class="fas fa-brain"></i></div>
+                <div class="milestone-date">2026</div>
+                <div class="milestone-content">
+                    <span class="milestone-status status-planned">RESEARCH</span>
+                    <h2 class="milestone-title">AI Security Assistant</h2>
+                    <p>AI-powered security assistant for intelligent threat detection and automated response.</p>
+
+                    <ul class="feature-list">
+                        <li><i class="fas fa-clock"></i> Natural language query interface</li>
+                        <li><i class="fas fa-clock"></i> Automated threat hunting</li>
+                        <li><i class="fas fa-clock"></i> Predictive vulnerability analysis</li>
+                        <li><i class="fas fa-clock"></i> Intelligent scan optimization</li>
+                        <li><i class="fas fa-clock"></i> Context-aware recommendations</li>
+                    </ul>
+
+                    <div class="votes">
+                        <span style="color: var(--text-muted);">
+                            <i class="fas fa-thumbs-up"></i> 312 upvotes
+                        </span>
+                        <button class="vote-btn">
+                            <i class="fas fa-thumbs-up"></i> Upvote
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Legend -->
+        <div style="margin-top: 4rem; padding: 2rem; background: var(--dark-light); border-radius: 12px;">
+            <h2 style="margin-bottom: 1.5rem;">Status Legend</h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
+                <div>
+                    <span class="milestone-status status-completed">COMPLETED</span>
+                    <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 0.5rem;">Feature is released and available</p>
+                </div>
+                <div>
+                    <span class="milestone-status status-in-progress">IN PROGRESS</span>
+                    <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 0.5rem;">Actively being developed</p>
+                </div>
+                <div>
+                    <span class="milestone-status status-planned">PLANNED</span>
+                    <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 0.5rem;">Scheduled for development</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Community Input -->
+        <div style="margin-top: 3rem; padding: 3rem; background: var(--dark-light); border-radius: 12px; text-align: center;">
+            <h2 style="margin-bottom: 1rem;">Have a Feature Request?</h2>
+            <p style="color: var(--text-muted); margin-bottom: 2rem;">
+                Your feedback shapes our roadmap. Share your ideas with the community!
+            </p>
+            <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                <a href="https://github.com/samueldk12/penetration-test/issues/new?template=feature_request.md" class="btn btn-primary">
+                    <i class="fas fa-lightbulb"></i> Suggest Feature
+                </a>
+                <a href="https://github.com/samueldk12/penetration-test/discussions" class="btn btn-secondary">
+                    <i class="fas fa-comments"></i> Join Discussion
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom">
+                <p>&copy; 2024 Penetration Test Suite. Licensed under MIT.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script>
+        // Vote button functionality (placeholder)
+        document.querySelectorAll('.vote-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const votesSpan = this.parentElement.querySelector('span');
+                const currentVotes = parseInt(votesSpan.textContent.match(/\\d+/)[0]);
+                votesSpan.innerHTML = '<i class="fas fa-thumbs-up"></i> ' + (currentVotes + 1) + ' upvotes';
+                this.disabled = true;
+                this.textContent = 'Voted!';
+                this.style.background = 'var(--success)';
+                this.style.color = 'var(--dark)';
+                this.style.borderColor = 'var(--success)';
+            });
+        });
+    </script>
+</body>
+</html>

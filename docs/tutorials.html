@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tutorials - Penetration Test Suite</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/docs.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="navbar">
+            <div class="container">
+                <div class="nav-brand">
+                    <i class="fas fa-shield-alt"></i>
+                    <span>Penetration Test Suite</span>
+                </div>
+                <button class="mobile-menu-toggle" id="mobile-menu-toggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <ul class="nav-menu" id="nav-menu">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="documentation.html">Docs</a></li>
+                    <li><a href="screenshots.html">Screenshots</a></li>
+                    <li><a href="tutorials.html" class="active">Tutorials</a></li>
+                    <li><a href="changelog.html">Changelog</a></li>
+                    <li><a href="https://github.com/samueldk12/penetration-test" target="_blank">
+                        <i class="fab fa-github"></i> GitHub
+                    </a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Content -->
+    <div class="docs-container">
+        <aside class="docs-sidebar">
+            <nav class="docs-nav">
+                <h3>Tutorials</h3>
+                <ul>
+                    <li><a href="#getting-started">Getting Started</a></li>
+                    <li><a href="#basic-scan">Basic Scanning</a></li>
+                    <li><a href="#advanced-scan">Advanced Scanning</a></li>
+                    <li><a href="#osint-investigation">OSINT Investigation</a></li>
+                    <li><a href="#web-interface">Using Web Interface</a></li>
+                    <li><a href="#custom-plugins">Creating Plugins</a></li>
+                    <li><a href="#notifications">Setting Up Notifications</a></li>
+                    <li><a href="#reporting">Generating Reports</a></li>
+                    <li><a href="#automation">Automation & CI/CD</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="docs-content">
+            <!-- Getting Started -->
+            <section id="getting-started" class="doc-section">
+                <h1><i class="fas fa-play-circle"></i> Getting Started</h1>
+
+                <p>This tutorial will walk you through setting up the Penetration Test Suite and performing your first scan.</p>
+
+                <h2>Step 1: Installation</h2>
+                <div class="code-block">
+                    <pre><code># Clone the repository
+git clone https://github.com/samueldk12/penetration-test.git
+cd penetration-test
+
+# Install Python dependencies
+pip install -r requirements.txt
+
+# Verify installation
+python3 penetration-test.py --version</code></pre>
+                </div>
+
+                <h2>Step 2: Initialize Configuration</h2>
+                <div class="code-block">
+                    <pre><code># Create default config file
+python3 penetration-test.py config --init
+
+# Review configuration
+python3 penetration-test.py config --show</code></pre>
+                </div>
+
+                <h2>Step 3: Check Available Plugins</h2>
+                <div class="code-block">
+                    <pre><code># List all plugins
+python3 penetration-test.py plugins
+
+# List with descriptions
+python3 penetration-test.py plugins -v</code></pre>
+                </div>
+
+                <div class="alert alert-success">
+                    <strong>✓ Success!</strong> You're now ready to start scanning.
+                </div>
+            </section>
+
+            <!-- Basic Scan -->
+            <section id="basic-scan" class="doc-section">
+                <h1><i class="fas fa-search"></i> Your First Scan</h1>
+
+                <h2>Simple Target Scan</h2>
+                <p>Let's perform a basic scan on a target domain:</p>
+
+                <div class="code-block">
+                    <pre><code># Basic scan with all plugins
+python3 penetration-test.py scan example.com --all-plugins
+
+# Output will show:
+# - Plugin execution progress
+# - Findings as they're discovered
+# - Summary statistics</code></pre>
+                </div>
+
+                <h2>Scanning Specific Categories</h2>
+                <p>You can limit the scan to specific categories:</p>
+
+                <div class="code-block">
+                    <pre><code># Only reconnaissance plugins
+python3 penetration-test.py scan example.com --categories recon
+
+# Only vulnerability scanning
+python3 penetration-test.py scan example.com --categories vuln_scan
+
+# Multiple categories
+python3 penetration-test.py scan example.com --categories recon,vuln_scan</code></pre>
+                </div>
+
+                <h2>Running Specific Plugins</h2>
+                <div class="code-block">
+                    <pre><code># Run single plugin
+python3 penetration-test.py scan example.com --plugin nuclei_scanner
+
+# Run multiple plugins
+python3 penetration-test.py scan example.com --plugin nuclei_scanner,nmap_scanner</code></pre>
+                </div>
+
+                <div class="alert alert-info">
+                    <strong>ℹ️ Tip:</strong> Use <code>--verbose</code> flag for detailed output: <code>python3 penetration-test.py scan example.com --all-plugins --verbose</code>
+                </div>
+            </section>
+
+            <!-- Advanced Scan -->
+            <section id="advanced-scan" class="doc-section">
+                <h1><i class="fas fa-cogs"></i> Advanced Scanning Techniques</h1>
+
+                <h2>Complete Scan with All Options</h2>
+                <div class="code-block">
+                    <pre><code># Comprehensive scan
+python3 penetration-test.py scan example.com \
+    --all-plugins \
+    --complete \
+    --verbose \
+    --threads 10 \
+    --timeout 600</code></pre>
+                </div>
+
+                <h2>Scanning Multiple Targets</h2>
+                <p>Create a bash script to scan multiple targets:</p>
+
+                <div class="code-block">
+                    <pre><code>#!/bin/bash
+# scan-multiple.sh
+
+TARGETS=(
+    "example.com"
+    "test.com"
+    "demo.com"
+)
+
+for target in "${TARGETS[@]}"; do
+    echo "Scanning $target..."
+    python3 penetration-test.py scan "$target" --all-plugins
+    echo "---"
+done</code></pre>
+                </div>
+
+                <h2>Custom Plugin Arguments</h2>
+                <p>Some plugins accept custom arguments:</p>
+
+                <div class="code-block">
+                    <pre><code># Pass custom arguments via config
+python3 penetration-test.py scan example.com \
+    --plugin nmap_scanner \
+    --config custom-config.yaml</code></pre>
+                </div>
+
+                <h2>Excluding Plugins</h2>
+                <div class="code-block">
+                    <pre><code># Run all except specific plugins
+python3 penetration-test.py scan example.com \
+    --all-plugins \
+    --exclude nikto_scanner,nmap_scanner</code></pre>
+                </div>
+            </section>
+
+            <!-- OSINT Investigation -->
+            <section id="osint-investigation" class="doc-section">
+                <h1><i class="fas fa-user-secret"></i> OSINT Investigation</h1>
+
+                <h2>Basic OSINT Gathering</h2>
+                <div class="code-block">
+                    <pre><code># Standard OSINT investigation
+python3 penetration-test.py osint example.com
+
+# Deep investigation (more comprehensive)
+python3 penetration-test.py osint example.com --deep</code></pre>
+                </div>
+
+                <h2>What OSINT Collects</h2>
+                <ul>
+                    <li><strong>Domain Information:</strong> WHOIS records, DNS records, SSL certificates</li>
+                    <li><strong>Subdomains:</strong> Active subdomain enumeration</li>
+                    <li><strong>Email Addresses:</strong> Harvested from public sources</li>
+                    <li><strong>Social Media:</strong> Company presence and employee profiles</li>
+                    <li><strong>Technologies:</strong> Web technologies and frameworks used</li>
+                    <li><strong>Leaked Data:</strong> Check for breaches and exposed data</li>
+                </ul>
+
+                <h2>Combining OSINT with Scanning</h2>
+                <div class="code-block">
+                    <pre><code># First, gather OSINT
+python3 penetration-test.py osint example.com --deep
+
+# Then, scan discovered subdomains
+# (Subdomains are saved in database)
+
+# Run full scan
+python3 penetration-test.py scan example.com --all-plugins</code></pre>
+                </div>
+            </section>
+
+            <!-- Web Interface -->
+            <section id="web-interface" class="doc-section">
+                <h1><i class="fas fa-desktop"></i> Using the Web Interface</h1>
+
+                <h2>Starting the Web Server</h2>
+                <div class="code-block">
+                    <pre><code># Default (localhost:5000)
+python3 penetration-test.py web
+
+# Custom port
+python3 penetration-test.py web --port 8080
+
+# Allow external access
+python3 penetration-test.py web --host 0.0.0.0 --port 8080
+
+# Debug mode
+python3 penetration-test.py web --debug</code></pre>
+                </div>
+
+                <h2>Creating Your First Scan</h2>
+                <ol>
+                    <li>Open browser at <code>http://localhost:5000</code></li>
+                    <li>Click <strong>"New Scan"</strong> button</li>
+                    <li>Enter target domain</li>
+                    <li>Select scan type (All Plugins / By Category / Specific Plugins)</li>
+                    <li>Click <strong>"Start Scan"</strong></li>
+                    <li>Monitor progress in real-time</li>
+                </ol>
+
+                <h2>Managing Multiple Targets</h2>
+                <p>The web interface supports multi-tab management:</p>
+                <ul>
+                    <li>Click <strong>"+ New Target"</strong> to add a tab</li>
+                    <li>Each tab maintains independent configuration</li>
+                    <li>Run scans in parallel across tabs</li>
+                    <li>Switch between targets easily</li>
+                </ul>
+
+                <h2>Adding Notes</h2>
+                <div class="code-block">
+                    <pre><code>1. Navigate to "Notes" section
+2. Click "Add Note"
+3. Select target
+4. Write your findings/observations
+5. Click "Save Note"
+
+Notes are searchable and exportable!</code></pre>
+                </div>
+            </section>
+
+            <!-- Custom Plugins -->
+            <section id="custom-plugins" class="doc-section">
+                <h1><i class="fas fa-puzzle-piece"></i> Creating Custom Plugins</h1>
+
+                <h2>Python Plugin Example</h2>
+                <div class="code-block">
+                    <pre><code># tools/plugins/my_scanner.py
+from plugin_base import PluginBase
+
+class MyScanner(PluginBase):
+    def __init__(self):
+        super().__init__(
+            name="my_scanner",
+            description="My custom security scanner",
+            category="vuln_scan",
+            version="1.0.0"
+        )
+
+    def run(self, target, **kwargs):
+        """Scan implementation"""
+        self.logger.info(f"Scanning {target}...")
+
+        findings = []
+
+        # Your scanning logic here
+        # ...
+
+        return {
+            'success': True,
+            'findings': findings,
+            'target': target
+        }</code></pre>
+                </div>
+
+                <h2>JavaScript Plugin Example</h2>
+                <div class="code-block">
+                    <pre><code>// tools/js_plugins/my_tool.js
+// @name my_tool
+// @description My custom JS tool
+// @category recon
+// @version 1.0.0
+
+const args = JSON.parse(process.argv[2]);
+const target = args.target;
+
+async function scan(target) {
+    // Your scanning logic
+    return {
+        success: true,
+        data: []
+    };
+}
+
+scan(target).then(result => {
+    console.log(JSON.stringify(result));
+});</code></pre>
+                </div>
+
+                <h2>Go Plugin Example</h2>
+                <div class="code-block">
+                    <pre><code>// tools/go_plugins/my_scanner.go
+// @name my_scanner
+// @description My custom Go scanner
+// @category recon
+// @version 1.0.0
+
+package main
+
+import (
+    "encoding/json"
+    "fmt"
+    "os"
+)
+
+type Result struct {
+    Success bool     `json:"success"`
+    Data    []string `json:"data"`
+}
+
+func main() {
+    if len(os.Args) > 1 && os.Args[1] == "--info" {
+        fmt.Println(`{"name":"my_scanner","version":"1.0.0"}`)
+        return
+    }
+
+    // Scanning logic
+    result := Result{
+        Success: true,
+        Data:    []string{},
+    }
+
+    json.NewEncoder(os.Stdout).Encode(result)
+}</code></pre>
+                </div>
+
+                <h2>Installing Your Plugin</h2>
+                <div class="code-block">
+                    <pre><code># Place plugin in appropriate directory
+cp my_scanner.py tools/plugins/
+
+# Verify it's detected
+python3 penetration-test.py plugins
+
+# Test it
+python3 penetration-test.py scan example.com --plugin my_scanner</code></pre>
+                </div>
+            </section>
+
+            <!-- Notifications -->
+            <section id="notifications" class="doc-section">
+                <h1><i class="fas fa-bell"></i> Setting Up Notifications</h1>
+
+                <h2>Telegram Notifications</h2>
+                <ol>
+                    <li>Create a bot with <a href="https://t.me/BotFather" target="_blank">@BotFather</a></li>
+                    <li>Get your bot token</li>
+                    <li>Get your chat_id from <a href="https://t.me/userinfobot" target="_blank">@userinfobot</a></li>
+                    <li>Update <code>config.yaml</code>:</li>
+                </ol>
+
+                <div class="code-block">
+                    <pre><code>notifications:
+  enabled: true
+  telegram:
+    enabled: true
+    bot_token: "YOUR_BOT_TOKEN"
+    chat_id: "YOUR_CHAT_ID"</code></pre>
+                </div>
+
+                <h2>Email Notifications</h2>
+                <div class="code-block">
+                    <pre><code>notifications:
+  email:
+    enabled: true
+    smtp_host: smtp.gmail.com
+    smtp_port: 587
+    smtp_user: your@email.com
+    smtp_password: your_app_password
+    from_email: your@email.com
+    to_emails:
+      - recipient@email.com</code></pre>
+                </div>
+
+                <div class="alert alert-warning">
+                    <strong>⚠️ Gmail Users:</strong> Use App Passwords instead of your regular password. Enable 2FA and generate an app password in your Google Account settings.
+                </div>
+
+                <h2>WhatsApp Notifications (CallMeBot)</h2>
+                <ol>
+                    <li>Add CallMeBot to your contacts: +34 644 28 77 64</li>
+                    <li>Send message: "I allow callmebot to send me messages"</li>
+                    <li>Save your API key</li>
+                    <li>Update config:</li>
+                </ol>
+
+                <div class="code-block">
+                    <pre><code>notifications:
+  whatsapp:
+    enabled: true
+    api_key: "YOUR_API_KEY"
+    phone: "+1234567890"</code></pre>
+                </div>
+            </section>
+
+            <!-- Reporting -->
+            <section id="reporting" class="doc-section">
+                <h1><i class="fas fa-file-alt"></i> Generating Reports</h1>
+
+                <h2>Basic Report Generation</h2>
+                <div class="code-block">
+                    <pre><code># Generate comprehensive report
+python3 penetration-test.py report --type comprehensive
+
+# Specific formats
+python3 penetration-test.py report --format json
+python3 penetration-test.py report --format html
+python3 penetration-test.py report --format markdown
+
+# Multiple formats
+python3 penetration-test.py report --format json html markdown</code></pre>
+                </div>
+
+                <h2>Filtering Reports</h2>
+                <div class="code-block">
+                    <pre><code># By severity
+python3 penetration-test.py report --severity critical high
+
+# By domain
+python3 penetration-test.py report --domain example.com
+
+# By vulnerability type
+python3 penetration-test.py report --vuln-type xss sqli
+
+# By date range
+python3 penetration-test.py report \
+    --from 2024-01-01 \
+    --to 2024-12-31</code></pre>
+                </div>
+
+                <h2>Custom Report Output</h2>
+                <div class="code-block">
+                    <pre><code># Specify output directory
+python3 penetration-test.py report \
+    --output /path/to/reports/ \
+    --format html
+
+# Include raw data
+python3 penetration-test.py report \
+    --type comprehensive \
+    --include-raw</code></pre>
+                </div>
+            </section>
+
+            <!-- Automation -->
+            <section id="automation" class="doc-section">
+                <h1><i class="fas fa-robot"></i> Automation & CI/CD</h1>
+
+                <h2>Cron Job Setup</h2>
+                <div class="code-block">
+                    <pre><code># Edit crontab
+crontab -e
+
+# Add daily scan at 2 AM
+0 2 * * * cd /path/to/penetration-test && python3 penetration-test.py scan example.com --all-plugins
+
+# Weekly comprehensive scan
+0 3 * * 0 cd /path/to/penetration-test && python3 penetration-test.py scan example.com --all-plugins --complete</code></pre>
+                </div>
+
+                <h2>GitHub Actions Integration</h2>
+                <div class="code-block">
+                    <pre><code># .github/workflows/security-scan.yml
+name: Security Scan
+
+on:
+  schedule:
+    - cron: '0 2 * * *'  # Daily at 2 AM
+  workflow_dispatch:
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run scan
+        run: |
+          python3 penetration-test.py scan ${{ secrets.TARGET_DOMAIN }} --all-plugins
+
+      - name: Generate report
+        run: |
+          python3 penetration-test.py report --format html
+
+      - name: Upload report
+        uses: actions/upload-artifact@v3
+        with:
+          name: security-report
+          path: reports/</code></pre>
+                </div>
+
+                <h2>Docker Integration</h2>
+                <div class="code-block">
+                    <pre><code># Create Dockerfile
+FROM python:3.10-slim
+
+WORKDIR /app
+COPY . /app
+
+RUN pip install -r requirements.txt
+
+ENTRYPOINT ["python3", "penetration-test.py"]
+
+# Build image
+docker build -t pentest-suite .
+
+# Run scan
+docker run --rm pentest-suite scan example.com --all-plugins</code></pre>
+                </div>
+            </section>
+
+            <!-- Next Steps -->
+            <div style="margin-top: 4rem; padding: 3rem; background: var(--dark-light); border-radius: 12px;">
+                <h2>Next Steps</h2>
+                <p>Now that you've mastered the basics, explore:</p>
+                <ul>
+                    <li><a href="documentation.html">Complete Documentation</a> - In-depth reference</li>
+                    <li><a href="theory.html">Pentesting Theory</a> - Learn security concepts</li>
+                    <li><a href="contributing.html">Contributing Guide</a> - Help improve the project</li>
+                    <li><a href="https://github.com/samueldk12/penetration-test/discussions">Community Discussions</a> - Get help and share knowledge</li>
+                </ul>
+            </div>
+        </main>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom">
+                <p>&copy; 2024 Penetration Test Suite. Licensed under MIT.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script src="js/docs.js"></script>
+</body>
+</html>
