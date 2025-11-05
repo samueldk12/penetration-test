@@ -75,6 +75,30 @@ class BruteForce:
 
     def load_wordlist(self, filepath):
         """Load wordlist from file"""
+        import os
+
+        # If relative path, try wordlists directory first
+        if not os.path.isabs(filepath):
+            possible_paths = [
+                filepath,  # Try as-is first
+                os.path.join('wordlists', filepath),
+                os.path.join('..', '..', '..', 'wordlists', filepath),
+                os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..', '..', 'wordlists', filepath)
+            ]
+        else:
+            possible_paths = [filepath]
+
+        for path in possible_paths:
+            try:
+                if os.path.exists(path):
+                    with open(path, 'r', encoding='utf-8', errors='ignore') as f:
+                        wordlist = [line.strip() for line in f if line.strip() and not line.strip().startswith('#')]
+                    print(f"[+] Loaded {len(wordlist)} entries from {os.path.basename(path)}")
+                    return wordlist
+            except Exception as e:
+                continue
+
+        # If not found, try original path
         try:
             with open(filepath, 'r', encoding='utf-8', errors='ignore') as f:
                 return [line.strip() for line in f if line.strip()]

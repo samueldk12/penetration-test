@@ -96,7 +96,38 @@ class SeleniumFuzzer:
     def load_wordlist(self):
         """Load wordlist from file"""
         if not self.wordlist_path:
-            # Use default fuzzing payloads
+            # Try to load combined wordlist from default location
+            combined_payloads = []
+
+            # Try to load from wordlists directory
+            wordlist_dir = self.options.get('wordlist_dir', 'wordlists')
+            default_lists = ['sqli.txt', 'xss.txt', 'lfi.txt', 'rce.txt']
+
+            for wordlist_file in default_lists:
+                possible_paths = [
+                    os.path.join(wordlist_dir, wordlist_file),
+                    os.path.join('..', '..', '..', 'wordlists', wordlist_file),
+                    os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..', '..', 'wordlists', wordlist_file)
+                ]
+
+                for filepath in possible_paths:
+                    try:
+                        if os.path.exists(filepath):
+                            with open(filepath, 'r', encoding='utf-8', errors='ignore') as f:
+                                payloads = [line.strip() for line in f if line.strip() and not line.strip().startswith('#')]
+                            combined_payloads.extend(payloads[:50])  # First 50 from each
+                            print(f"[+] Loaded {len(payloads[:50])} payloads from {wordlist_file}")
+                            break
+                    except:
+                        continue
+
+            if combined_payloads:
+                self.wordlist = combined_payloads
+                print(f"[+] Total payloads loaded: {len(self.wordlist)}")
+                return True
+
+            # Fallback to default fuzzing payloads if files not found
+            print("[!] Using default fuzzing payloads")
             self.wordlist = [
                 "' OR '1'='1",
                 "\" OR \"1\"=\"1",

