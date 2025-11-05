@@ -1,0 +1,55 @@
+# GitHub Pages Configuration
+title: "Penetration Test Suite"
+description: "Professional Security Testing Framework with Multi-Language Support"
+author: "Penetration Test Suite Team"
+email: ""
+url: "https://samueldk12.github.io"
+baseurl: "/penetration-test"
+
+# Theme
+theme: null
+markdown: kramdown
+
+# SEO
+lang: en
+locale: en_US
+
+# Social
+github_username: samueldk12
+repository: samueldk12/penetration-test
+
+# Plugins
+plugins:
+  - jekyll-seo-tag
+  - jekyll-sitemap
+  - jekyll-feed
+
+# Exclude files
+exclude:
+  - README.md
+  - LICENSE
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor
+
+# Build settings
+safe: true
+lsi: false
+incremental: false
+highlighter: rouge
+gfm: true
+
+# Collections
+collections:
+  docs:
+    output: true
+    permalink: /:collection/:path/
+
+# Defaults
+defaults:
+  - scope:
+      path: ""
+    values:
+      layout: "default"
+      image: /img/og-image.png
