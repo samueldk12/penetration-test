@@ -5,6 +5,7 @@ Permite adicionar/remover módulos dinamicamente
 """
 
 import importlib
+import importlib.util
 import inspect
 from typing import List, Dict, Any, Optional
 from pathlib import Path
