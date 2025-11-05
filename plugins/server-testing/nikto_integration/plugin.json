@@ -1,0 +1,38 @@
+{
+  "name": "nikto_integration",
+  "version": "1.0.0",
+  "description": "Integration with Nikto web server scanner (third-party)",
+  "type": "python",
+  "category": "server_testing",
+  "author": "Penetration Test Suite",
+  "entrypoint": "nikto_integration.py",
+  "dependencies": [],
+  "external_tools": ["nikto"],
+  "options": {
+    "tuning": {
+      "type": "string",
+      "default": "",
+      "description": "Tuning options (0-9, a-z). Example: '1 2 3' for interesting files, misconfiguration, info disclosure"
+    },
+    "timeout": {
+      "type": "integer",
+      "default": 600,
+      "description": "Scan timeout in seconds"
+    },
+    "ssl": {
+      "type": "boolean",
+      "default": false,
+      "description": "Force SSL mode"
+    },
+    "port": {
+      "type": "integer",
+      "default": 80,
+      "description": "Port to scan"
+    },
+    "output": {
+      "type": "string",
+      "default": "json",
+      "description": "Output format: json, xml, html, csv"
+    }
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "name": "selenium_fuzzer",
+  "version": "1.0.0",
+  "description": "Selenium-based parameter fuzzing and input testing",
+  "type": "python",
+  "category": "web_testing",
+  "author": "Penetration Test Suite",
+  "entrypoint": "selenium_fuzzer.py",
+  "dependencies": ["selenium", "beautifulsoup4"],
+  "external_tools": ["chromedriver", "geckodriver"],
+  "options": {
+    "mode": {
+      "type": "string",
+      "default": "param",
+      "description": "Testing mode: param (URL parameters), form (form inputs), both"
+    },
+    "wordlist": {
+      "type": "string",
+      "default": "",
+      "description": "Path to wordlist file for fuzzing"
+    },
+    "browser": {
+      "type": "string",
+      "default": "chrome",
+      "description": "Browser to use: chrome, firefox, headless-chrome, headless-firefox"
+    },
+    "timeout": {
+      "type": "integer",
+      "default": 10,
+      "description": "Page load timeout (seconds)"
+    },
+    "delay": {
+      "type": "number",
+      "default": 0.5,
+      "description": "Delay between tests (seconds)"
+    },
+    "screenshot": {
+      "type": "boolean",
+      "default": false,
+      "description": "Take screenshots of interesting findings"
+    },
+    "check_errors": {
+      "type": "boolean",
+      "default": true,
+      "description": "Check for error messages and stack traces"
+    },
+    "check_sql": {
+      "type": "boolean",
+      "default": true,
+      "description": "Check for SQL error messages"
+    },
+    "check_xss": {
+      "type": "boolean",
+      "default": true,
+      "description": "Check for XSS reflection"
+    }
+  }
+}

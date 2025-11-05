@@ -1,0 +1,73 @@
+{
+  "name": "brute_force",
+  "version": "1.0.0",
+  "description": "Multi-protocol brute force authentication testing",
+  "type": "python",
+  "category": "authentication_testing",
+  "author": "Penetration Test Suite",
+  "entrypoint": "brute_force.py",
+  "dependencies": ["requests", "paramiko"],
+  "external_tools": [],
+  "options": {
+    "protocol": {
+      "type": "string",
+      "default": "http",
+      "description": "Protocol: http, http-form, ssh, ftp, smtp, mysql, postgres"
+    },
+    "username": {
+      "type": "string",
+      "default": "",
+      "description": "Single username (leave empty to use username_list)"
+    },
+    "username_list": {
+      "type": "string",
+      "default": "",
+      "description": "Path to username wordlist file"
+    },
+    "password_list": {
+      "type": "string",
+      "default": "",
+      "description": "Path to password wordlist file (required)"
+    },
+    "threads": {
+      "type": "integer",
+      "default": 5,
+      "description": "Number of concurrent threads"
+    },
+    "delay": {
+      "type": "number",
+      "default": 0.5,
+      "description": "Delay between attempts (seconds)"
+    },
+    "timeout": {
+      "type": "integer",
+      "default": 10,
+      "description": "Connection timeout (seconds)"
+    },
+    "http_method": {
+      "type": "string",
+      "default": "POST",
+      "description": "HTTP method for http-form (GET/POST)"
+    },
+    "username_field": {
+      "type": "string",
+      "default": "username",
+      "description": "Username field name for http-form"
+    },
+    "password_field": {
+      "type": "string",
+      "default": "password",
+      "description": "Password field name for http-form"
+    },
+    "success_string": {
+      "type": "string",
+      "default": "",
+      "description": "String indicating successful login (for http-form)"
+    },
+    "failure_string": {
+      "type": "string",
+      "default": "",
+      "description": "String indicating failed login (for http-form)"
+    }
+  }
+}
