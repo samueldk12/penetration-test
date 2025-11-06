@@ -41,6 +41,8 @@ except ImportError:
 
 class SeleniumFuzzer(PluginInterface):
     def __init__(self, config=None):
+        super().__init__(config)
+
     name = "selenium_fuzzer"
     version = "1.0.0"
     author = "Penetration Test Suite"

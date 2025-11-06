@@ -27,6 +27,8 @@ from urllib.parse import urljoin, urlparse
 
 class ZAPIntegration(PluginInterface):
     def __init__(self, config=None):
+        super().__init__(config)
+
     name = "zap_integration"
     version = "1.0.0"
     author = "Penetration Test Suite"

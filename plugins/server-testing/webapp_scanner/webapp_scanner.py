@@ -30,6 +30,8 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 class WebAppScanner(PluginInterface):
     def __init__(self, config=None):
+        super().__init__(config)
+
     name = "webapp_scanner"
     version = "1.0.0"
     author = "Penetration Test Suite"

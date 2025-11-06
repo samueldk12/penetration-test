@@ -11,12 +11,7 @@ project_root = Path(__file__).parent.parent.parent.parent
 sys.path.insert(0, str(project_root))
 sys.path.insert(0, str(project_root / 'tools'))
 
-try:
-    from tools.plugin_system import PluginInterface
-except ImportError:
-    from plugin_system import PluginInterface
-
-import sys
+from plugin_system import PluginInterface
 import json
 import time
 import requests
