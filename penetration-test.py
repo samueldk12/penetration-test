@@ -106,7 +106,6 @@ class PentestCLI:
                 format=['json', 'html', 'markdown'] if args.complete else [args.report_format],
                 type='comprehensive',
                 output=args.output,
-                filters={},
                 verbose=args.verbose,
                 debug=args.debug,
                 domain=None,
