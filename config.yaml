@@ -8,6 +8,11 @@ plugins:
   enabled_categories:
   - recon
   - vuln_scan
+  - api_testing
+  - authentication_testing
+  - interactive_testing
+  - server_testing
+  - web_testing
   disabled_plugins: []
   python_plugins_dir: ./plugins
   js_plugins_dir: ./js_plugins
