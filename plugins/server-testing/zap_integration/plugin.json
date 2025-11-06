@@ -1,0 +1,38 @@
+{
+  "name": "zap_integration",
+  "version": "1.0.0",
+  "description": "Integration with OWASP ZAP security scanner (third-party)",
+  "type": "python",
+  "category": "server_testing",
+  "author": "Penetration Test Suite",
+  "entrypoint": "zap_integration.py",
+  "dependencies": ["requests"],
+  "external_tools": ["zaproxy"],
+  "options": {
+    "scan_type": {
+      "type": "string",
+      "default": "both",
+      "description": "Scan type: passive, active, or both"
+    },
+    "spider": {
+      "type": "boolean",
+      "default": true,
+      "description": "Run spider before scanning"
+    },
+    "ajax_spider": {
+      "type": "boolean",
+      "default": false,
+      "description": "Run AJAX spider (slower but more thorough)"
+    },
+    "api_key": {
+      "type": "string",
+      "default": "",
+      "description": "ZAP API key (if authentication enabled)"
+    },
+    "zap_port": {
+      "type": "integer",
+      "default": 8080,
+      "description": "ZAP proxy port"
+    }
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "name": "nuclei_integration",
+  "version": "1.0.0",
+  "description": "Integration with Nuclei vulnerability scanner (third-party)",
+  "type": "python",
+  "category": "server_testing",
+  "author": "Penetration Test Suite",
+  "entrypoint": "nuclei_integration.py",
+  "dependencies": [],
+  "external_tools": ["nuclei"],
+  "options": {
+    "severity": {
+      "type": "string",
+      "default": "critical,high,medium",
+      "description": "Severity levels to scan"
+    },
+    "templates": {
+      "type": "string",
+      "default": "",
+      "description": "Custom templates path"
+    },
+    "rate_limit": {
+      "type": "integer",
+      "default": 150,
+      "description": "Max requests per second"
+    },
+    "update": {
+      "type": "boolean",
+      "default": true,
+      "description": "Update templates before scan"
+    }
+  }
+}

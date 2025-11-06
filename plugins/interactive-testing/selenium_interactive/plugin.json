@@ -1,0 +1,33 @@
+{
+  "name": "selenium_interactive",
+  "version": "1.0.0",
+  "description": "Interactive penetration testing with Selenium and hotkeys",
+  "type": "python",
+  "category": "interactive_testing",
+  "author": "Penetration Test Suite",
+  "entrypoint": "selenium_interactive.py",
+  "dependencies": ["selenium", "pynput", "beautifulsoup4"],
+  "external_tools": ["chromedriver", "geckodriver"],
+  "options": {
+    "browser": {
+      "type": "string",
+      "default": "chrome",
+      "description": "Browser to use: chrome, firefox"
+    },
+    "proxy_enabled": {
+      "type": "boolean",
+      "default": false,
+      "description": "Enable built-in proxy"
+    },
+    "proxy_port": {
+      "type": "integer",
+      "default": 8888,
+      "description": "Proxy port"
+    },
+    "console_mode": {
+      "type": "boolean",
+      "default": true,
+      "description": "Enable JavaScript console testing"
+    }
+  }
+}
