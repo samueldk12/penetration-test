@@ -4,6 +4,18 @@ Web Application Security Scanner Plugin
 Comprehensive testing for web applications and servers
 """
 
+# Add project root to path
+from pathlib import Path
+import sys
+project_root = Path(__file__).parent.parent.parent.parent
+sys.path.insert(0, str(project_root))
+sys.path.insert(0, str(project_root / 'tools'))
+
+try:
+    from tools.plugin_system import PluginInterface
+except ImportError:
+    from plugin_system import PluginInterface
+
 import requests
 import json
 import sys
@@ -16,8 +28,16 @@ import re
 # Disable SSL warnings if check_ssl is False
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
-class WebAppScanner:
-    def __init__(self, target, options=None):
+class WebAppScanner(PluginInterface):
+    def __init__(self, config=None, target, options=None):
+        super().__init__(config)
+
+    name = "webapp_scanner"
+    version = "1.0.0"
+    author = "Penetration Test Suite"
+    description = "Comprehensive web application security scanner"
+    category = "server_testing"
+    requires = ['requests', 'beautifulsoup4', 'urllib3']
         self.target = target if target.startswith('http') else f'http://{target}'
         self.options = options or {}
         self.threads = self.options.get('threads', 5)

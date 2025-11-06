@@ -83,8 +83,29 @@ class OSINTModule:
         else:
             return 'person'
 
+    def _extract_domain(self, target: str) -> str:
+        """Extrai domínio de uma URL ou retorna o domínio se já for um."""
+        # Remove protocol if present
+        if target.startswith(('http://', 'https://')):
+            parsed = urlparse(target)
+            domain = parsed.netloc
+        else:
+            domain = target
+
+        # Remove port if present
+        if ':' in domain:
+            domain = domain.split(':')[0]
+
+        # Remove path/query if present
+        if '/' in domain:
+            domain = domain.split('/')[0]
+
+        return domain.strip()
+
     def _investigate_domain(self, domain: str, deep_scan: bool):
         """Investiga domínio."""
+        # Extract clean domain from URL
+        domain = self._extract_domain(domain)
         print(f"[*] Investigating domain: {domain}")
 
         # WHOIS

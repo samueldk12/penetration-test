@@ -4,6 +4,18 @@ Interactive Selenium Pentesting Plugin
 Real-time interactive pentesting with hotkeys and visual feedback
 """
 
+# Add project root to path
+from pathlib import Path
+import sys
+project_root = Path(__file__).parent.parent.parent.parent
+sys.path.insert(0, str(project_root))
+sys.path.insert(0, str(project_root / 'tools'))
+
+try:
+    from tools.plugin_system import PluginInterface
+except ImportError:
+    from plugin_system import PluginInterface
+
 import sys
 import json
 import time
@@ -33,8 +45,16 @@ except ImportError:
     print("[!] pynput not available - install with: pip install pynput")
 
 
-class InteractivePentester:
-    def __init__(self, target, options=None):
+class InteractivePentester(PluginInterface):
+    def __init__(self, config=None, target, options=None):
+        super().__init__(config)
+
+    name = "selenium_interactive"
+    version = "1.0.0"
+    author = "Penetration Test Suite"
+    description = "Interactive penetration testing with Selenium and hotkeys"
+    category = "interactive_testing"
+    requires = ['selenium', 'pynput', 'beautifulsoup4']
         self.target = target
         self.options = options or {}
 

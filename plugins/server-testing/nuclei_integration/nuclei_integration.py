@@ -4,14 +4,34 @@ Nuclei Integration Plugin
 Integrate with Nuclei vulnerability scanner (third-party tool)
 """
 
+# Add project root to path
+from pathlib import Path
+import sys
+project_root = Path(__file__).parent.parent.parent.parent
+sys.path.insert(0, str(project_root))
+sys.path.insert(0, str(project_root / 'tools'))
+
+try:
+    from tools.plugin_system import PluginInterface
+except ImportError:
+    from plugin_system import PluginInterface
+
 import subprocess
 import json
 import sys
 import os
 import shutil
 
-class NucleiIntegration:
-    def __init__(self, target, options=None):
+class NucleiIntegration(PluginInterface):
+    def __init__(self, config=None, target, options=None):
+        super().__init__(config)
+
+    name = "nuclei_integration"
+    version = "1.0.0"
+    author = "Penetration Test Suite"
+    description = "Integration with Nuclei vulnerability scanner (third-party)"
+    category = "server_testing"
+    requires = []
         self.target = target
         self.options = options or {}
 

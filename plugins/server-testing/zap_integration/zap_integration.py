@@ -4,6 +4,18 @@ OWASP ZAP Integration Plugin
 Integration with OWASP Zed Attack Proxy (third-party tool)
 """
 
+# Add project root to path
+from pathlib import Path
+import sys
+project_root = Path(__file__).parent.parent.parent.parent
+sys.path.insert(0, str(project_root))
+sys.path.insert(0, str(project_root / 'tools'))
+
+try:
+    from tools.plugin_system import PluginInterface
+except ImportError:
+    from plugin_system import PluginInterface
+
 import subprocess
 import requests
 import json
@@ -13,8 +25,16 @@ import time
 import shutil
 from urllib.parse import urljoin, urlparse
 
-class ZAPIntegration:
-    def __init__(self, target, options=None):
+class ZAPIntegration(PluginInterface):
+    def __init__(self, config=None, target, options=None):
+        super().__init__(config)
+
+    name = "zap_integration"
+    version = "1.0.0"
+    author = "Penetration Test Suite"
+    description = "Integration with OWASP ZAP security scanner (third-party)"
+    category = "server_testing"
+    requires = ['requests']
         self.target = target
         self.options = options or {}
 
