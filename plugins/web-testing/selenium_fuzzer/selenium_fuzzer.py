@@ -41,80 +41,12 @@ except ImportError:
 
 class SeleniumFuzzer(PluginInterface):
     def __init__(self, config=None):
-        super().__init__(config)
-
     name = "selenium_fuzzer"
     version = "1.0.0"
     author = "Penetration Test Suite"
     description = "Selenium-based parameter fuzzing and input testing"
     category = "web_testing"
     requires = ['selenium', 'beautifulsoup4']
-        self.target = target
-        self.options = options or {}
-
-        # Configuration
-        self.mode = self.options.get('mode', 'param')
-        self.wordlist_path = self.options.get('wordlist', '')
-        self.browser_type = self.options.get('browser', 'chrome')
-        self.timeout = self.options.get('timeout', 10)
-        self.delay = self.options.get('delay', 0.5)
-        self.screenshot = self.options.get('screenshot', False)
-        self.check_errors = self.options.get('check_errors', True)
-        self.check_sql = self.options.get('check_sql', True)
-        self.check_xss = self.options.get('check_xss', True)
-        self.check_iframe = self.options.get('check_iframe', True)
-
-        self.driver = None
-        self.wordlist = []
-
-        # Results
-        self.results = {
-            'target': self.target,
-            'mode': self.mode,
-            'vulnerabilities': [],
-            'findings': [],
-            'stats': {
-                'tests': 0,
-                'errors_found': 0,
-                'sql_errors': 0,
-                'xss_reflected': 0,
-                'iframe_injected': 0
-            }
-        }
-
-        # Error patterns
-        self.error_patterns = [
-            r'fatal error',
-            r'uncaught exception',
-            r'stack trace',
-            r'traceback',
-            r'warning: ',
-            r'error: ',
-            r'exception: ',
-            r'fatal: ',
-            r'syntax error',
-            r'parse error',
-            r'undefined',
-            r'null pointer',
-            r'access violation'
-        ]
-
-        self.sql_patterns = [
-            r'sql syntax',
-            r'mysql',
-            r'postgresql',
-            r'oracle error',
-            r'sqlite',
-            r'odbc',
-            r'jdbc',
-            r'you have an error in your sql syntax',
-            r'warning: mysql',
-            r'pg_query',
-            r'postgresql query failed',
-            r'unclosed quotation mark',
-            r'quoted string not properly terminated'
-        ]
-
     def load_wordlist(self):
         """Load wordlist from file"""
         if not self.wordlist_path:
@@ -522,8 +454,10 @@ class SeleniumFuzzer(PluginInterface):
         except Exception as e:
             print(f"[!] Error in form fuzzing: {e}")
 
-    def run(self):
+    def run(self, target, **kwargs):
         """Main execution"""
+        self.target = target
+        self.options = kwargs
         if not SELENIUM_AVAILABLE:
             return {
                 'error': 'Selenium not available - install with: pip install selenium',

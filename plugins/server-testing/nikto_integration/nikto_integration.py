@@ -27,41 +27,12 @@ from urllib.parse import urlparse
 
 class NiktoIntegration(PluginInterface):
     def __init__(self, config=None):
-        super().__init__(config)
-
     name = "nikto_integration"
     version = "1.0.0"
     author = "Penetration Test Suite"
     description = "Integration with Nikto web server scanner (third-party)"
     category = "server_testing"
     requires = []
-        self.target = target
-        self.options = options or {}
-
-        self.tuning = self.options.get('tuning', '')
-        self.timeout = self.options.get('timeout', 600)
-        self.ssl = self.options.get('ssl', False)
-        self.port = self.options.get('port', None)
-        self.output_format = self.options.get('output', 'json')
-
-        # Parse target
-        parsed = urlparse(self.target)
-        self.host = parsed.hostname or self.target
-        if not self.port:
-            self.port = parsed.port or (443 if parsed.scheme == 'https' or self.ssl else 80)
-
-        self.results = {
-            'target': self.target,
-            'host': self.host,
-            'port': self.port,
-            'vulnerabilities': [],
-            'info': [],
-            'stats': {
-                'total_items': 0,
-                'osvdb_entries': 0
-            }
-        }
-
     def check_nikto_installed(self):
         """Check if Nikto is installed"""
         nikto_path = shutil.which('nikto') or shutil.which('nikto.pl')
@@ -268,8 +239,10 @@ class NiktoIntegration(PluginInterface):
                     }
                     self.results['info'].append(vuln)
 
-    def run(self):
+    def run(self, target, **kwargs):
         """Main execution"""
+        self.target = target
+        self.options = kwargs
         # Check installation
         if not self.check_nikto_installed():
             return {

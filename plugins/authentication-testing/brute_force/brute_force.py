@@ -47,26 +47,24 @@ except ImportError:
 
 
 class BruteForce(PluginInterface):
-    def __init__(self, config=None):
-        super().__init__(config)
-
     name = "brute_force"
     version = "1.0.0"
     author = "Penetration Test Suite"
     description = "Multi-protocol brute force authentication testing"
     category = "authentication_testing"
     requires = ['requests', 'paramiko']
-        self.target = target
-        self.options = options or {}
 
-        # Configuration
-        self.protocol = self.options.get('protocol', 'http').lower()
-        self.username = self.options.get('username', '')
-        self.username_list = self.options.get('username_list', '')
-        self.password_list = self.options.get('password_list', '')
-        self.threads = self.options.get('threads', 5)
-        self.delay = self.options.get('delay', 0.5)
-        self.timeout = self.options.get('timeout', 10)
+    def __init__(self, config=None):
+        super().__init__(config)
+        self.target = None
+        self.options = {}
+        self.protocol = 'http'
+        self.username = ''
+        self.username_list = ''
+        self.password_list = ''
+        self.threads = 5
+        self.delay = 0.5
+        self.timeout = 10
 
         # HTTP Form options
         self.http_method = self.options.get('http_method', 'POST').upper()
@@ -326,8 +324,20 @@ class BruteForce(PluginInterface):
                 print(f"[!] Worker error: {e}")
                 credentials_queue.task_done()
 
-    def run(self):
+    def run(self, target, **kwargs):
         """Main execution"""
+        self.target = target
+        self.options = kwargs
+
+        # Configuration
+        self.protocol = self.options.get('protocol', 'http').lower()
+        self.username = self.options.get('username', '')
+        self.username_list = self.options.get('username_list', '')
+        self.password_list = self.options.get('password_list', '')
+        self.threads = self.options.get('threads', 5)
+        self.delay = self.options.get('delay', 0.5)
+        self.timeout = self.options.get('timeout', 10)
+
         print(f"[*] Starting brute force attack on {self.target}")
         print(f"[*] Protocol: {self.protocol}")
         print(f"[*] Threads: {self.threads}")

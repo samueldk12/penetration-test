@@ -27,36 +27,12 @@ from urllib.parse import urljoin, urlparse
 
 class ZAPIntegration(PluginInterface):
     def __init__(self, config=None):
-        super().__init__(config)
-
     name = "zap_integration"
     version = "1.0.0"
     author = "Penetration Test Suite"
     description = "Integration with OWASP ZAP security scanner (third-party)"
     category = "server_testing"
     requires = ['requests']
-        self.target = target
-        self.options = options or {}
-
-        self.scan_type = self.options.get('scan_type', 'both')
-        self.spider = self.options.get('spider', True)
-        self.ajax_spider = self.options.get('ajax_spider', False)
-        self.api_key = self.options.get('api_key', '')
-        self.zap_port = self.options.get('zap_port', 8080)
-
-        self.zap_base = f"http://localhost:{self.zap_port}"
-        self.zap_process = None
-
-        self.results = {
-            'target': self.target,
-            'vulnerabilities': [],
-            'info': [],
-            'stats': {
-                'total_alerts': 0,
-                'by_severity': {}
-            }
-        }
-
     def check_zap_installed(self):
         """Check if ZAP is installed"""
         # Check for zap.sh (Linux/Mac) or zap.bat (Windows)
@@ -329,8 +305,10 @@ class ZAPIntegration(PluginInterface):
 
         self.results['stats']['total_alerts'] = len(alerts['alerts'])
 
-    def run(self):
+    def run(self, target, **kwargs):
         """Main execution"""
+        self.target = target
+        self.options = kwargs
         # Check installation
         if not self.check_zap_installed():
             return {

@@ -24,29 +24,12 @@ import shutil
 
 class NucleiIntegration(PluginInterface):
     def __init__(self, config=None):
-        super().__init__(config)
-
     name = "nuclei_integration"
     version = "1.0.0"
     author = "Penetration Test Suite"
     description = "Integration with Nuclei vulnerability scanner (third-party)"
     category = "server_testing"
     requires = []
-        self.target = target
-        self.options = options or {}
-
-        self.severity = self.options.get('severity', 'critical,high,medium')
-        self.templates = self.options.get('templates', '')
-        self.rate_limit = self.options.get('rate_limit', 150)
-        self.update = self.options.get('update', True)
-
-        self.results = {
-            'target': self.target,
-            'vulnerabilities': [],
-            'info': [],
-            'stats': {}
-        }
-
     def check_nuclei_installed(self):
         """Check if Nuclei is installed"""
         nuclei_path = shutil.which('nuclei')
@@ -201,8 +184,10 @@ class NucleiIntegration(PluginInterface):
         if requests_match:
             self.results['stats']['requests'] = int(requests_match.group(1))
 
-    def run(self):
+    def run(self, target, **kwargs):
         """Main execution"""
+        self.target = target
+        self.options = kwargs
         # Check installation
         if not self.check_nuclei_installed():
             return {

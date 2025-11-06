@@ -47,47 +47,12 @@ except ImportError:
 
 class InteractivePentester(PluginInterface):
     def __init__(self, config=None):
-        super().__init__(config)
-
     name = "selenium_interactive"
     version = "1.0.0"
     author = "Penetration Test Suite"
     description = "Interactive penetration testing with Selenium and hotkeys"
     category = "interactive_testing"
     requires = ['selenium', 'pynput', 'beautifulsoup4']
-        self.target = target
-        self.options = options or {}
-
-        self.browser_type = self.options.get('browser', 'chrome')
-        self.proxy_enabled = self.options.get('proxy_enabled', False)
-        self.proxy_port = self.options.get('proxy_port', 8888)
-        self.console_mode = self.options.get('console_mode', True)
-
-        self.driver = None
-        self.current_element = None
-        self.hotkey_listener = None
-        self.running = True
-
-        # Results
-        self.results = {
-            'target': self.target,
-            'tests_performed': [],
-            'vulnerabilities': [],
-            'console_tests': [],
-            'findings': []
-        }
-
-        # Test payloads - Load from wordlists
-        self.wordlist_dir = self.options.get('wordlist_dir', 'wordlists')
-        self.sql_payloads = self.load_wordlist('sqli.txt')
-        self.xss_payloads = self.load_wordlist('xss.txt')
-        self.lfi_payloads = self.load_wordlist('lfi.txt')
-        self.iframe_payloads = self.load_wordlist('iframe.txt')
-
-        # Keyboard state
-        self.ctrl_pressed = False
-        self.testing_in_progress = False
-
     def load_wordlist(self, filename):
         """Load wordlist from file"""
         import os
@@ -795,8 +760,10 @@ class InteractivePentester(PluginInterface):
 """
         print(help_text)
 
-    def run(self):
+    def run(self, target, **kwargs):
         """Main execution"""
+        self.target = target
+        self.options = kwargs
         if not SELENIUM_AVAILABLE:
             return {'error': 'Selenium not available'}
 
