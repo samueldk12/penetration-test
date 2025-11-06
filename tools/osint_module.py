@@ -144,6 +144,9 @@ class OSINTModule:
     def _whois_lookup(self, domain: str) -> Dict:
         """Realiza lookup WHOIS."""
         try:
+            # Set default timeout for socket operations
+            socket.setdefaulttimeout(10)
+
             w = whois.whois(domain)
 
             return {
@@ -158,6 +161,8 @@ class OSINTModule:
                 'org': w.org if hasattr(w, 'org') else None,
                 'country': w.country if hasattr(w, 'country') else None
             }
+        except socket.timeout:
+            return {'error': 'WHOIS lookup timeout'}
         except Exception as e:
             return {'error': str(e)}
 
@@ -205,6 +210,9 @@ class OSINTModule:
         ips = []
 
         try:
+            # Set timeout for DNS resolution
+            socket.setdefaulttimeout(10)
+
             # IPv4
             ipv4_addresses = socket.getaddrinfo(domain, None, socket.AF_INET)
             for addr in ipv4_addresses:
@@ -228,6 +236,8 @@ class OSINTModule:
             except:
                 pass
 
+        except socket.timeout:
+            print(f"Timeout resolving IPs for {domain}")
         except Exception as e:
             print(f"Error resolving IPs: {e}")
 
@@ -236,7 +246,10 @@ class OSINTModule:
     def _reverse_dns(self, ip: str) -> Optional[str]:
         """Realiza reverse DNS."""
         try:
+            socket.setdefaulttimeout(5)  # Shorter timeout for reverse DNS
             return socket.gethostbyaddr(ip)[0]
+        except socket.timeout:
+            return None
         except:
             return None
 
