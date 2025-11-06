@@ -12,17 +12,11 @@ from datetime import datetime
 # Add project root to path
 project_root = Path(__file__).parent.parent.parent.parent
 sys.path.insert(0, str(project_root))
+sys.path.insert(0, str(project_root / 'tools'))
+sys.path.insert(0, str(project_root / 'pentest_suite' / 'modules'))
 
-try:
-    from tools.plugin_system import PluginInterface
-    from pentest_suite.modules.recon import ReconModule
-except ImportError as e:
-    print(f"[!] Import error: {e}")
-    # Fallback imports
-    sys.path.insert(0, str(project_root / 'tools'))
-    sys.path.insert(0, str(project_root / 'pentest_suite' / 'modules'))
-    from plugin_system import PluginInterface
-    from recon import ReconModule
+from plugin_system import PluginInterface
+from recon import ReconModule
 
 
 class ReconScannerPlugin(PluginInterface):

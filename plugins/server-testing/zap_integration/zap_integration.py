@@ -26,7 +26,7 @@ import shutil
 from urllib.parse import urljoin, urlparse
 
 class ZAPIntegration(PluginInterface):
-    def __init__(self, config=None, target, options=None):
+    def __init__(self, config=None):
         super().__init__(config)
 
     name = "zap_integration"

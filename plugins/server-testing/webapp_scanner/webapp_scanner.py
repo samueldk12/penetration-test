@@ -29,7 +29,7 @@ import re
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 class WebAppScanner(PluginInterface):
-    def __init__(self, config=None, target, options=None):
+    def __init__(self, config=None):
         super().__init__(config)
 
     name = "webapp_scanner"

@@ -23,7 +23,7 @@ import os
 import shutil
 
 class NucleiIntegration(PluginInterface):
-    def __init__(self, config=None, target, options=None):
+    def __init__(self, config=None):
         super().__init__(config)
 
     name = "nuclei_integration"
