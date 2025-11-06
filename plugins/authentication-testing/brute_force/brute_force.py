@@ -4,6 +4,18 @@ Brute Force Authentication Testing Plugin
 Multi-protocol brute force tool for authorized security testing
 """
 
+# Add project root to path
+from pathlib import Path
+import sys
+project_root = Path(__file__).parent.parent.parent.parent
+sys.path.insert(0, str(project_root))
+sys.path.insert(0, str(project_root / 'tools'))
+
+try:
+    from tools.plugin_system import PluginInterface
+except ImportError:
+    from plugin_system import PluginInterface
+
 import sys
 import json
 import time
@@ -34,8 +46,16 @@ except ImportError:
     SMTP_AVAILABLE = False
 
 
-class BruteForce:
-    def __init__(self, target, options=None):
+class BruteForce(PluginInterface):
+    def __init__(self, config=None, target, options=None):
+        super().__init__(config)
+
+    name = "brute_force"
+    version = "1.0.0"
+    author = "Penetration Test Suite"
+    description = "Multi-protocol brute force authentication testing"
+    category = "authentication_testing"
+    requires = ['requests', 'paramiko']
         self.target = target
         self.options = options or {}
 

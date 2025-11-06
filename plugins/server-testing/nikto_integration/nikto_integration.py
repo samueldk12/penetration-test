@@ -4,6 +4,18 @@ Nikto Integration Plugin
 Integration with Nikto web server scanner (third-party tool)
 """
 
+# Add project root to path
+from pathlib import Path
+import sys
+project_root = Path(__file__).parent.parent.parent.parent
+sys.path.insert(0, str(project_root))
+sys.path.insert(0, str(project_root / 'tools'))
+
+try:
+    from tools.plugin_system import PluginInterface
+except ImportError:
+    from plugin_system import PluginInterface
+
 import subprocess
 import json
 import sys
@@ -13,8 +25,16 @@ import tempfile
 import re
 from urllib.parse import urlparse
 
-class NiktoIntegration:
-    def __init__(self, target, options=None):
+class NiktoIntegration(PluginInterface):
+    def __init__(self, config=None, target, options=None):
+        super().__init__(config)
+
+    name = "nikto_integration"
+    version = "1.0.0"
+    author = "Penetration Test Suite"
+    description = "Integration with Nikto web server scanner (third-party)"
+    category = "server_testing"
+    requires = []
         self.target = target
         self.options = options or {}
 
