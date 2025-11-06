@@ -4,17 +4,21 @@ Interactive Selenium Pentesting Plugin
 Real-time interactive pentesting with hotkeys and visual feedback
 """
 
-# Add project root to path
 from pathlib import Path
 import sys
-project_root = Path(__file__).parent.parent.parent.parent
-sys.path.insert(0, str(project_root))
-sys.path.insert(0, str(project_root / 'tools'))
 
+# Import PluginInterface first (before modifying sys.path)
 try:
-    from tools.plugin_system import PluginInterface
-except ImportError:
     from plugin_system import PluginInterface
+except ImportError:
+    try:
+        from tools.plugin_system import PluginInterface
+    except ImportError:
+        # Last resort - add paths and try again
+        project_root = Path(__file__).parent.parent.parent.parent
+        sys.path.insert(0, str(project_root))
+        sys.path.insert(0, str(project_root / 'tools'))
+        from plugin_system import PluginInterface
 
 import sys
 import json
@@ -46,15 +50,48 @@ except ImportError:
 
 
 class InteractivePentester(PluginInterface):
-    def __init__(self, config=None):
-        super().__init__(config)
-
     name = "selenium_interactive"
     version = "1.0.0"
     author = "Penetration Test Suite"
     description = "Interactive penetration testing with Selenium and hotkeys"
     category = "interactive_testing"
     requires = ['selenium', 'pynput', 'beautifulsoup4']
+
+    def __init__(self, config=None):
+        super().__init__(config)
+        self.driver = None
+        self.target = None
+        self.options = {}
+        self.browser_type = 'chrome'
+        self.proxy_enabled = False
+        self.proxy_port = 8080
+        self.console_mode = True
+        self.running = True
+        self.ctrl_pressed = False
+        self.testing_in_progress = False
+        self.hotkey_listener = None
+
+        # Load payloads safely
+        self.wordlist_dir = Path(__file__).parent.parent.parent.parent / 'wordlists'
+        try:
+            self.sql_payloads = self.load_wordlist('sqli.txt')
+            self.xss_payloads = self.load_wordlist('xss.txt')
+            self.lfi_payloads = self.load_wordlist('lfi.txt')
+            self.iframe_payloads = self.load_wordlist('iframe.txt')
+        except Exception as e:
+            # If wordlist loading fails, use empty lists (will be populated by defaults in load_wordlist)
+            self.sql_payloads = []
+            self.xss_payloads = []
+            self.lfi_payloads = []
+            self.iframe_payloads = []
+
+        # Results tracking
+        self.results = {
+            'vulnerabilities': [],
+            'tests_performed': [],
+            'console_tests': []
+        }
+
     def load_wordlist(self, filename):
         """Load wordlist from file"""
         import os

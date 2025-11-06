@@ -12,9 +12,9 @@ sys.path.insert(0, str(project_root))
 sys.path.insert(0, str(project_root / 'tools'))
 
 try:
-    from tools.plugin_system import PluginInterface
-except ImportError:
     from plugin_system import PluginInterface
+except ImportError:
+    from tools.plugin_system import PluginInterface
 
 import subprocess
 import json

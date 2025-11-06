@@ -4,12 +4,32 @@ Plugin System - Sistema modular para ferramentas de pentest
 Permite adicionar/remover módulos dinamicamente
 """
 
+import sys
 import importlib
 import importlib.util
 import inspect
 from typing import List, Dict, Any, Optional
 from pathlib import Path
 import json
+
+# Ensure tools directory is in sys.path for consistent imports
+_tools_dir = Path(__file__).parent
+_project_root = _tools_dir.parent
+if str(_tools_dir) not in sys.path:
+    sys.path.insert(0, str(_tools_dir))
+if str(_project_root) not in sys.path:
+    sys.path.insert(0, str(_project_root))
+
+
+# Mapeamento de nomes de pacotes para nomes de importação
+PACKAGE_IMPORT_MAP = {
+    'PyJWT': 'jwt',
+    'dnspython': 'dns',
+    'beautifulsoup4': 'bs4',
+    'python-whois': 'whois',
+    'websocket-client': 'websocket',
+    'pyOpenSSL': 'OpenSSL',
+}
 
 
 class PluginInterface:
@@ -43,10 +63,12 @@ class PluginInterface:
         """
         # Verifica dependências
         for dep in self.requires:
+            # Use mapped import name if available
+            import_name = PACKAGE_IMPORT_MAP.get(dep, dep)
             try:
-                importlib.import_module(dep)
+                importlib.import_module(import_name)
             except ImportError:
-                self.errors.append(f"Missing dependency: {dep}")
+                self.errors.append(f"Missing dependency: {dep} (import as '{import_name}')")
                 return False
 
         return True
