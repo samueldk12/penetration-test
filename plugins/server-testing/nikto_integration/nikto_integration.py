@@ -26,7 +26,7 @@ import re
 from urllib.parse import urlparse
 
 class NiktoIntegration(PluginInterface):
-    def __init__(self, config=None, target, options=None):
+    def __init__(self, config=None):
         super().__init__(config)
 
     name = "nikto_integration"

@@ -40,7 +40,7 @@ except ImportError:
 
 
 class SeleniumFuzzer(PluginInterface):
-    def __init__(self, config=None, target, options=None):
+    def __init__(self, config=None):
         super().__init__(config)
 
     name = "selenium_fuzzer"
