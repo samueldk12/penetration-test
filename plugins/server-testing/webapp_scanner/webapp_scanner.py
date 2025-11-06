@@ -30,34 +30,16 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 class WebAppScanner(PluginInterface):
     def __init__(self, config=None):
-        super().__init__(config)
-
     name = "webapp_scanner"
     version = "1.0.0"
     author = "Penetration Test Suite"
     description = "Comprehensive web application security scanner"
     category = "server_testing"
     requires = ['requests', 'beautifulsoup4', 'urllib3']
-        self.target = target if target.startswith('http') else f'http://{target}'
-        self.options = options or {}
-        self.threads = self.options.get('threads', 5)
-        self.timeout = self.options.get('timeout', 10)
-        self.verify_ssl = self.options.get('check_ssl', False)
-        self.user_agent = self.options.get('user_agent', 'PenTest-Suite/1.0')
-
-        self.session = requests.Session()
-        self.session.headers.update({'User-Agent': self.user_agent})
-
-        self.results = {
-            'target': self.target,
-            'vulnerabilities': [],
-            'findings': [],
-            'server_info': {},
-            'technologies': []
-        }
-
-    def run(self):
+    def run(self, target, **kwargs):
         """Main scan execution"""
+        self.target = target
+        self.options = kwargs
         print(f"[*] Starting web application scan: {self.target}")
 
         # Server Information
