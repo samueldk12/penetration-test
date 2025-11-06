@@ -104,13 +104,81 @@ class PluginManager:
     def discover_plugins(self) -> int:
         """
         Descobre plugins no diretório.
+        Procura por plugin.json em subdiretórios.
 
         Returns:
             Número de plugins descobertos
         """
         count = 0
 
-        # Procura por arquivos Python
+        # Procura por arquivos plugin.json em subdiretórios
+        for plugin_json in self.plugins_dir.rglob("plugin.json"):
+            try:
+                # Carrega metadados do plugin
+                with open(plugin_json, 'r') as f:
+                    metadata = json.load(f)
+
+                # Verifica se é plugin Python
+                if metadata.get('type') != 'python':
+                    continue
+
+                plugin_dir = plugin_json.parent
+                entrypoint = metadata.get('entrypoint', f"{metadata['name']}.py")
+                plugin_file = plugin_dir / entrypoint
+
+                if not plugin_file.exists():
+                    print(f"[!] Plugin entrypoint not found: {plugin_file}")
+                    continue
+
+                # Importa módulo
+                module_name = f"plugin_{metadata['name']}"
+                spec = importlib.util.spec_from_file_location(module_name, plugin_file)
+                if spec is None or spec.loader is None:
+                    print(f"[!] Failed to load plugin spec: {plugin_file}")
+                    continue
+
+                module = importlib.util.module_from_spec(spec)
+
+                # Adiciona diretório do plugin ao sys.path temporariamente
+                import sys
+                plugin_dir_str = str(plugin_dir)
+                if plugin_dir_str not in sys.path:
+                    sys.path.insert(0, plugin_dir_str)
+
+                spec.loader.exec_module(module)
+
+                # Procura por classes que herdam de PluginInterface
+                plugin_instance = None
+                for name, obj in inspect.getmembers(module, inspect.isclass):
+                    if issubclass(obj, PluginInterface) and obj != PluginInterface:
+                        plugin_instance = obj()
+
+                        # Atualiza metadados do plugin com dados do JSON
+                        plugin_instance.name = metadata.get('name', plugin_instance.name)
+                        plugin_instance.version = metadata.get('version', plugin_instance.version)
+                        plugin_instance.author = metadata.get('author', plugin_instance.author)
+                        plugin_instance.description = metadata.get('description', plugin_instance.description)
+                        plugin_instance.category = metadata.get('category', plugin_instance.category)
+
+                        # Valida plugin
+                        if plugin_instance.validate():
+                            self.register_plugin(plugin_instance)
+                            count += 1
+                        else:
+                            print(f"[!] Plugin {name} validation failed:")
+                            for error in plugin_instance.get_errors():
+                                print(f"    - {error}")
+                        break
+
+                if plugin_instance is None:
+                    print(f"[!] No PluginInterface subclass found in {plugin_file}")
+
+            except Exception as e:
+                print(f"[!] Error loading plugin {plugin_json}: {e}")
+                import traceback
+                traceback.print_exc()
+
+        # Também procura por arquivos Python soltos (compatibilidade com plugins antigos)
         for plugin_file in self.plugins_dir.glob("*.py"):
             if plugin_file.name.startswith("_"):
                 continue
