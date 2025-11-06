@@ -24,6 +24,8 @@ import shutil
 
 class NucleiIntegration(PluginInterface):
     def __init__(self, config=None):
+        super().__init__(config)
+
     name = "nuclei_integration"
     version = "1.0.0"
     author = "Penetration Test Suite"

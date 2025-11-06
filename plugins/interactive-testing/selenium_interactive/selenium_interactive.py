@@ -47,6 +47,8 @@ except ImportError:
 
 class InteractivePentester(PluginInterface):
     def __init__(self, config=None):
+        super().__init__(config)
+
     name = "selenium_interactive"
     version = "1.0.0"
     author = "Penetration Test Suite"
