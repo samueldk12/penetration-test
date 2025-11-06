@@ -44,18 +44,20 @@ except ImportError:
 try:
     from pynput import keyboard
     PYNPUT_AVAILABLE = True
-except ImportError:
+except Exception as e:
+    # pynput may fail if no X display is available (headless environment)
     PYNPUT_AVAILABLE = False
-    print("[!] pynput not available - install with: pip install pynput")
+    # Don't print error during import - only during validation
+    keyboard = None
 
 
 class InteractivePentester(PluginInterface):
     name = "selenium_interactive"
     version = "1.0.0"
     author = "Penetration Test Suite"
-    description = "Interactive penetration testing with Selenium and hotkeys"
+    description = "Interactive penetration testing with Selenium and hotkeys (requires X display for keyboard listener)"
     category = "interactive_testing"
-    requires = ['selenium', 'pynput', 'beautifulsoup4']
+    requires = ['selenium', 'beautifulsoup4']  # pynput checked at runtime (needs X display)
 
     def __init__(self, config=None):
         super().__init__(config)
